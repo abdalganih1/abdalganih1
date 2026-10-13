@@ -99,7 +99,7 @@ html.no-loader .intro{display:none}
   background:radial-gradient(50% 50% at 50% 50%,rgba(25,224,200,.35),transparent 70%);border-radius:50%}
 .in-pad::after{content:"";position:absolute;inset:48% 10% auto;height:1px;background:linear-gradient(90deg,transparent,rgba(25,224,200,.8),transparent)}
 .in-count{position:absolute;left:50%;top:18%;translate:-50% 0;z-index:7;font:600 clamp(60px,12vw,140px)/1 var(--f-mono);color:#bffff3;text-shadow:0 0 30px rgba(25,224,200,.7);pointer-events:none}
-.in-title{position:absolute;inset-inline:0;top:13%;z-index:7;text-align:center;pointer-events:none}
+.in-title{position:absolute;inset-inline:0;top:6%;z-index:7;text-align:center;pointer-events:none}
 .in-title h2{margin:0;font:700 clamp(46px,9vw,120px)/1.15 var(--f-disp);filter:drop-shadow(0 0 30px rgba(53,182,255,.45))}
 .in-title .tw{display:inline-block;overflow:hidden;padding-bottom:.08em}
 .in-title .tw>span{display:inline-block;background:linear-gradient(180deg,#fff 20%,#8fe8ff);-webkit-background-clip:text;background-clip:text;color:transparent}
