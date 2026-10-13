@@ -187,7 +187,7 @@ function card(p, i = 0) {
 }
 
 function pageHead({ crumb, title, sub, img }) {
-  return `<section class="page-head">${img ? `<div class="bgimg"><img src="${img}" alt="" fetchpriority="high"></div>` : ''}<div class="wrap">
+  return `<section class="page-head">${img ? `<div class="bgimg"><img${img.includes('/brand/') ? ' class="portrait"' : ''} src="${img}" alt="" fetchpriority="high"></div>` : ''}<div class="wrap">
 <div class="crumb"><a href="/">الرئيسية</a><span>/</span><span>${crumb}</span></div>
 <h1>${title}</h1>${sub ? `<p class="sub">${sub}</p>` : ''}</div></section>`;
 }
@@ -260,7 +260,7 @@ ${featured.map((p, i) => `<a class="scard" href="${p.path}" data-cursor="اكت�
 <section class="blk"><div class="wrap">${stats()}</div></section>
 
 <section class="blk" style="padding-top:0"><div class="wrap duo">
-<div class="reveal-img" data-clip><img src="/assets/gen/page-about.webp" alt="المهندس عبد الغني مع طلاب في مختبر الروبوتيك" data-parallax="14" loading="lazy">
+<div class="reveal-img" data-clip><img class="portrait" src="/assets/brand/abdalgani.webp" alt="المهندس عبد الغني الحمدي" data-parallax="14" loading="lazy">
 <div class="badge"><b>ماجستير</b><span>هندسة التحكّم والأتمتة · جامعة حلب</span></div></div>
 <div class="txt"><div class="kicker">من أنا</div><h2 class="big" data-split>مهندس، مدرّب، وقائد فريق تكنو إنجاز</h2>
 <p data-rv>مهندس ومستشار متخصّص في مشاريع التخرّج التقنية. ساهم في إنجاز أكثر من 500 مشروع تقني، وحصل على المركز السادس في مسابقة «تميّز للإبداع والاختراع» على مستوى القطر، ويدرّب على برمجة الأردوينو والروبوتيك.</p>
@@ -367,7 +367,7 @@ ${related.length ? `<div class="sec-head" style="margin-top:100px"><div><div cla
 write('/about/', layout({
   title: 'عن المهندس عبد الغني الحمدي', url: '/about/', current: '/about/',
   desc: 'مهندس ومستشار متخصّص في مشاريع التخرّج التقنية، مدرّب أردوينو وروبوتيك، وقائد فريق تكنو إنجاز.',
-  body: `${pageHead({ crumb: 'عني', title: 'من هو المهندس عبد الغني', sub: 'مستشار هندسي · مدرّب تقني · مشرف مشاريع تقنية', img: '/assets/gen/page-about.webp' })}
+  body: `${pageHead({ crumb: 'عني', title: 'من هو المهندس عبد الغني', sub: 'مستشار هندسي · مدرّب تقني · مشرف مشاريع تقنية', img: '/assets/brand/abdalgani.webp' })}
 <section class="blk" style="padding-top:30px"><div class="wrap duo" style="align-items:start">
 <div class="prose-lg">
 <p data-rv>مرحبًا بكم في موقع المهندس عبد الغني الحمدي. إذا كنتم تبحثون عن مستشار هندسي أو مدرّب متخصّص في مجالات التقنية والروبوتيك، فأنتم في المكان الصحيح.</p>
