@@ -9,6 +9,7 @@
 
   if (!gsap || !ST) { h.classList.remove('js'); h.classList.add('ready'); return; }
   gsap.registerPlugin(ST);
+  h.classList.add('booted');
 
   /* ---------- smooth scroll ---------- */
   var lenis = null;
@@ -136,22 +137,15 @@
     }
   }
 
-  var loader = $('.loader');
-  if (loader && !h.classList.contains('no-loader') && !RM) {
+  var intro = $('.intro');
+  if (intro && !h.classList.contains('no-loader') && !RM && w.AGIntro) {
     if (lenis) lenis.stop();
-    var n = { v: 0 }, num = $('.ld-num', loader);
-    gsap.timeline({ onComplete: function () { loader.remove(); if (lenis) lenis.start(); try { sessionStorage.setItem('ag-intro', '1'); } catch (e) {} } })
-      .from($('img', loader), { scale: .4, opacity: 0, rotate: -40, filter: 'blur(14px)', duration: 1.1, ease: 'expo.out' })
-      .from($('.ld-name', loader), { y: 20, opacity: 0, duration: .7, ease: 'power3.out' }, '-=.6')
-      .to($('.ld-bar i', loader), { scaleX: 1, duration: 1.1, ease: 'power2.inOut' }, '-=.3')
-      .to(n, { v: 100, duration: 1.1, ease: 'power2.inOut', onUpdate: function () { num.textContent = String(Math.round(n.v)).padStart(3, '0'); } }, '<')
-      .to($('.ld-in', loader), { y: -40, opacity: 0, duration: .6, ease: 'power3.in' })
-      .to($('.ld-p.t', loader), { yPercent: -100, duration: 1, ease: 'expo.inOut' }, '-=.1')
-      .to($('.ld-p.b', loader), { yPercent: 100, duration: 1, ease: 'expo.inOut' }, '<')
-      .set(loader, { background: 'transparent' }, '<')
-      .call(revealPage, null, '-=.75');
+    w.AGIntro(intro, {
+      onOpen: revealPage,
+      onDone: function () { if (lenis) lenis.start(); try { sessionStorage.setItem('ag-intro', '1'); } catch (e) {} }
+    });
   } else {
-    if (loader) loader.remove();
+    if (intro) intro.remove();
     revealPage();
   }
 

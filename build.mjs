@@ -42,6 +42,7 @@ function emit(src, name) {
 }
 emit('src/styles.css', 'styles.css');
 emit('src/boot.js', 'boot.js');
+emit('src/intro.js', 'intro.js');
 emit('src/app.js', 'app.js');
 emit('node_modules/gsap/dist/gsap.min.js', 'vendor/gsap.min.js');
 emit('node_modules/gsap/dist/ScrollTrigger.min.js', 'vendor/ScrollTrigger.min.js');
@@ -105,7 +106,34 @@ ${jsonld ? `<script type="application/ld+json">${JSON.stringify(jsonld)}</script
 </head>
 <body>
 <a class="sr" href="#main">تخطَّ إلى المحتوى</a>
-${loader ? `<div class="loader" aria-hidden="true"><div class="ld-p t"></div><div class="ld-p b"></div><div class="ld-in"><img src="/assets/brand/logo.webp" alt="" width="92" height="98"><div class="ld-name">عبد الغني الحمدي</div><div class="ld-bar"><i></i></div><div class="ld-num">000</div></div></div>` : ''}
+${loader ? `<div class="intro" aria-hidden="true">
+<div class="in-nebula"><img src="/assets/intro/nebula.webp" alt=""></div>
+<div class="in-sky"></div>
+<canvas class="in-cv"></canvas>
+<div class="in-earth"><img src="/assets/intro/earth.webp" alt=""></div>
+<div class="in-clouds"><img src="/assets/intro/clouds.webp" alt=""></div>
+<div class="in-cam">
+<div class="in-stage">
+<div class="in-pad"></div>
+<div class="in-rocket">
+<div class="in-flame"><i class="c"></i><i class="l"></i><i class="r"></i></div>
+<img class="in-body" src="/assets/brand/te-body.webp" alt="">
+<div class="in-disc">
+<div class="in-disc-glow"></div><div class="in-disc-wave"></div><div class="in-shock"></div>
+<div class="in-coder"><img src="/assets/intro/coder.webp" alt=""><i class="scan"></i></div>
+<img class="in-disc-art" src="/assets/brand/te-disc.webp" alt="">
+<svg class="in-ring" viewBox="0 0 120 120"><circle class="track" cx="60" cy="60" r="56" pathLength="100"/><circle class="charge" cx="60" cy="60" r="56" pathLength="100"/></svg>
+<span class="in-press">اضغط</span>
+</div>
+</div>
+</div>
+</div>
+<div class="in-count"></div>
+<div class="in-title"><h2><span class="tw"><span>تكنو</span></span> <span class="tw"><span>إنجاز</span></span></h2><p>TECHNO ENJAZ · من فكرة مبرمج لإنجاز بيوصل للفضاء</p></div>
+<div class="in-hud"><div class="in-code"></div><div class="row"><span class="dot"></span><span class="tag">BOOT · مبرمج عم يشتغل…</span><span class="in-alt"></span></div></div>
+<button class="in-skip" type="button">تخطَّ الانترو ←</button>
+<div class="in-flash"></div>
+</div>` : ''}
 <div class="curtain" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
 <div class="progress" aria-hidden="true"></div><div class="grain" aria-hidden="true"></div><div class="glow" aria-hidden="true"></div><div class="cursor" aria-hidden="true"><b></b></div>
 <header class="site"><div class="wrap">
@@ -123,6 +151,7 @@ ${footer()}
 <script src="${hashed['vendor/gsap.min.js']}" defer></script>
 <script src="${hashed['vendor/ScrollTrigger.min.js']}" defer></script>
 <script src="${hashed['vendor/lenis.min.js']}" defer></script>
+${loader ? `<script src="${hashed['intro.js']}" defer></script>` : ''}
 <script src="${hashed['app.js']}" defer></script>
 </body>
 </html>
@@ -140,7 +169,7 @@ function footer() {
 <div><h4>الموقع</h4><ul><li><a href="/prjects/">المشاريع</a></li><li><a href="/about/">عني</a></li><li><a href="/techno/">تكنو إنجاز</a></li><li><a href="/contact/">طلب استشارة</a></li></ul></div>
 <div><h4>تواصل</h4><ul><li><a href="https://wa.me/${WA_DISPLAY}" target="_blank" rel="noopener" dir="ltr">+963 951 413 649</a></li><li><a href="mailto:${EMAIL}">${EMAIL}</a></li><li><a href="${IG_TE}" target="_blank" rel="noopener">تكنو إنجاز على إنستغرام</a></li></ul></div>
 </div>
-<div class="fine"><span>© ${new Date().getFullYear()} المهندس عبد الغني الحمدي. جميع الحقوق محفوظة.</span><span class="mono">ABDALGANI.COM</span></div>
+<div class="fine"><span>© ${new Date().getFullYear()} المهندس عبد الغني الحمدي. جميع الحقوق محفوظة. · <a href="/?intro" style="color:var(--teal)">شاهد انترو الإطلاق 🚀</a></span><span class="mono">ABDALGANI.COM</span></div>
 </div></footer>`;
 }
 
