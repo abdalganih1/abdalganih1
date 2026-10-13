@@ -450,3 +450,19 @@ footer .fine{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
 html.js:not(.rm) [data-rv]{opacity:0;transform:translateY(46px)}
 html.js:not(.rm) [data-clip]{clip-path:inset(100% 0 0 0)}
 @media (prefers-reduced-motion:reduce){.grain{animation:none}.marquee .track{transform:none!important}}
+
+/* pinned showcase must fit one screen on desktop, so cards show image AND text while sliding */
+@media (min-width:761px) and (prefers-reduced-motion:no-preference){
+  .showcase{height:100vh;height:100svh;min-height:560px;display:flex;flex-direction:column;justify-content:center;padding:84px 0 24px}
+  .showcase .sec-head{margin-bottom:clamp(16px,3vh,36px);align-items:center}
+  .showcase h2.big{font-size:clamp(28px,3.6vw,54px);max-width:none}
+  .showcase .kicker{margin-bottom:6px}
+  .showcase .rail{align-items:stretch}
+  .scard{width:clamp(340px,30vw + 80px,540px);display:flex;flex-direction:column}
+  .scard .im{aspect-ratio:auto;height:clamp(150px,36vh,340px);flex:none}
+  .scard .tx{padding:4px 26px 24px;margin-top:-40px}
+  .scard h3{font-size:clamp(19px,1.7vw,25px);margin:8px 0 6px}
+  .scard p{margin-bottom:12px}
+  .scard .idx{font-size:52px;top:-30px}
+  .showcase .bar{margin-top:clamp(14px,2.5vh,30px)}
+}
