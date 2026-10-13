@@ -1,0 +1,13 @@
+{
+  "name": "abdalgani-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "preview": "npx --yes serve dist -l 4173"
+  },
+  "dependencies": {
+    "gsap": "3.13.0",
+    "lenis": "1.3.11"
+  }
+}

@@ -1,0 +1,884 @@
+{
+ "posts": {
+  "نظام-مراقبة-وحماية-منشأة-صناعية-من-الح": {
+   "cover": "/assets/gen/fire-guard/cover.webp",
+   "feature_real": null,
+   "slots": {
+    "0": {
+     "src": "/assets/gen/fire-guard/01.webp",
+     "real": false
+    },
+    "1": {
+     "src": "/assets/gen/fire-guard/02.webp",
+     "real": false
+    },
+    "2": null,
+    "3": null,
+    "4": null,
+    "5": {
+     "src": "/assets/gen/fire-guard/03.webp",
+     "real": false
+    },
+    "6": {
+     "src": "/assets/gen/fire-guard/04.webp",
+     "real": false
+    },
+    "7": {
+     "src": "/assets/gen/fire-guard/05.webp",
+     "real": false
+    },
+    "8": {
+     "src": "/assets/gen/fire-guard/06.webp",
+     "real": false
+    },
+    "9": null
+   }
+  },
+  "موقع-وتطبيق-لبيع-منتجات-العناية-بالبش": {
+   "cover": "/assets/gen/beauty-store/cover.webp",
+   "feature_real": null,
+   "slots": {
+    "0": {
+     "src": "/assets/gen/beauty-store/01.webp",
+     "real": false
+    },
+    "1": {
+     "src": "/assets/gen/beauty-store/02.webp",
+     "real": false
+    },
+    "2": null,
+    "3": {
+     "src": "/assets/gen/beauty-store/03.webp",
+     "real": false
+    },
+    "4": {
+     "src": "/assets/gen/beauty-store/04.webp",
+     "real": false
+    },
+    "5": null,
+    "6": null,
+    "7": null,
+    "8": null,
+    "9": null,
+    "10": {
+     "src": "/assets/gen/beauty-store/05.webp",
+     "real": false
+    },
+    "11": {
+     "src": "/assets/gen/beauty-store/06.webp",
+     "real": false
+    },
+    "12": null,
+    "13": null,
+    "14": null,
+    "15": null,
+    "16": null,
+    "17": null,
+    "18": null,
+    "19": null
+   }
+  },
+  "منصة-للتبرعات-والأعمال-الخيرية": {
+   "cover": "/assets/gen/donations/cover.webp",
+   "feature_real": null,
+   "slots": {
+    "0": {
+     "src": "/assets/gen/donations/01.webp",
+     "real": false
+    },
+    "1": {
+     "src": "/assets/gen/donations/02.webp",
+     "real": false
+    },
+    "2": {
+     "src": "/assets/gen/donations/03.webp",
+     "real": false
+    },
+    "3": {
+     "src": "/assets/gen/donations/04.webp",
+     "real": false
+    },
+    "4": {
+     "src": "/assets/gen/donations/05.webp",
+     "real": false
+    },
+    "5": {
+     "src": "/assets/gen/donations/06.webp",
+     "real": false
+    },
+    "6": {
+     "src": "/assets/gen/donations/07.webp",
+     "real": false
+    },
+    "7": null,
+    "8": null,
+    "9": null,
+    "10": null,
+    "11": null,
+    "12": null,
+    "13": null,
+    "14": {
+     "src": "/assets/gen/donations/08.webp",
+     "real": false
+    },
+    "15": {
+     "src": "/assets/gen/donations/09.webp",
+     "real": false
+    },
+    "16": null
+   }
+  },
+  "تطبيق-تعليم-لغات-البرمجة-باستخدام-إطا": {
+   "cover": "/assets/gen/code-learning/cover.webp",
+   "feature_real": null,
+   "slots": {
+    "0": {
+     "src": "/assets/gen/code-learning/01.webp",
+     "real": false
+    },
+    "1": {
+     "src": "/assets/gen/code-learning/02.webp",
+     "real": false
+    },
+    "2": {
+     "src": "/assets/gen/code-learning/03.webp",
+     "real": false
+    },
+    "3": {
+     "src": "/assets/gen/code-learning/04.webp",
+     "real": false
+    },
+    "4": {
+     "src": "/assets/gen/code-learning/05.webp",
+     "real": false
+    },
+    "5": null,
+    "6": null,
+    "7": {
+     "src": "/assets/gen/code-learning/06.webp",
+     "real": false
+    },
+    "8": {
+     "src": "/assets/gen/code-learning/07.webp",
+     "real": false
+    }
+   }
+  },
+  "تصميم-نظارة-تساعد-المكفوفين-على-الرؤي": {
+   "cover": "/assets/gen/blind-glasses/cover.webp",
+   "feature_real": null,
+   "slots": {
+    "0": {
+     "src": "/assets/gen/blind-glasses/01.webp",
+     "real": false
+    },
+    "1": {
+     "src": "/assets/gen/blind-glasses/02.webp",
+     "real": false
+    },
+    "2": {
+     "src": "/assets/gen/blind-glasses/03.webp",
+     "real": false
+    },
+    "3": {
+     "src": "/assets/gen/blind-glasses/04.webp",
+     "real": false
+    },
+    "4": {
+     "src": "/assets/gen/blind-glasses/05.webp",
+     "real": false
+    },
+    "5": {
+     "src": "/assets/gen/blind-glasses/06.webp",
+     "real": false
+    },
+    "6": {
+     "src": "/assets/gen/blind-glasses/07.webp",
+     "real": false
+    },
+    "7": {
+     "src": "/assets/gen/blind-glasses/08.webp",
+     "real": false
+    },
+    "8": {
+     "src": "/assets/gen/blind-glasses/09.webp",
+     "real": false
+    },
+    "9": {
+     "src": "/assets/gen/blind-glasses/10.webp",
+     "real": false
+    },
+    "10": {
+     "src": "/assets/gen/blind-glasses/11.webp",
+     "real": false
+    },
+    "11": {
+     "src": "/assets/gen/blind-glasses/12.webp",
+     "real": false
+    },
+    "12": {
+     "src": "/assets/gen/blind-glasses/13.webp",
+     "real": false
+    },
+    "13": null
+   }
+  },
+  "تصميم-وتنفيذ-نظام-حجوزات-طيران-باستخد": {
+   "cover": "/assets/gen/rfid-airport/cover.webp",
+   "feature_real": null,
+   "slots": {
+    "0": {
+     "src": "/assets/gen/rfid-airport/01.webp",
+     "real": false
+    },
+    "1": {
+     "src": "/assets/gen/rfid-airport/02.webp",
+     "real": false
+    },
+    "2": null,
+    "3": {
+     "src": "/assets/gen/rfid-airport/03.webp",
+     "real": false
+    }
+   }
+  },
+  "تصميم-وتنفيذ-ذراع-روبوتية": {
+   "cover": "/assets/gen/robot-arm/cover.webp",
+   "feature_real": null,
+   "slots": {
+    "0": {
+     "src": "/assets/gen/robot-arm/01.webp",
+     "real": false
+    },
+    "1": {
+     "src": "/assets/gen/robot-arm/02.webp",
+     "real": false
+    },
+    "2": null
+   }
+  },
+  "تغذية-مزرعة-بالطاقة-الشمسية-مع-تحسين": {
+   "cover": "/assets/gen/solar-farm/cover.webp",
+   "feature_real": null,
+   "slots": {
+    "0": {
+     "src": "/assets/gen/solar-farm/01.webp",
+     "real": false
+    },
+    "1": {
+     "src": "/assets/gen/solar-farm/02.webp",
+     "real": false
+    },
+    "2": {
+     "src": "/assets/gen/solar-farm/03.webp",
+     "real": false
+    },
+    "3": {
+     "src": "/assets/gen/solar-farm/04.webp",
+     "real": false
+    }
+   }
+  },
+  "تصميم-وتنفيذ-كراج-ذكي": {
+   "cover": "/assets/gen/smart-garage/cover.webp",
+   "feature_real": null,
+   "slots": {
+    "0": {
+     "src": "/assets/gen/smart-garage/01.webp",
+     "real": false
+    },
+    "1": {
+     "src": "/assets/gen/smart-garage/02.webp",
+     "real": false
+    },
+    "2": {
+     "src": "/assets/gen/smart-garage/03.webp",
+     "real": false
+    }
+   }
+  },
+  "بناء-وتنفيذ-منظومه-روبوت-آلي-لنقل-وتوص": {
+   "cover": "/assets/gen/delivery-robot/cover.webp",
+   "feature_real": null,
+   "slots": {
+    "0": {
+     "src": "/assets/gen/delivery-robot/01.webp",
+     "real": false
+    },
+    "1": {
+     "src": "/assets/gen/delivery-robot/02.webp",
+     "real": false
+    },
+    "2": {
+     "src": "/assets/gen/delivery-robot/03.webp",
+     "real": false
+    },
+    "3": {
+     "src": "/assets/gen/delivery-robot/04.webp",
+     "real": false
+    },
+    "4": {
+     "src": "/assets/gen/delivery-robot/05.webp",
+     "real": false
+    }
+   }
+  },
+  "تطبيق-الجلاء-المدرسي": {
+   "cover": "/assets/gen/school-report/cover.webp",
+   "feature_real": null,
+   "slots": {
+    "0": {
+     "src": "/assets/gen/school-report/01.webp",
+     "real": false
+    },
+    "1": {
+     "src": "/assets/gen/school-report/02.webp",
+     "real": false
+    },
+    "2": {
+     "src": "/assets/gen/school-report/03.webp",
+     "real": false
+    },
+    "3": null
+   }
+  },
+  "مسودة-تلقائية-تحسين-أمان-الصيانة-الكه": {
+   "cover": "/assets/gen/volt-glasses/cover.webp",
+   "feature_real": null,
+   "slots": {
+    "0": {
+     "src": "/assets/gen/volt-glasses/01.webp",
+     "real": false
+    },
+    "1": {
+     "src": "/assets/gen/volt-glasses/02.webp",
+     "real": false
+    }
+   }
+  },
+  "موقع-طلب-استشارات-للهندسة-المعمارية-ب": {
+   "cover": "/assets/gen/arch-consult/cover.webp",
+   "feature_real": null,
+   "slots": {
+    "0": {
+     "src": "/assets/gen/arch-consult/01.webp",
+     "real": false
+    },
+    "1": {
+     "src": "/assets/gen/arch-consult/02.webp",
+     "real": false
+    },
+    "2": null
+   }
+  },
+  "تصميم-وتنفيذ-عربة-scooter-لذوي-الاحتياجات-ال": {
+   "cover": "/assets/gen/mobility-scooter/cover.webp",
+   "feature_real": null,
+   "slots": {
+    "0": {
+     "src": "/assets/gen/mobility-scooter/01.webp",
+     "real": false
+    }
+   }
+  },
+  "روبوت-تنظيف-الألواح-الشمسية": {
+   "cover": "/assets/gen/solar-cleaner/cover.webp",
+   "feature_real": null,
+   "slots": {
+    "0": {
+     "src": "/assets/gen/solar-cleaner/01.webp",
+     "real": false
+    },
+    "1": {
+     "src": "/assets/gen/solar-cleaner/02.webp",
+     "real": false
+    }
+   }
+  },
+  "تطبيق-مساعدة-المكفوفين-باستخدام-الرؤ": {
+   "cover": "/assets/gen/vision-app/cover.webp",
+   "feature_real": null,
+   "slots": {
+    "0": {
+     "src": "/assets/gen/vision-app/01.webp",
+     "real": false
+    },
+    "1": {
+     "src": "/assets/gen/vision-app/02.webp",
+     "real": false
+    },
+    "2": {
+     "src": "/assets/gen/vision-app/03.webp",
+     "real": false
+    }
+   }
+  }
+ },
+ "items": [
+  {
+   "file": "page-hero.webp",
+   "prompt": "a futuristic engineering workshop at night, robotic arm, circuit boards, drones and solar panel models on a desk, holographic glow, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "wide"
+  },
+  {
+   "file": "page-about.webp",
+   "prompt": "an engineer mentor teaching a group of university students robotics and Arduino in a modern lab, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "wide"
+  },
+  {
+   "file": "page-techno.webp",
+   "prompt": "a creative tech team collaborating around a large screen with website designs and code in a modern studio, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "wide"
+  },
+  {
+   "file": "page-contact.webp",
+   "prompt": "a calm modern consultation desk with a laptop, a smartphone showing a chat, coffee and engineering sketches, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "wide"
+  },
+  {
+   "file": "page-award.webp",
+   "prompt": "an engineer workbench at night with Arduino boards, a small robotic arm, soldering tools and a glowing innovation award trophy, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "wide"
+  },
+  {
+   "file": "page-projects.webp",
+   "prompt": "a wall of engineering student projects: robots, circuit boards, apps and solar prototypes displayed like a gallery, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "wide"
+  },
+  {
+   "file": "fire-guard/cover.webp",
+   "prompt": "hero image of an industrial factory hall protected by a smart fire detection system, gas sensors, a water pump nozzle and red alarm beacons, a security camera watching, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "wide"
+  },
+  {
+   "file": "fire-guard/01.webp",
+   "prompt": "an illustrative scene of an industrial factory hall protected by a smart fire detection system, gas sensors, a water pump nozzle and red alarm beacons, a security camera watching, variation 1, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "fire-guard/02.webp",
+   "prompt": "an illustrative scene of an industrial factory hall protected by a smart fire detection system, gas sensors, a water pump nozzle and red alarm beacons, a security camera watching, variation 2, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "fire-guard/03.webp",
+   "prompt": "a clean isometric 3D conceptual illustration of the system architecture: glowing connected modules, data flow lines between blocks, for an industrial factory hall protected by a smart fire detection system, gas sensors, a water pump nozzle and red alarm beacons, a security camera watching, variation 3, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "fire-guard/04.webp",
+   "prompt": "a clean isometric 3D conceptual illustration of the system architecture: glowing connected modules, data flow lines between blocks, for an industrial factory hall protected by a smart fire detection system, gas sensors, a water pump nozzle and red alarm beacons, a security camera watching, variation 4, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "fire-guard/05.webp",
+   "prompt": "a photo of the finished working prototype of an industrial factory hall protected by a smart fire detection system, gas sensors, a water pump nozzle and red alarm beacons, a security camera watching, variation 5, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "fire-guard/06.webp",
+   "prompt": "a photo of the finished working prototype of an industrial factory hall protected by a smart fire detection system, gas sensors, a water pump nozzle and red alarm beacons, a security camera watching, variation 6, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "beauty-store/cover.webp",
+   "prompt": "hero image of luxury skincare and cosmetics products arranged elegantly next to a smartphone showing an online store, soft pastel and teal tones, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "wide"
+  },
+  {
+   "file": "beauty-store/01.webp",
+   "prompt": "an illustrative scene of luxury skincare and cosmetics products arranged elegantly next to a smartphone showing an online store, soft pastel and teal tones, variation 1, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "beauty-store/02.webp",
+   "prompt": "an illustrative scene of luxury skincare and cosmetics products arranged elegantly next to a smartphone showing an online store, soft pastel and teal tones, variation 2, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "beauty-store/03.webp",
+   "prompt": "a sleek device mockup (smartphone and laptop) displaying a modern abstract dashboard UI for luxury skincare and cosmetics products arranged elegantly next to a smartphone showing an online store, soft pastel and teal tones, variation 3, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "beauty-store/04.webp",
+   "prompt": "a sleek device mockup (smartphone and laptop) displaying a modern abstract dashboard UI for luxury skincare and cosmetics products arranged elegantly next to a smartphone showing an online store, soft pastel and teal tones, variation 4, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "beauty-store/05.webp",
+   "prompt": "a sleek device mockup (smartphone and laptop) displaying a modern abstract dashboard UI for luxury skincare and cosmetics products arranged elegantly next to a smartphone showing an online store, soft pastel and teal tones, variation 5, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "beauty-store/06.webp",
+   "prompt": "a sleek device mockup (smartphone and laptop) displaying a modern abstract dashboard UI for luxury skincare and cosmetics products arranged elegantly next to a smartphone showing an online store, soft pastel and teal tones, variation 6, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "donations/cover.webp",
+   "prompt": "hero image of hands holding a smartphone with a charity donation app, stacked cardboard aid boxes decorated with simple heart shapes in the background, no cross symbols, hopeful atmosphere, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "wide"
+  },
+  {
+   "file": "donations/01.webp",
+   "prompt": "an illustrative scene of hands holding a smartphone with a charity donation app, stacked cardboard aid boxes decorated with simple heart shapes in the background, no cross symbols, hopeful atmosphere, variation 1, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "donations/02.webp",
+   "prompt": "an illustrative scene of hands holding a smartphone with a charity donation app, stacked cardboard aid boxes decorated with simple heart shapes in the background, no cross symbols, hopeful atmosphere, variation 2, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "donations/03.webp",
+   "prompt": "an illustrative scene of hands holding a smartphone with a charity donation app, stacked cardboard aid boxes decorated with simple heart shapes in the background, no cross symbols, hopeful atmosphere, variation 3, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "donations/04.webp",
+   "prompt": "an illustrative scene of hands holding a smartphone with a charity donation app, stacked cardboard aid boxes decorated with simple heart shapes in the background, no cross symbols, hopeful atmosphere, variation 4, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "donations/05.webp",
+   "prompt": "an illustrative scene of hands holding a smartphone with a charity donation app, stacked cardboard aid boxes decorated with simple heart shapes in the background, no cross symbols, hopeful atmosphere, variation 5, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "donations/06.webp",
+   "prompt": "a sleek device mockup (smartphone and laptop) displaying a modern abstract dashboard UI for hands holding a smartphone with a charity donation app, stacked cardboard aid boxes decorated with simple heart shapes in the background, no cross symbols, hopeful atmosphere, variation 6, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "donations/07.webp",
+   "prompt": "a sleek device mockup (smartphone and laptop) displaying a modern abstract dashboard UI for hands holding a smartphone with a charity donation app, stacked cardboard aid boxes decorated with simple heart shapes in the background, no cross symbols, hopeful atmosphere, variation 7, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "donations/08.webp",
+   "prompt": "a sleek device mockup (smartphone and laptop) displaying a modern abstract dashboard UI for hands holding a smartphone with a charity donation app, stacked cardboard aid boxes decorated with simple heart shapes in the background, no cross symbols, hopeful atmosphere, variation 8, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "donations/09.webp",
+   "prompt": "a sleek device mockup (smartphone and laptop) displaying a modern abstract dashboard UI for hands holding a smartphone with a charity donation app, stacked cardboard aid boxes decorated with simple heart shapes in the background, no cross symbols, hopeful atmosphere, variation 9, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "code-learning/cover.webp",
+   "prompt": "hero image of a student learning programming on a smartphone and laptop, floating abstract code symbols and course cards, modern desk, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "wide"
+  },
+  {
+   "file": "code-learning/01.webp",
+   "prompt": "a clean isometric 3D conceptual illustration of the system architecture: glowing connected modules, data flow lines between blocks, for a student learning programming on a smartphone and laptop, floating abstract code symbols and course cards, modern desk, variation 1, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "code-learning/02.webp",
+   "prompt": "a clean isometric 3D conceptual illustration of the system architecture: glowing connected modules, data flow lines between blocks, for a student learning programming on a smartphone and laptop, floating abstract code symbols and course cards, modern desk, variation 2, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "code-learning/03.webp",
+   "prompt": "a clean isometric 3D conceptual illustration of the system architecture: glowing connected modules, data flow lines between blocks, for a student learning programming on a smartphone and laptop, floating abstract code symbols and course cards, modern desk, variation 3, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "code-learning/04.webp",
+   "prompt": "a sleek device mockup (smartphone and laptop) displaying a modern abstract dashboard UI for a student learning programming on a smartphone and laptop, floating abstract code symbols and course cards, modern desk, variation 4, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "code-learning/05.webp",
+   "prompt": "a sleek device mockup (smartphone and laptop) displaying a modern abstract dashboard UI for a student learning programming on a smartphone and laptop, floating abstract code symbols and course cards, modern desk, variation 5, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "code-learning/06.webp",
+   "prompt": "a sleek device mockup (smartphone and laptop) displaying a modern abstract dashboard UI for a student learning programming on a smartphone and laptop, floating abstract code symbols and course cards, modern desk, variation 6, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "code-learning/07.webp",
+   "prompt": "a sleek device mockup (smartphone and laptop) displaying a modern abstract dashboard UI for a student learning programming on a smartphone and laptop, floating abstract code symbols and course cards, modern desk, variation 7, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "blind-glasses/cover.webp",
+   "prompt": "hero image of smart assistive glasses with a tiny camera module and earpiece for blind people, AI object detection bounding boxes in a city street, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "wide"
+  },
+  {
+   "file": "blind-glasses/01.webp",
+   "prompt": "an illustrative scene of smart assistive glasses with a tiny camera module and earpiece for blind people, AI object detection bounding boxes in a city street, variation 1, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "blind-glasses/02.webp",
+   "prompt": "an abstract visualization of a neural network and computer vision detection for smart assistive glasses with a tiny camera module and earpiece for blind people, AI object detection bounding boxes in a city street, variation 2, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "blind-glasses/03.webp",
+   "prompt": "an abstract visualization of a neural network and computer vision detection for smart assistive glasses with a tiny camera module and earpiece for blind people, AI object detection bounding boxes in a city street, variation 3, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "blind-glasses/04.webp",
+   "prompt": "an abstract visualization of a neural network and computer vision detection for smart assistive glasses with a tiny camera module and earpiece for blind people, AI object detection bounding boxes in a city street, variation 4, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "blind-glasses/05.webp",
+   "prompt": "a macro photo of the electronics hardware (microcontroller board, sensor modules and wires on a workbench) used in smart assistive glasses with a tiny camera module and earpiece for blind people, AI object detection bounding boxes in a city street, variation 5, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "blind-glasses/06.webp",
+   "prompt": "a macro photo of the electronics hardware (microcontroller board, sensor modules and wires on a workbench) used in smart assistive glasses with a tiny camera module and earpiece for blind people, AI object detection bounding boxes in a city street, variation 6, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "blind-glasses/07.webp",
+   "prompt": "a macro photo of the electronics hardware (microcontroller board, sensor modules and wires on a workbench) used in smart assistive glasses with a tiny camera module and earpiece for blind people, AI object detection bounding boxes in a city street, variation 7, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "blind-glasses/08.webp",
+   "prompt": "a macro photo of the electronics hardware (microcontroller board, sensor modules and wires on a workbench) used in smart assistive glasses with a tiny camera module and earpiece for blind people, AI object detection bounding boxes in a city street, variation 8, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "blind-glasses/09.webp",
+   "prompt": "a macro photo of the electronics hardware (microcontroller board, sensor modules and wires on a workbench) used in smart assistive glasses with a tiny camera module and earpiece for blind people, AI object detection bounding boxes in a city street, variation 9, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "blind-glasses/10.webp",
+   "prompt": "an abstract visualization of a neural network and computer vision detection for smart assistive glasses with a tiny camera module and earpiece for blind people, AI object detection bounding boxes in a city street, variation 10, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "blind-glasses/11.webp",
+   "prompt": "a clean isometric 3D conceptual illustration of the system architecture: glowing connected modules, data flow lines between blocks, for smart assistive glasses with a tiny camera module and earpiece for blind people, AI object detection bounding boxes in a city street, variation 11, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "blind-glasses/12.webp",
+   "prompt": "a photo of the finished working prototype of smart assistive glasses with a tiny camera module and earpiece for blind people, AI object detection bounding boxes in a city street, variation 12, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "blind-glasses/13.webp",
+   "prompt": "a photo of the finished working prototype of smart assistive glasses with a tiny camera module and earpiece for blind people, AI object detection bounding boxes in a city street, variation 13, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "rfid-airport/cover.webp",
+   "prompt": "hero image of an airport check-in gate with an RFID card being tapped on a reader, boarding passes and airplanes through the window, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "wide"
+  },
+  {
+   "file": "rfid-airport/01.webp",
+   "prompt": "a clean isometric 3D conceptual illustration of the system architecture: glowing connected modules, data flow lines between blocks, for an airport check-in gate with an RFID card being tapped on a reader, boarding passes and airplanes through the window, variation 1, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "rfid-airport/02.webp",
+   "prompt": "a clean isometric 3D conceptual illustration of the system architecture: glowing connected modules, data flow lines between blocks, for an airport check-in gate with an RFID card being tapped on a reader, boarding passes and airplanes through the window, variation 2, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "rfid-airport/03.webp",
+   "prompt": "a sleek device mockup (smartphone and laptop) displaying a modern abstract dashboard UI for an airport check-in gate with an RFID card being tapped on a reader, boarding passes and airplanes through the window, variation 3, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "robot-arm/cover.webp",
+   "prompt": "hero image of a desktop robotic arm with servo motors controlled by Arduino and a webcam doing image processing, picking up a colored cube, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "wide"
+  },
+  {
+   "file": "robot-arm/01.webp",
+   "prompt": "an illustrative scene of a desktop robotic arm with servo motors controlled by Arduino and a webcam doing image processing, picking up a colored cube, variation 1, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "robot-arm/02.webp",
+   "prompt": "an illustrative scene of a desktop robotic arm with servo motors controlled by Arduino and a webcam doing image processing, picking up a colored cube, variation 2, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "solar-farm/cover.webp",
+   "prompt": "hero image of a green farm powered by solar panels with an inverter box and IoT controller, controlled remotely from a phone, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "wide"
+  },
+  {
+   "file": "solar-farm/01.webp",
+   "prompt": "an illustrative scene of a green farm powered by solar panels with an inverter box and IoT controller, controlled remotely from a phone, variation 1, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "solar-farm/02.webp",
+   "prompt": "an illustrative scene of a green farm powered by solar panels with an inverter box and IoT controller, controlled remotely from a phone, variation 2, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "solar-farm/03.webp",
+   "prompt": "a macro photo of the electronics hardware (microcontroller board, sensor modules and wires on a workbench) used in a green farm powered by solar panels with an inverter box and IoT controller, controlled remotely from a phone, variation 3, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "solar-farm/04.webp",
+   "prompt": "a sleek device mockup (smartphone and laptop) displaying a modern abstract dashboard UI for a green farm powered by solar panels with an inverter box and IoT controller, controlled remotely from a phone, variation 4, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "smart-garage/cover.webp",
+   "prompt": "hero image of a miniature smart parking garage model with four parking spots, infrared sensors, an automatic gate barrier and an LCD screen, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "wide"
+  },
+  {
+   "file": "smart-garage/01.webp",
+   "prompt": "a clean isometric 3D conceptual illustration of the system architecture: glowing connected modules, data flow lines between blocks, for a miniature smart parking garage model with four parking spots, infrared sensors, an automatic gate barrier and an LCD screen, variation 1, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "smart-garage/02.webp",
+   "prompt": "a sleek device mockup (smartphone and laptop) displaying a modern abstract dashboard UI for a miniature smart parking garage model with four parking spots, infrared sensors, an automatic gate barrier and an LCD screen, variation 2, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "smart-garage/03.webp",
+   "prompt": "a macro photo of the electronics hardware (microcontroller board, sensor modules and wires on a workbench) used in a miniature smart parking garage model with four parking spots, infrared sensors, an automatic gate barrier and an LCD screen, variation 3, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "delivery-robot/cover.webp",
+   "prompt": "hero image of a small autonomous wheeled delivery robot carrying a package through an office corridor, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "wide"
+  },
+  {
+   "file": "delivery-robot/01.webp",
+   "prompt": "an illustrative scene of a small autonomous wheeled delivery robot carrying a package through an office corridor, variation 1, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "delivery-robot/02.webp",
+   "prompt": "a clean isometric 3D conceptual illustration of the system architecture: glowing connected modules, data flow lines between blocks, for a small autonomous wheeled delivery robot carrying a package through an office corridor, variation 2, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "delivery-robot/03.webp",
+   "prompt": "a clean isometric 3D conceptual illustration of the system architecture: glowing connected modules, data flow lines between blocks, for a small autonomous wheeled delivery robot carrying a package through an office corridor, variation 3, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "delivery-robot/04.webp",
+   "prompt": "a macro photo of the electronics hardware (microcontroller board, sensor modules and wires on a workbench) used in a small autonomous wheeled delivery robot carrying a package through an office corridor, variation 4, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "delivery-robot/05.webp",
+   "prompt": "a sleek device mockup (smartphone and laptop) displaying a modern abstract dashboard UI for a small autonomous wheeled delivery robot carrying a package through an office corridor, variation 5, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "school-report/cover.webp",
+   "prompt": "hero image of a school report card management desktop application on a computer monitor in a school office, grades and student records, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "wide"
+  },
+  {
+   "file": "school-report/01.webp",
+   "prompt": "a macro photo of the electronics hardware (microcontroller board, sensor modules and wires on a workbench) used in a school report card management desktop application on a computer monitor in a school office, grades and student records, variation 1, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "school-report/02.webp",
+   "prompt": "a sleek device mockup (smartphone and laptop) displaying a modern abstract dashboard UI for a school report card management desktop application on a computer monitor in a school office, grades and student records, variation 2, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "school-report/03.webp",
+   "prompt": "a sleek device mockup (smartphone and laptop) displaying a modern abstract dashboard UI for a school report card management desktop application on a computer monitor in a school office, grades and student records, variation 3, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "volt-glasses/cover.webp",
+   "prompt": "hero image of an electrician wearing smart data glasses with a heads-up voltage reading while inspecting an electrical panel safely, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "wide"
+  },
+  {
+   "file": "volt-glasses/01.webp",
+   "prompt": "an illustrative scene of an electrician wearing smart data glasses with a heads-up voltage reading while inspecting an electrical panel safely, variation 1, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "volt-glasses/02.webp",
+   "prompt": "an illustrative scene of an electrician wearing smart data glasses with a heads-up voltage reading while inspecting an electrical panel safely, variation 2, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "arch-consult/cover.webp",
+   "prompt": "hero image of an architecture consultation website on a laptop with 3D building models and AI generated floor plans on a drafting table, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "wide"
+  },
+  {
+   "file": "arch-consult/01.webp",
+   "prompt": "a photo of the finished working prototype of an architecture consultation website on a laptop with 3D building models and AI generated floor plans on a drafting table, variation 1, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "arch-consult/02.webp",
+   "prompt": "a photo of the finished working prototype of an architecture consultation website on a laptop with 3D building models and AI generated floor plans on a drafting table, variation 2, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "mobility-scooter/cover.webp",
+   "prompt": "hero image of an innovative electric mobility scooter designed for people with disabilities, clean modern engineering prototype, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "wide"
+  },
+  {
+   "file": "mobility-scooter/01.webp",
+   "prompt": "an illustrative scene of an innovative electric mobility scooter designed for people with disabilities, clean modern engineering prototype, variation 1, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "solar-cleaner/cover.webp",
+   "prompt": "hero image of a tracked robot cleaning a rooftop solar panel array with a rotating brush, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "wide"
+  },
+  {
+   "file": "solar-cleaner/01.webp",
+   "prompt": "an illustrative scene of a tracked robot cleaning a rooftop solar panel array with a rotating brush, variation 1, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "solar-cleaner/02.webp",
+   "prompt": "a clean isometric 3D conceptual illustration of the system architecture: glowing connected modules, data flow lines between blocks, for a tracked robot cleaning a rooftop solar panel array with a rotating brush, variation 2, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "vision-app/cover.webp",
+   "prompt": "hero image of a smartphone camera app that describes surroundings to a blind user with text-to-speech, sound waves and recognized objects, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "wide"
+  },
+  {
+   "file": "vision-app/01.webp",
+   "prompt": "an illustrative scene of a smartphone camera app that describes surroundings to a blind user with text-to-speech, sound waves and recognized objects, variation 1, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "vision-app/02.webp",
+   "prompt": "an illustrative scene of a smartphone camera app that describes surroundings to a blind user with text-to-speech, sound waves and recognized objects, variation 2, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  },
+  {
+   "file": "vision-app/03.webp",
+   "prompt": "an illustrative scene of a smartphone camera app that describes surroundings to a blind user with text-to-speech, sound waves and recognized objects, variation 3, cinematic lighting, deep navy background with teal and cyan accent glow, high detail, sharp focus, professional photography, no text, no letters, no watermark, no logo",
+   "crop": "std"
+  }
+ ]
+}

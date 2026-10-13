@@ -1,0 +1,1051 @@
+[
+ {
+  "slug": "نظام-مراقبة-وحماية-منشأة-صناعية-من-الح",
+  "date": "2024-10-06",
+  "path": "/2024/10/06/نظام-مراقبة-وحماية-منشأة-صناعية-من-الح/",
+  "url": "/2024/10/06/%D9%86%D8%B8%D8%A7%D9%85-%D9%85%D8%B1%D8%A7%D9%82%D8%A8%D8%A9-%D9%88%D8%AD%D9%85%D8%A7%D9%8A%D8%A9-%D9%85%D9%86%D8%B4%D8%A3%D8%A9-%D8%B5%D9%86%D8%A7%D8%B9%D9%8A%D8%A9-%D9%85%D9%86-%D8%A7%D9%84%D8%AD/",
+  "title": "نظام مراقبة وحماية منشأة صناعية من الحرائق واللهب",
+  "cats": [
+   "arduino",
+   "برمجة",
+   "هاردوير"
+  ],
+  "tags": [
+   "هاردوير",
+   "متحكمات صغرية",
+   "برمجة",
+   "NodeMCU",
+   "ArduinoC"
+  ],
+  "excerpt": "يهدف هذا المشروع إلى تصميم وتنفيذ نظام شامل لحماية المنشآت الصناعية من الحرائق واللهب. يتضمن النظام أنظمة اكتشاف الحرائق التلقائية ومضخة للمياه مع توجيهها إلى مكان الحريق، بالإضافة إلى…",
+  "minutes": 4,
+  "feature_real": null,
+  "body": "<p>جدول المصطلحات:</p>\n\n<figure class=\"wp-block-table\"><table class=\"has-fixed-layout\"><tbody><tr><td><strong>الاختصار</strong><strong></strong></td><td><strong>المصطلح بالإنكليزي</strong><strong></strong></td><td><strong>المعنى</strong><strong></strong></td></tr><tr><td>MQ sensor</td><td>Metal Oxide Semiconductor</td><td>حساس تسريب الغاز</td></tr><tr><td>IR sensor</td><td>Infrared Sensor</td><td>حساس اللهب</td></tr><tr><td>NTP</td><td>Network Time Protocol</td><td>مكتبة برمجة لمزامنة الوقت عبر الشبكة</td></tr><tr><td>API</td><td>Application Programming Interface</td><td>واجهة برمجة التطبيقات</td></tr></tbody></table></figure>\n\n<h2 class=\"wp-block-heading\" id=\"h-ملخص\">ملخص</h2>\n\n<p>يهدف هذا المشروع إلى تصميم وتنفيذ نظام شامل لحماية المنشآت الصناعية من الحرائق واللهب. يتضمن النظام أنظمة اكتشاف الحرائق التلقائية ومضخة للمياه مع توجيهها إلى مكان الحريق، بالإضافة إلى جهاز إنذار صوتي لتنبيه الموجودين في المنشأة. يتم استخدام حساسات الغازات من طراز MQ لاكتشاف أي تغييرات غير طبيعية في البيئة، وسيتم تضمين كاميرا مراقبة لمراقبة الحالة بشكل مستمر. سيتم استخدام تطبيق التلغرام لقراءة قيم الحساسات وتلقي الإشعارات بشكل فوري.</p>\n\n<h2 class=\"wp-block-heading has-text-align-left\" id=\"h-abstract\">Abstract</h2>\n\n<p dir=\"ltr\">This project aims to design and implement a comprehensive system for protecting industrial facilities from fires and flames. The system includes automatic fire detection systems and a water pump to direct water to the fire location, in addition to an audible alarm to alert individuals within the facility.MQ gas sensors will be used to detect any abnormal changes in the environment, and a surveillance camera will be included for continuous monitoring. The Telegram application will be used to read sensor values and receive notifications instantly.</p>\n\n<h2 class=\"wp-block-heading\" id=\"h-1-1-هدف-المشروع\"><a>1.1 هدف المشروع</a>:</h2>\n\n<p>يهدف هذا المشروع إلى تصميم وتنفيذ نظام شامل لمراقبة وحماية المنشآت الصناعية من الحرائق واللهب. يتضمن النظام مكونات متطورة لاكتشاف الحرائق في مراحلها المبكرة وإطلاق إنذارات فورية واتخاذ إجراءات التصدي المناسبة.</p>\n\n<p>بفضل استخدام تقنيات النظم المدمجة Embeded System، سيتم بناء المنظومة بطريقة تضمن كفاءة واستجابة فعّالة للمتغيرات البيئية والظروف الطارئة. سيتم تكامل هذه التقنيات لضمان تشغيل متواصل وثابت للنظام، بالإضافة إلى توفير وسائل التحكم والمراقبة التي تمكن المشغلين من التفاعل السريع واتخاذ القرارات الصائبة في حالات الطوارئ.</p>\n\n<p>هدفنا الرئيسي هو تحسين مستوى السلامة والأمان في المنشآت الصناعية، وتقديم حلول فعّالة وموثوقة لمواجهة تحديات الحرائق واللهب، مما يسهم في حماية الأرواح والممتلكات وضمان استمرارية العمليات الصناعية بشكل مستدام ومضمون.</p>\n\n<ul class=\"wp-block-list\">\n<li>أعلى النموذج</li>\n</ul>\n\n<h2 class=\"wp-block-heading\" id=\"h-2-1-مزايا-المشروع\"><a>2.1 مزايا المشروع:</a></h2>\n\n<p>1. اكتشاف مبكر للحرائق: يُساعد النظام على اكتشاف الحرائق في مراحلها المبكرة، ممّا يُتيح وقتًا كافيًا لإخمادها والحد من انتشارها.</p>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:0--></figure>\n\n<p><a>الشكل </a>‏1‑1 اكتشاف الحرائق في مراحلها المبكرة</p>\n\n<p>2. إنذارات فورية: يُصدر النظام إنذارات صوتية ومرئية تنبه العاملين في المنشأة إلى وجود خطر حريق، ممّا يُتيح لهم إخلاء المبنى بأمان.</p>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:1--></figure>\n\n<p><a>الشكل </a>‏1‑2 انذار الحرائق.</p>\n\n<p>3. إجراءات تصدي فعّالة: يتضمن النظام مضخة مياه يتم توجيهها تلقائيًا إلى مكان الحريق، ممّا يُساعد في إخماد النيران بسرعة وكفاءة.</p>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:2--></figure>\n\n<p><a>الشكل </a>‏1‑3 نظام إطفاء الحريق.</p>\n\n<p>4. المراقبة المستمرة: يتم استخدام كاميرات مراقبة لمراقبة المنشأة بشكل مستمر، ممّا يُتيح للمسؤولين تقييم الوضع واتخاذ القرارات المناسبة.</p>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:3--></figure>\n\n<p><a>الشكل </a>‏1‑4 نظام المراقبة.</p>\n\n<p>5. التواصل الفوري: يتم استخدام تطبيق التلغرام لإرسال إشعارات فورية إلى المسؤولين المعنيين بقيم الحساسات وحالة النظام، ممّا يُتيح لهم اتخاذ الإجراءات اللازمة بسرعة.</p>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:4--></figure>\n\n<p><a>الشكل </a>‏1‑5 وصول رسالة الحريق إلى رجال الإطفاء.</p>\n\n<h2 class=\"wp-block-heading\"><a>1.1 المخطط الصندوقي:</a></h2>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:5--></figure>\n\n<p><a>الشكل </a>‏4.10 المخطط الصندوقي</p>\n\n<p>يظهر المخطط الصندوقي اتصال شريحة NodeMCU مع تطبيق التيليغرام لتعمل كـ بوت ضمن التطبيق بالإضافة الى ربطها مع جهاز الإنذار الصوتي Buzzer وربطها مع المضخة Pump وربطها مع محرك السيرفو بالإضافة الى الحساسات جميعها مثل حساس الغاز والحركة واللهب الذي يعمل بتقنية IR.</p>\n\n<p>تعمل شريحة NodeMCU على قراءة القيم من الحساسات بالإضافة الى ارسال هذه القراءات الى تطبيق التيليغرام عبر ترميز كود بلغة Json وتقوم على استقبال التعليمات من المستخدم من أجل العمل مثلاً يمكن للمستخدم أن يرسل رسالة الغاء الإنذار التي تقوم بإلغاء جميع الإنذارات لمدة زمنية معينة أو يمكنه الاستعلام عن قيم الحساسات وفي حال تم الاستشعار الى وجود حالة معينة من قبل الحساسات تقوم الشريحة بإرسال اشعار الى المستخدم عبر بوت التيليغرام من أجل ان يقوم بالتصرف حسب الحالة الموجودة.</p>\n\n<h2 class=\"wp-block-heading\"><a>1.2 خوارزمية العمل:</a></h2>\n\n<figure class=\"wp-block-image aligncenter size-large\"><!--IMG:6--></figure>\n\n<p><a>الشكل </a>‏4.11 خوارزمية العمل.</p>\n\n<h2 class=\"wp-block-heading\"><a>1.3 الخلاصة:</a></h2>\n\n<p>يتركز المشروع على تصميم وتنفيذ نظام شامل لحماية المنشآت الصناعية من الحرائق واللهب. يدمج هذا النظام تقنيات متنوعة لاكتشاف الحرائق في مراحلها المبكرة، توفير تنبيهات فورية، وتنفيذ تدابير مضادة فعّالة.</p>\n\n<p>من المكونات الأساسية لهذا النظام استخدام حساسات متقدمة لاكتشاف الحرائق والغازات، مضخات آلية لتوجيه المياه نحو مكان الحريق، وأنظمة إنذار صوتية لتنبيه الأفراد.</p>\n\n<p>كما يستفيد النظام من مراقبة مستمرة باستخدام كاميرات المراقبة.</p>\n\n<p>بالإضافة إلى ذلك، يستغل المشروع التقنيات الحديثة مثل إنترنت الأشياء لتعزيز قدرات التحكم عن بُعد، مستخدماً تطبيقات مثل التلغرام لنقل بيانات الحساسات والإشعارات بشكل فوري.</p>\n\n<p>هذا النهج لا يعزز فقط كفاءة النظام بل يضمن أيضاً سلامة المنشأة والعاملين من خلال توفير استجابات سريعة للحالات الطارئة.</p>\n\n<p>بوجه عام، يهدف المشروع إلى تقديم حل موثوق وفعال لتقليل مخاطر الحرائق في البيئات الصناعية، مساهماً في بيئات تشغيلية أكثر أمانًا.</p>\n\n<h2 class=\"wp-block-heading\" id=\"h-1-4-التطويرات-والآفاق-المستقبلية\"><a>1.4 التطويرات والآفاق المستقبلية</a>:</h2>\n\n<p>في ضوء التقنيات المتقدمة والابتكارات المستمرة في مجال حماية المنشآت الصناعية، توجد عدة تطويرات وآفاق مستقبلية يمكن استكشافها. يمكن تحسين النظام الحالي من خلال إضافة ميزات جديدة مثل الذكاء الصناعي والتعلم الآلي لتحسين دقة اكتشاف الحرائق وتقليل الإنذارات الكاذبة. كما يمكن توسيع نطاق النظام ليشمل مزيدًا من المرافق والمنشآت، مما يزيد من فعالية الحماية والأمان.</p>\n\n<p>بالإضافة إلى ذلك، يمكن استكشاف فرص التكامل مع تقنيات أخرى مثل الإنترنت الأشياء (IoT) والحوسبة السحابية لتوفير نظام مرن وقابل للتوسع يمكن الوصول إليه عن بعد وإدارته بسهولة. كما يمكن استخدام تحليلات البيانات الضخمة لتحليل البيانات المولدة من النظام وتحديد الاتجاهات والمخاطر المحتملة بشكل أفضل، مما يساعد في اتخاذ القرارات الاستراتيجية لتحسين الأداء وتعزيز السلامة.</p>\n\n<p>باستمرارية التطور التكنولوجي، يمكن توقع المزيد من التحسينات والابتكارات في مجال حماية المنشآت الصناعية، مما يسهم في تعزيز الأمان والاستدامة في البيئات الصناعية المختلفة.</p>\n\n<h2 class=\"wp-block-heading\" id=\"h-الشكل-النهائي-للمشروع\"><a>الشكل النهائي للمشروع</a>:</h2>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:7--></figure>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:8--></figure>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:9--></figure>",
+  "images": [
+   {
+    "i": 0,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-44.png",
+    "context": "2.1 مزايا المشروع:"
+   },
+   {
+    "i": 1,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-45.png",
+    "context": "2.1 مزايا المشروع:"
+   },
+   {
+    "i": 2,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-46.png",
+    "context": "2.1 مزايا المشروع:"
+   },
+   {
+    "i": 3,
+    "real": false,
+    "src": null,
+    "orig": "/assets/img/image-47.png",
+    "context": "2.1 مزايا المشروع:"
+   },
+   {
+    "i": 4,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-48.png",
+    "context": "2.1 مزايا المشروع:"
+   },
+   {
+    "i": 5,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-49.png",
+    "context": "1.1 المخطط الصندوقي:"
+   },
+   {
+    "i": 6,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-50-483x1024.png",
+    "context": "1.2 خوارزمية العمل:"
+   },
+   {
+    "i": 7,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-54.png",
+    "context": "الشكل النهائي للمشروع:"
+   },
+   {
+    "i": 8,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-51.png",
+    "context": "الشكل النهائي للمشروع:"
+   },
+   {
+    "i": 9,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-52.png",
+    "context": "الشكل النهائي للمشروع:"
+   }
+  ]
+ },
+ {
+  "slug": "موقع-وتطبيق-لبيع-منتجات-العناية-بالبش",
+  "date": "2024-10-06",
+  "path": "/2024/10/06/موقع-وتطبيق-لبيع-منتجات-العناية-بالبش/",
+  "url": "/2024/10/06/%D9%85%D9%88%D9%82%D8%B9-%D9%88%D8%AA%D8%B7%D8%A8%D9%8A%D9%82-%D9%84%D8%A8%D9%8A%D8%B9-%D9%85%D9%86%D8%AA%D8%AC%D8%A7%D8%AA-%D8%A7%D9%84%D8%B9%D9%86%D8%A7%D9%8A%D8%A9-%D8%A8%D8%A7%D9%84%D8%A8%D8%B4/",
+  "title": "موقع وتطبيق لبيع منتجات العناية بالبشرة والمستحضرات التجميلية.",
+  "cats": [
+   "برمجة"
+  ],
+  "tags": [
+   "برمجة",
+   "فلاتر",
+   "لارافل"
+  ],
+  "excerpt": "يهدف هذا المشروع الى إنشاء موقع وتطبيق جوال للتجارة الإلكترونية تبيع منتجات العناية بالبشرة والمستحضرات التجميلية، وتوفر تجربة سهلة ومريحة للمستخدمين، مع التركيز على ميزات فريدة تميزها…",
+  "minutes": 3,
+  "feature_real": null,
+  "body": "<h2 class=\"wp-block-heading\" id=\"h-الملخص\"><a>الملخص</a></h2>\n\n<p>يهدف هذا المشروع الى إنشاء موقع وتطبيق جوال للتجارة الإلكترونية تبيع منتجات العناية بالبشرة والمستحضرات التجميلية، وتوفر تجربة سهلة ومريحة للمستخدمين، مع التركيز على ميزات فريدة تميزها عن المنافسين، نذكر من هذه الميزات: تصميم جذاب وواجهة سهلة الاستخدام، عرض مُنظّم للمنتجات مع فلاتر متقدمة للبحث. كما يتضمن مجموعة واسعة من المنتجات من مختلف الموردين لتلبية احتياجات جميع العملاء. كما يتضمن مساعد ذكي مربوط بالذكاء الاصطناعي بحيث يقدم استشارة عامة للمستخدم. كما يحتوي على سلة شراء لحفظ المنتجات للمستخدمين. يتضمن هذا المشروع ميزة مراسلة مُباشرة مع المورد. كما يوفر شحن مُريحة وسلسة مع تتبع دقيق لحالة طلبك. تتيح هذه الميزة للعملاء التواصل مع فريق خدمة العملاء أو الإدارة بشكل مباشر، وطرح الأسئلة، والحصول على المساعدة، أو تقديم ملاحظاتهم. يتم ربطهما مع لوحة تحكم شاملة لإدارة المخزون والطلبات.</p>\n\n<p>الكلمات المفتاحية: متجر الكتروني، مستحضرات تجميل، شحن سريع، مرأة، خدمة عملاء، ذكاء اصطناعي<strong>.</strong><strong><br></strong></p>\n\n<h2 class=\"wp-block-heading has-text-align-left\" id=\"h-abstract\"><a>abstract</a></h2>\n\n<p dir=\"ltr\">project aims to create an e-commerce website and mobile application that sells skincare products and cosmetics, providing a seamless and convenient experience for users. It focuses on unique features that set it apart from competitors. These features include an attractive design and an easy-to-use interface, a well-organized display of products with advanced search filters, and a wide range of products from various suppliers to meet the needs of all customers. The project also includes an intelligent assistant powered by AI to provide general advice to users. Additionally, it features a shopping cart to save products for users. This project includes a direct messaging feature with suppliers, offers convenient and smooth shipping with precise tracking of your order status. This feature allows customers to communicate directly with the customer service team or management, ask questions, get assistance, or provide feedback. Both the website and application are integrated with a comprehensive dashboard for inventory and order management.</p>\n\n<p dir=\"ltr\">Keywords: E-commerce store, cosmetics, fast shipping, women, customer service, artificial intelligence.</p>\n\n<h2 class=\"wp-block-heading\"><a>مقدمة عامة عن المشروع</a></h2>\n\n<p>تعد العناية الشخصية والصحية من الجوانب الأساسية التي يحرص الأفراد على الاهتمام بها لتحسين جودة حياتهم. مع التطور التكنولوجي وانتشار الإنترنت، أصبح التسوق عبر الإنترنت وسيلة مفضلة للكثيرين للحصول على هذه المنتجات. يواجه المستخدمون تحديات كبيرة في العثور على المنتجات المناسبة لهم بسبب تعدد الخيارات المتاحة واختلاف احتياجات كل شخص.</p>\n\n<p>من هنا، يهدف هذا المشروع إلى تطوير منصة متكاملة تشمل موقعًا إلكترونيًا وتطبيقًا جوال متخصصًا في بيع منتجات العناية الشخصية والصحية. سيتضمن المشروع نظام مساعد ذكي يستخدم تقنيات الذكاء الاصطناعي لتقديم توصيات مخصصة للمستخدمين بناءً على احتياجاتهم وتفضيلاتهم. سيعمل هذا النظام على تحسين تجربة المستخدمين وزيادة رضاهم عن المنتجات والخدمات المقدمة. ستتيح المنصة أيضًا تحديد صلاحيات مختلفة للمستخدمين لضمان إدارة فعالة وآمنة للمتجر. سيتكامل الموقع والتطبيق مع نظام إدارة شامل يسهل عمليات الإدارة والتحكم في المتجر، مما يتيح للمديرين متابعة المخزون والطلبات والإدارة المالية بكل سهولة.</p>\n\n<p><strong>مخطط سير الواجهات:</strong></p>\n\n<figure class=\"wp-block-image size-full\"><!--IMG:0--></figure>\n\n<p><strong>مخطط الصفوف</strong>:</p>\n\n<figure class=\"wp-block-image size-full\"><!--IMG:1--></figure>\n\n<p><a><strong>مخطط حالات الاستخدام:</strong></a></p>\n\n<figure class=\"wp-block-image size-full\"><!--IMG:2--></figure>\n\n<h2 class=\"wp-block-heading\" id=\"h-لوحة-التحكم-laravel\"><a>لوحة التحكم </a>Laravel:</h2>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:3--></figure>\n\n<figure class=\"wp-block-image size-full\"><!--IMG:4--></figure>\n\n<figure class=\"wp-block-image size-full\"><!--IMG:5--></figure>\n\n<figure class=\"wp-block-image size-full\"><!--IMG:6--></figure>\n\n<figure class=\"wp-block-image size-full\"><!--IMG:7--></figure>\n\n<figure class=\"wp-block-image size-full\"><!--IMG:8--></figure>\n\n<figure class=\"wp-block-image size-full\"><!--IMG:9--></figure>\n\n<h2 class=\"wp-block-heading\" id=\"h-تطبيق-الهاتف\">تطبيق الهاتف:</h2>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:10--></figure>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:11--></figure>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:12--></figure>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:13--></figure>\n\n<p>صفحة التحدث مع الذكاء الاصطناعي:</p>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:14--></figure>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:15--></figure>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:16--></figure>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:17--></figure>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:18--></figure>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:19--></figure>\n\n<h2 class=\"wp-block-heading\" id=\"h-الخاتمة\"><a>الخاتمة:</a></h2>\n\n<p>في الختام، يقدم مشروعنا خطوة مميزة نحو تجربة تسوق مُتكاملة لمنتجات العناية بالبشرة والتجميل.من خلال دمج التكنولوجيا الحديثة مع ميزات مُبتكرة وتركيزنا على احتياجات العملاء، نسعى جاهدين لتقديم تجربة تسوق لا مثيل لها تُعزز ثقة عملائنا وتُصبح وجهتهم المُفضلة للحصول على أجمل وأصح منتجات العناية بالبشرة.</p>\n\n<p>نؤمن بأن رحلة التطوير والتحديث ستستمر، ونُعدّكم بمزيد من الميزات والخدمات المُبتكرة التي تُلبي احتياجاتكم وتُتجاوز توقعاتكم.</p>",
+  "images": [
+   {
+    "i": 0,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-10.png",
+    "context": "مقدمة عامة عن المشروع"
+   },
+   {
+    "i": 1,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-11.png",
+    "context": "مقدمة عامة عن المشروع"
+   },
+   {
+    "i": 2,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-12.png",
+    "context": "مقدمة عامة عن المشروع"
+   },
+   {
+    "i": 3,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-13.png",
+    "context": "لوحة التحكم Laravel:"
+   },
+   {
+    "i": 4,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-14.png",
+    "context": "لوحة التحكم Laravel:"
+   },
+   {
+    "i": 5,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-15.png",
+    "context": "لوحة التحكم Laravel:"
+   },
+   {
+    "i": 6,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-16.png",
+    "context": "لوحة التحكم Laravel:"
+   },
+   {
+    "i": 7,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-17.png",
+    "context": "لوحة التحكم Laravel:"
+   },
+   {
+    "i": 8,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-18.png",
+    "context": "لوحة التحكم Laravel:"
+   },
+   {
+    "i": 9,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-19.png",
+    "context": "لوحة التحكم Laravel:"
+   },
+   {
+    "i": 10,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-20.png",
+    "context": "تطبيق الهاتف:"
+   },
+   {
+    "i": 11,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-21.png",
+    "context": "تطبيق الهاتف:"
+   },
+   {
+    "i": 12,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-22.png",
+    "context": "تطبيق الهاتف:"
+   },
+   {
+    "i": 13,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-23.png",
+    "context": "تطبيق الهاتف:"
+   },
+   {
+    "i": 14,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-24.png",
+    "context": "تطبيق الهاتف:"
+   },
+   {
+    "i": 15,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-25.png",
+    "context": "تطبيق الهاتف:"
+   },
+   {
+    "i": 16,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-26.png",
+    "context": "تطبيق الهاتف:"
+   },
+   {
+    "i": 17,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-27.png",
+    "context": "تطبيق الهاتف:"
+   },
+   {
+    "i": 18,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-28.png",
+    "context": "تطبيق الهاتف:"
+   },
+   {
+    "i": 19,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-29.png",
+    "context": "تطبيق الهاتف:"
+   }
+  ]
+ },
+ {
+  "slug": "منصة-للتبرعات-والأعمال-الخيرية",
+  "date": "2024-10-06",
+  "path": "/2024/10/06/منصة-للتبرعات-والأعمال-الخيرية/",
+  "url": "/2024/10/06/%D9%85%D9%86%D8%B5%D8%A9-%D9%84%D9%84%D8%AA%D8%A8%D8%B1%D8%B9%D8%A7%D8%AA-%D9%88%D8%A7%D9%84%D8%A3%D8%B9%D9%85%D8%A7%D9%84-%D8%A7%D9%84%D8%AE%D9%8A%D8%B1%D9%8A%D8%A9/",
+  "title": "منصة للتبرعات والأعمال الخيرية",
+  "cats": [
+   "برمجة"
+  ],
+  "tags": [
+   "برمجة",
+   "فلاتر",
+   "لارافل"
+  ],
+  "excerpt": "يهدف هذا المشروع إلى تطوير تطبيق شامل يسهل على المستخدمين التبرع للحملات الإغاثية والأعمال الخيرية المختلفة. ستتيح \"منصة التبرعات والأعمال الخيرية\" للمستخدمين إمكانية المساهمة مباشرة…",
+  "minutes": 13,
+  "feature_real": null,
+  "body": "<h2 class=\"wp-block-heading has-text-align-center\" id=\"h-charity-and-donation-platform\"><strong>Charity and Donation Platform</strong></h2>\n\n<h2 class=\"wp-block-heading\" id=\"h-ملخص\">ملخص</h2>\n\n<p>يهدف هذا المشروع إلى تطوير تطبيق شامل يسهل على المستخدمين التبرع للحملات الإغاثية والأعمال الخيرية المختلفة. ستتيح \"منصة التبرعات والأعمال الخيرية\" للمستخدمين إمكانية المساهمة مباشرة في مبادرات مثل بناء المساجد، وحفر الآبار، وكفالة الأيتام، من خلال طرائق متنوعة تشمل التبرعات المالية. يتميز التطبيق بميزة توثيق الأعمال الخيرية إلكترونياً عبر الصور والفيديوهات، مما يعزز الشفافية ويزيد من تفاعل المتبرعين.</p>\n\n<p>تشمل الوظائف الأساسية التي سيتم تنفيذها تصميم واجهة مستخدم سهلة الاستخدام باستخدام Flutter، وربط التطبيق بقاعدة بيانات مستضافة باستخدام أكواد PHP وPhpMyAdmin لإدارة البيانات بشكل موثوق. كما سيتم تطوير نظام للتبرعات المالية يتطلب من المستخدمين أولاً تعبئة رصيد حسابهم عبر الحوالة المصرفية قبل تخصيص المبالغ للمبادرات الخيرية المختارة. بالإضافة إلى ذلك، سيكون لكل متبرع قائمة شخصية تعرض مساهماته والأعمال الخيرية التي دعمها.</p>\n\n<p>بشكل عام، سيتم تكوين التطبيق واختباره بشكل دقيق لضمان أداء سلس وتوافق مع مختلف الأجهزة، بهدف تبسيط عملية التبرع وتعظيم الأثر الاجتماعي.</p>\n\n<p><strong>كلمات مفتاحية:</strong> أعمال خيرية، توثيق إلكتروني، فلاتر، لغة php، الاستضافة التشاركية.</p>\n\n<h2 class=\"wp-block-heading has-text-align-left\" id=\"h-abstract\">Abstract</h2>\n\n<p dir=\"ltr\">This project aims to develop a comprehensive application that facilitates user donations to various charitable campaigns and activities. The \"Charity and Donation Platform\" will allow users to directly contribute to initiatives such as mosque construction, well drilling, and orphan sponsorship through diverse modalities including financial donations. An innovative aspect of the platform is the electronic documentation of charitable deeds via photos and videos, enhancing transparency and donor engagement.</p>\n\n<p dir=\"ltr\">Key functionalities to be implemented include designing a user-friendly interface with Flutter, integrating a backend using PHP and PhpMyAdmin for robust data management, and developing a financial donation system. This system will require users to first transfer funds into their account via bank transfer before allocating amounts to chosen charities. Additionally, each donor will have a personalized list showcasing their contributions and the specific charitable works they have supported.</p>\n\n<p dir=\"ltr\">Overall, the platform will be thoroughly configured and tested to ensure smooth performance and compatibility across various devices, ultimately aiming to streamline the process of charitable giving and increase overall impact.</p>\n\n<p dir=\"ltr\"><strong>Keywords:</strong> Donations, Charitable Activities, Flutter, php, Shared Host.</p>\n\n<h2 class=\"wp-block-heading\"><a>1-1 مقدمة</a></h2>\n\n<p>في عالم يشهد تقلبات مستمرة وتحديات متزايدة، تبرز الحاجة الملحة للأعمال الخيرية كأحد الركائز الأساسية للدعم الإنساني والتنمية المستدامة. وفقاً لإحصائيات منظمة الأمم المتحدة للغذاء والزراعة (FAO) لعام 2024، يعيش أكثر من 690 مليون شخص في حالة جوع مزمن، مما يشير إلى زيادة بنسبة 10% في العقد الأخير[1] . إضافةً إلى ذلك، تظهر بيانات من منظمة الصحة العالمية (WHO) أن حوالي 785 مليون شخص لا يمتلكون حتى الآن الوصول إلى مياه شرب نظيفة، مما يضعهم في خطر دائم للأمراض والوفيات المرتبطة بتلوث المياه[2] .</p>\n\n<p>في ضوء هذه الإحصائيات المقلقة، تكتسب المنصات التي توفر الدعم للأعمال الخيرية أهمية متزايدة. \"منصة التبرعات والأعمال الخيرية\" هي استجابة تكنولوجية مبتكرة تهدف إلى تسهيل عملية التبرع وتوسيع نطاق الأعمال الخيرية. من خلال توفير وسيلة سهلة وموثوقة لتجميع الأموال وتوزيعها على المشاريع الحيوية مثل بناء المساجد، حفر الآبار، وكفالة الأيتام، يمكن لهذا التطبيق أن يحدث فارقاً حقيقياً في حياة الملايين.</p>\n\n<p>يبين الشكل (1-1) شعار منظمة Save the Children.</p>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:0--></figure>\n\n<p><a></a><a><strong>الشكل (</strong></a><strong>‏1</strong><strong>‑</strong><strong>1</strong><strong>): شعار منظمة </strong><strong>Save the Children</strong><strong>.</strong><strong></strong></p>\n\n<p>على سبيل المثال، تسلط الضوء منظمة \"Save the Children\" الشكل (‏1‑1) على قصة قرية في شرق أفريقيا حيث تمكنت الدعم المالي من توفير المياه النظيفة لأكثر من 3000 طفل، مما أدى إلى انخفاض كبير في الأمراض المنقولة عبر المياه وزيادة الحضور المدرسي. هذه القصص تجسد تأثير الأعمال الخيرية المباشر وتؤكد على الحاجة الماسة لتوسيع هذه الجهود، خاصة في الأوقات التي يشهدها العالم اليوم [3].</p>\n\n<p>\"منصة التبرعات والأعمال الخيرية\" تقدم ليس فقط كوسيلة للتبرع، بل كأداة لتعزيز المساءلة والشفافية في العمل الخيري، مما يعزز الثقة بين المتبرعين والمستفيدين. من خلال التقنيات الحديثة والتوثيق الرقمي، يمكننا الآن رؤية تأثير مساهماتنا مباشرة، وهو ما يسهم في بناء مجتمع عالمي أكثر تكاتفًا واستدامة.</p>\n\n<h2 class=\"wp-block-heading\"><a>1-1 الأهداف</a></h2>\n\n<p>أولاً، يتمثل أحد الأهداف الأساسية في تصميم تطبيق يستخدم تكنولوجيا Flutter كما هو مبين ضمن <strong>الشكل (‏1‑2</strong>)، وهو إطار عمل معروف بقدرته على بناء تطبيقات متقدمة ومتوافقة مع كل من أنظمة التشغيل iOS وAndroid. هذا سيضمن توفر التطبيق على مجموعة واسعة من الأجهزة المحمولة، مما يزيد من إمكانية الوصول والاستخدام. ثانيًا، سيتم الاشتراك بخدمات استضافة عالمية لضمان رفع التطبيق على سيرفرات ذات أداء عالي وأمان متقدم. هذا الاشتراك سيوفر البنية التحتية اللازمة لتحمل الأحمال الكبيرة من البيانات والتفاعلات، وضمان استقرار وسرعة الخدمة المقدمة للمستخدمين.</p>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:1--></figure>\n\n<p><a></a><a><strong>الشكل (</strong></a><strong>‏1</strong><strong>‑</strong><strong>2</strong><strong>): ربط فلاتر مع </strong><strong>API</strong><strong> ضمن الاستضافة.</strong><strong></strong></p>\n\n<p>ثالثًا، سيتم بناء قاعدة بيانات قوية باستخدام PhpMyAdmin، وهو أداة إدارة تسمح بالتعامل مع قاعدة البيانات بطريقة فعالة ومرنة. قاعدة البيانات هذه ستكون المحور الرئيسي لتخزين كافة البيانات المتعلقة بالمتبرعين والحملات الخيرية والتبرعات، مما يسهل عمليات البحث والتقارير والتحليلات اللازمة. رابعًا، سيتم تطوير ملفات PHP للتعامل مع الطلبات والبيانات بين واجهة المستخدم وقاعدة البيانات. هذه الملفات ستكون مسؤولة عن معالجة البيانات الواردة والصادرة، وتأمين تفاعلات النظام بشكل محمي وفعال، وهي خطوة ضرورية لضمان سلاسة تشغيل التطبيق وأمان المعلومات.</p>\n\n<h2 class=\"wp-block-heading\"><a>1-2 الدراسات السابقة</a></h2>\n\n<p>تبرز العديد من الدراسات الأكاديمية والتطبيقات التي قدمت إسهامات ملحوظة في هذا المجال. واحدة من هذه الدراسات، المنشورة في مجلة \"Nonprofit and Voluntary Sector Quarterly\" عام 2023، تحلل تأثير تكنولوجيا البلوك تشين على الشفافية وكفاءة التبرعات الخيرية. النتائج تشير إلى أن استخدام البلوك تشين يمكن أن يزيد من ثقة المتبرعين بنسبة تصل إلى 40%، مما يؤدي إلى زيادة الأموال &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;المتبرع بها [4].</p>\n\n<p>بالنسبة للتطبيقات، يمكننا الإشارة إلى \"GoFundMe\" كما في الشكل (‏1‑3)، والذي أطلق في العام 2010 وأصبح من أكثر المنصات شعبية لجمع الأموال لأغراض شخصية وخيرية. وفقًا لتقارير الشركة لعام 2024، ساعد التطبيق في جمع أكثر من 9 مليارات دولار من التبرعات [5]. \"Kiva\" هو تطبيق آخر يستحق الذكر، حيث يركز على توفير القروض الصغيرة للأفراد في البلدان النامية لدعم المشاريع الصغيرة والمتوسطة، وقد سجل نجاحًا ملحوظًا بمعدل سداد يتجاوز 96% [6].</p>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:2--></figure>\n\n<p><a></a><a><strong>الشكل (</strong></a><strong>‏1</strong><strong>‑</strong><strong>3</strong><strong>): شعار تطبيق </strong><strong>gofundme</strong><strong>.</strong><strong></strong></p>\n\n<p>أخيرًا، \"Charity Water\" الشكل (‏1‑4)، تطبيق يُظهر كيف يمكن للتكنولوجيا تحويل الأعمال الخيرية. هذا التطبيق يساعد في تمويل مشاريع المياه في البلدان النامية ويوفر آلية شفافة للمتبرعين لمتابعة كيفية استخدام أموالهم. وقد أبلغت الشركة أنهم تمكنوا من توفير مياه نظيفة لأكثر من 11 مليون شخص حتى الآن [7].</p>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:3--></figure>\n\n<p><a></a><a><strong>الشكل (</strong></a><strong>‏1</strong><strong>‑</strong><strong>4</strong><strong>): تطبيق </strong><strong>Charity Water</strong><strong>.</strong><strong></strong></p>\n\n<p>هذه الأمثلة والدراسات تقدم نظرة واضحة على كيفية استفادة المشاريع الخيرية من التطور التكنولوجي وتحسين العمليات، وكذلك تعزيز الثقة والمساهمات من جانب المتبرعين.</p>\n\n<h2 class=\"wp-block-heading\"><a>1-3 المتطلبات الوظيفية</a></h2>\n\n<p>هذه مجموعة من المتطلبات الوظيفية الأساسية للنظام:</p>\n\n<ol class=\"wp-block-list\">\n<li><strong>التسجيل وتسجيل الدخول</strong>:<ol><li>يجب أن يتمكن المستخدمون من إنشاء حساب جديد وتسجيل الدخول إلى النظام باستخدام بيانات اعتمادهم.</li></ol>\n<ol class=\"wp-block-list\">\n<li>يجب توفير خيارات لاستعادة كلمة المرور وتحديث معلومات الحساب.</li>\n</ol>\n</li>\n\n<li><strong>إدارة الحملات الخيرية</strong>:<ol><li>يجب أن يتمكن النظام من إضافة حملات خيرية جديدة، تعديلها وحذفها.</li></ol>\n<ol class=\"wp-block-list\">\n<li>يجب توفير وظيفة لعرض تفاصيل كل حملة بما في ذلك الأهداف المالية، الوصف، والمبلغ المتجمع حتى الآن.</li>\n</ol>\n</li>\n</ol>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:4--></figure>\n\n<p><a></a><a><strong>الشكل (</strong></a><strong>‏1</strong><strong>‑</strong><strong>5</strong><strong>): متطلبات التصميم الأمامي لتطبيقات الفلاتر </strong><strong>UI/UX</strong><strong>.</strong><strong></strong></p>\n\n<ul class=\"wp-block-list\">\n<li><strong>نظام التبرعات</strong>:<ul><li>يجب أن يسمح النظام للمستخدمين بتحديد مبلغ التبرع واختيار الحملة التي يرغبون بدعمها.</li></ul>\n<ul class=\"wp-block-list\">\n<li>يجب توفير خيارات متعددة للدفع بما في ذلك التحويل البنكي وبطاقات الائتمان.</li>\n</ul>\n</li>\n\n<li><strong>تتبع التبرعات والتقارير</strong>:<ul><li>يجب أن يتمكن المستخدمون من متابعة تاريخ تبرعاتهم والحصول على تقارير تفصيلية عن التبرعات.</li></ul>\n<ul class=\"wp-block-list\">\n<li>يجب توفير إمكانية للمنظمات لتتبع التبرعات المستلمة وإنشاء تقارير عن استخدام الأموال.</li>\n</ul>\n</li>\n\n<li><strong>التوثيق والمشاركة</strong>:<ul><li>يجب أن يتيح النظام للمنظمات تحميل صور وفيديوهات توثق الأنشطة الخيرية وتقدم تحديثات حول التقدم المحرز.</li></ul>\n<ul class=\"wp-block-list\">\n<li>يجب أن يكون هناك خيار للمستخدمين لمشاركة تفاصيل الحملة عبر وسائل التواصل الاجتماعي.</li>\n</ul>\n</li>\n\n<li><strong>الأمان والخصوصية</strong>:<ul><li>يجب تأمين النظام بالكامل لحماية بيانات المستخدمين والمعلومات المالية.</li></ul>\n<ul class=\"wp-block-list\">\n<li>يجب تطبيق سياسات الخصوصية والتأكد من الامتثال للقوانين المحلية والدولية بخصوص البيانات والتبرعات.</li>\n</ul>\n</li>\n\n<li><strong>دعم العملاء</strong>:\n<ul class=\"wp-block-list\">\n<li>يجب توفير وظائف لدعم العملاء داخل النظام بما في ذلك الأسئلة الشائعة، الدعم عبر البريد الإلكتروني، وربما الدردشة الحية.</li>\n</ul>\n</li>\n</ul>\n\n<p>هذه المتطلبات الوظيفية تعتبر حيوية لضمان أن المنصة لا تقدم فقط واجهة سهلة الاستخدام ولكنها أيضًا تلبي احتياجات جميع المعنيين بشكل فعال وآمن.</p>\n\n<h2 class=\"wp-block-heading\"><a>1-4 المتطلبات غير الوظيفية</a></h2>\n\n<p><strong>الأداء:</strong></p>\n\n<p>يجب أن يكون النظام قادرًا على التعامل مع حجم كبير من المستخدمين والمعاملات المالية في وقت واحد دون تأخير.</p>\n\n<p>يجب أن تكون وقت استجابة النظام لأي طلب لا يتجاوز 3 ثواني.</p>\n\n<p><strong>الموثوقية:</strong> يجب أن يكون النظام متاحًا بنسبة 99.9% من الوقت.</p>\n\n<p>يجب أن يكون قادرًا على التعافي من الأخطاء بسرعة دون فقدان البيانات.</p>\n\n<p><strong>التوافق:</strong></p>\n\n<p>يجب أن يكون النظام متوافقًا مع جميع أنظمة التشغيل الرئيسة للأجهزة المحمولة والحواسيب الشخصية.</p>\n\n<p>يجب دعم الأجهزة المحمولة بمختلف الأحجام والدقات.</p>\n\n<p><strong>قابلية التوسع:</strong></p>\n\n<p>يجب أن يكون النظام قابل للتوسع لدعم زيادة عدد المستخدمين والبيانات دون تأثير على الأداء.</p>\n\n<p>يجب تصميم النظام ليسمح بإضافة وظائف جديدة بسهولة.</p>\n\n<p><strong>الأمان:</strong></p>\n\n<p>يجب تأمين البيانات الشخصية والمالية للمستخدمين من خلال تشفير البيانات المنقولة والمخزنة.</p>\n\n<p>يجب تطبيق الإجراءات الأمنية لحماية النظام من الهجمات السيبرانية والوصول غير المصرح به.</p>\n\n<p><strong>الصيانة:</strong></p>\n\n<p>يجب تصميم النظام ليكون سهل الصيانة والتحديث.</p>\n\n<p>يجب أن تكون الوثائق التقنية متاحة لتسهيل عمليات الصيانة والتطوير المستقبلية.</p>\n\n<p><strong>سهولة الاستخدام:</strong> نلاحظ ضمن الشكل (‏1‑5) يجب أن تكون واجهة المستخدم بديهية وسهلة الاستخدام لكافة الأعمار والخلفيات التقنية.</p>\n\n<p>يجب توفير دعم لغات متعددة للتطبيق لجعله قابل للاستخدام عالميًا.</p>\n\n<p><strong>الاستدامة:</strong></p>\n\n<p>يجب تصميم النظام ليكون فعالاً في استهلاك الطاقة وموارد النظام.</p>\n\n<p>يجب أن تكون ممارسات التطوير والتشغيل صديقة للبيئة.</p>\n\n<h2 class=\"wp-block-heading\" id=\"h-تطبيق-المستخدم-النهائي\"><a>تطبيق المستخدم النهائي</a></h2>\n\n<h2 class=\"wp-block-heading\"><a>1-1 تطبيق المستخدم النهائي</a></h2>\n\n<p>سنقوم باستعراض لقطات شاشة لكل التطبيق:</p>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:5--></figure>\n\n<p><a></a><a><strong>الشكل (</strong></a><strong>‏4</strong><strong>‑</strong><strong>7</strong><strong>): واجهة إنشاء الحساب ضمن التطبيق.</strong><strong></strong></p>\n\n<p>الواجهة ضمن الشكل (‏4‑7) تُظهر شاشة تسجيل مستخدم جديد. الشاشة تحتوي على حقول نصية متعددة يجب على المستخدم ملؤها لإنشاء حساب جديد. تبدأ الحقول بطلب \"الاسم الأول\" ثم \"الاسم الأخير\"، تليها خانة \"اسم المستخدم\" التي سيستخدمها الشخص عند تسجيل الدخول. بعد ذلك، يتم إدخال \"كلمة المرور\" التي يجب أن تكون قوية وآمنة. وأخيراً، يتعين على المستخدم إدخال \"البريد الإلكتروني\". في أسفل الشاشة يوجد زر كبير باللون الأزرق مكتوب عليه \"إنشاء حساب\"، والذي يضغط عليه المستخدم بعد ملء جميع الحقول لإكمال عملية التسجيل وإنشاء حسابه الجديد.</p>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:6--></figure>\n\n<p><a></a><a><strong>الشكل (</strong></a><strong>‏4</strong><strong>‑</strong><strong>8</strong><strong>): واجهة تسجيل الدخول.</strong><strong></strong></p>\n\n<p>هذه الواجهة ضمن الشكل (‏4‑8) تُظهر شاشة تسجيل الدخول في التطبيق. في الجزء العلوي من الشاشة يوجد عنوان \"تسجيل الدخول\" بالإضافة إلى سهم للعودة إلى الشاشة السابقة. الشاشة تحتوي على حقلين نصيين يجب على المستخدم ملؤهما لتسجيل الدخول إلى حسابه. الحقل الأول مخصص لـ \"اسم المستخدم\"، حيث يدخل المستخدم اسمه الذي سجله به مسبقًا. الحقل الثاني هو \"كلمة المرور\"، حيث يجب على المستخدم إدخال كلمة المرور المرتبطة بحسابه. تحت هذه الحقول، يوجد خيار \"تذكرني\" بجانب مربع اختيار، والذي يمكن للمستخدم تفعيله إذا أراد أن يتذكر التطبيق بيانات تسجيل الدخول في المرات القادمة، مما يسهل عملية الدخول في المستقبل.</p>\n\n<p>في أسفل الشاشة، يوجد زر كبير باللون الأزرق مكتوب عليه \"تسجيل الدخول\"، والذي يضغط عليه المستخدم بعد إدخال البيانات المطلوبة للدخول إلى حسابه في التطبيق. هذه الواجهة تُظهر تصميمًا بسيطًا ومباشرًا لتسهيل عملية تسجيل الدخول على المستخدمين.</p>\n\n<figure class=\"wp-block-image aligncenter size-large\"><!--IMG:7--></figure>\n\n<p><a><strong>الشكل (</strong></a><strong>‏4</strong><strong>‑</strong><strong>9</strong><strong>): الواجهة الرئيسة.</strong><strong><br></strong></p>\n\n<figure class=\"wp-block-image aligncenter size-large\"><!--IMG:8--></figure>\n\n<p><a></a><a><strong>الشكل (</strong></a><strong>‏4</strong><strong>‑</strong><strong>10</strong><strong>): لوحة التحكم الخاصة بالمستخدم.</strong><strong></strong></p>\n\n<p>الواجهة الموضحة ضمن الشكل (‏4‑10) &nbsp;هي لوحة التحكم الخاصة بالمستخدم ضمن تطبيق التبرعات \"معاً نحو الخير\".</p>\n\n<p>في الجزء العلوي من الشاشة، يمكن رؤية اسم التطبيق \"معاً نحو الخير\" مكتوب بشكل بارز. يوجد رمز القائمة في الزاوية العلوية اليسرى، مما يشير إلى إمكانية الوصول إلى مزيد من الخيارات أو القوائم.</p>\n\n<p>تحت اسم التطبيق، يظهر رسم تخطيطي لمسجد، وهو يعكس ربما أحد أهداف التبرعات أو الأنشطة الرئيسية للتطبيق.</p>\n\n<p>في منتصف الشاشة، يظهر اسم المستخدم مع رصيده الحالي الذي يبلغ 2331.17، مما يشير إلى المبلغ المتاح لديه للتبرعات.</p>\n\n<p>تحت الرصيد، هناك عدة أيقونات تُظهر خيارات متعددة يمكن للمستخدم الوصول إليها:</p>\n\n<ul class=\"wp-block-list\">\n<li>أيقونة تحمل اسم المستخدم.</li>\n\n<li>أيقونة الهلال الأحمر، مما يشير إلى إمكانية التبرع أو دعم الأنشطة المرتبطة بالهلال الأحمر.</li>\n\n<li>أيقونة الزكاة، التي تتيح للمستخدم دفع الزكاة.</li>\n\n<li>أيقونة الإعدادات، التي تتيح للمستخدم ضبط إعدادات حسابه أو التطبيق.</li>\n</ul>\n\n<p>في الجزء السفلي من الشاشة، يوجد قسم بعنوان \"التبرعات\" والذي يعرض بعض مشاريع التبرع المتاحة، مثل:</p>\n\n<ul class=\"wp-block-list\">\n<li>مشروع \"بناء مسجد\".</li>\n\n<li>مشروع \"حفر بئر\".</li>\n</ul>\n\n<figure class=\"wp-block-image aligncenter size-large\"><!--IMG:9--></figure>\n\n<p><a></a><a><strong>الشكل (</strong></a><strong>‏4</strong><strong>‑</strong><strong>11</strong><strong>): الهلال الأحمر.</strong><strong></strong></p>\n\n<p>يعرض الشكل (‏4‑11) واجهة تعريفية عن الهلال الأحمر الذي يوفر للمستخدمين معلومات شاملة ومفيدة ، مما يمكنهم من فهم دور هذه المنظمة في تقديم المساعدات الإنسانية واتخاذ قرار بشأن التبرع أو المساهمة في أنشطتها.<br></p>\n\n<figure class=\"wp-block-image size-large\"><!--IMG:10--></figure>\n\n<p><a></a><a><strong>الشكل (</strong></a><strong>‏4</strong><strong>‑</strong><strong>12</strong><strong>): استعراض أحد التبرعات.</strong><strong></strong></p>\n\n<p>الواجهة ضمن الشكل (‏4‑12) تُظهر تفاصيل مشروع \"بناء مسجد\" ضمن التطبيق. في الجزء العلوي من الشاشة، يظهر عنوان \"بناء مسجد\" مع سهم للعودة إلى الشاشة السابقة. في منتصف الشاشة، يوجد رسم توضيحي لمسجد، مما يعطي المستخدم فكرة عن المشروع الذي يتم التبرع له.</p>\n\n<p>تحت الصورة، يوجد وصف مختصر للمشروع، مما يوضح الهدف الرئيس من هذا المشروع الخيري.</p>\n\n<p>أسفل الوصف، توجد ثلاثة أزرار أو خيارات:</p>\n\n<ol class=\"wp-block-list\">\n<li>زر \"فيديو\": من المحتمل أن يتيح للمستخدم مشاهدة فيديو توضيحي للمشروع.</li>\n\n<li>شريط الإنجاز: يعرض المبلغ الذي تم جمعه حتى الآن (1703.94) من الهدف الإجمالي (10000.00). هذا الشريط يعطي المستخدمين فكرة عن تقدم حملة التبرع ومدى قربها من تحقيق الهدف.</li>\n\n<li>زر \"تبرع الآن\": يتيح للمستخدمين القيام بعملية التبرع مباشرة للمشروع.</li>\n</ol>\n\n<figure class=\"wp-block-image size-full\"><!--IMG:11--></figure>\n\n<p><a></a><a><strong>الشكل (</strong></a><strong>‏4</strong><strong>‑</strong><strong>13</strong><strong>): استعراض من قبل المستخدم التبرعات التي تم التقدم لها مسبقاً.</strong><strong></strong></p>\n\n<p>يظهر ضمن الشكل (‏4‑13)&nbsp; أن كل عنصر في القائمة يتضمن اسم المشروع والمبلغ الذي تم التبرع به، بالإضافة إلى صورة توضيحية تتعلق بالمشروع. هذه الواجهة تُتيح للمستخدم مراجعة التبرعات التي قدمها مسبقاً بسهولة، مما يعزز الشفافية ويمكن المستخدم من متابعة مساهماته الخيرية.</p>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:12--></figure>\n\n<p><a></a><a><strong>الشكل (</strong></a><strong>‏4</strong><strong>‑</strong><strong>14</strong><strong>): الإعدادات.</strong><strong></strong></p>\n\n<p>تُظهر شاشة \"الإعدادات\" في تطبيق التبرعات ضمن الشكل (‏4‑14). في الجزء العلوي من الشاشة، يظهر عنوان \"الإعدادات\" مع سهم للعودة إلى الشاشة السابقة. في منتصف الشاشة، يوجد رمز الترس الكبير الذي يمثل الإعدادات.</p>\n\n<p>تحت رمز الترس، هناك زران رئيسيان:</p>\n\n<ol class=\"wp-block-list\">\n<li><strong>تغيير كلمة المرور</strong>: يتيح للمستخدم تغيير كلمة المرور الخاصة بحسابه.</li>\n\n<li><strong>إضافة رصيد</strong>: يتيح للمستخدم إضافة رصيد إلى حسابه لاستخدامه              في التبرعات.</li>\n</ol>\n\n<figure class=\"wp-block-image alignfull size-full\"><!--IMG:13--></figure>\n\n<p><a></a><a><strong>الشكل (</strong></a><strong>‏4</strong><strong>‑</strong><strong>15</strong><strong>): واجهة حساب الزكاة.</strong><strong></strong></p>\n\n<p>في الجزء العلوي من الشكل (‏4‑15) ، يظهر عنوان \"حساب الزكاة\" مع سهم للعودة إلى الشاشة السابقة.</p>\n\n<p>تحت العنوان، يوجد حقلان رئيسيان:</p>\n\n<ol class=\"wp-block-list\">\n<li><strong>الأموال الإجمالية</strong>: يظهر فيه المبلغ الإجمالي للأموال التي يمتلكها المستخدم، وهنا المبلغ هو 1,000,000.</li>\n\n<li><strong>قيمة الزكاة</strong>: يظهر فيه المبلغ الذي يجب على المستخدم دفعه كزكاة، وهنا المبلغ هو 25,000.</li>\n</ol>\n\n<p>هذه الواجهة تُساعد المستخدم في حساب مقدار الزكاة المستحقة بناءً على أمواله الإجمالية، مما يسهل عملية إخراج الزكاة وفقاً للشريعة الإسلامية.</p>\n\n<h3 class=\"wp-block-heading\"><a>1-1-1 وصف عام للواجهات</a></h3>\n\n<p>حساب الزكاة: واجهة تتيح للمستخدمين إدخال مبلغ الأموال لحساب قيمة الزكاة.</p>\n\n<p>الإعدادات: توفر خيارات لتغيير كلمة المرور وإضافة رصيد لحساب المستخدم.</p>\n\n<p>التبرعات: عرض تاريخي للتبرعات التي قام بها المستخدم، مع تفاصيل عن المشاريع.</p>\n\n<p>إنشاء حساب وتسجيل الدخول: واجهات بسيطة تسمح بتسجيل الدخول أو إنشاء حساب جديد بخطوات معدودة.</p>\n\n<p>المشاريع: تظهر المشاريع المتاحة للتبرع وتتيح للمستخدمين اختيار مشروع لدعمه.</p>\n\n<p>تفاصيل المشروع: تعرض معلومات مفصلة عن مشروع معين مع إمكانية التبرع مباشرة من هذه الواجهة.</p>\n\n<h2 class=\"wp-block-heading\"><a>1-2 لوحة التحكم للمدير</a></h2>\n\n<p>يظهر لنا ضمن هذه الفقرة لوحة التحكم الخاصة بالمدير وجميع الإعدادات التي يستطيع المدير التحكم بها.</p>\n\n<p>كنا هو موضح ضمن الشكل (‏4‑16) هذه الواجهة تُظهر جدول تتبع الطلبات. الجدول يُقدم تفاصيل متعددة حول الطلبات التي تم تقديمها.</p>\n\n<p>من اليمين إلى اليسار، يحتوي الجدول على الأعمدة التالية:</p>\n\n<ol class=\"wp-block-list\">\n<li><strong>رقم المستخدم</strong>: يُظهر الرقم التعريفي لكل مستخدم.</li>\n\n<li><strong>اسم المستخدم</strong>: يُظهر اسم المستخدم الذي قدم الطلب.</li>\n\n<li><strong>قيمة الرصيد</strong>: يُظهر المبلغ الذي تم تقديمه أو طلبه.</li>\n\n<li><strong>أعمدة التحكم</strong>: تتضمن أزرار للتحكم في العمليات المرتبطة بالطلبات مثل القبول أو الرفض أو الارجاع.</li>\n</ol>\n\n<figure class=\"wp-block-image size-large\"><!--IMG:14--></figure>\n\n<p><a></a><a><strong>الشكل (</strong></a><strong>‏4</strong><strong>‑</strong><strong>16</strong><strong>): تتبع الطلبات ضمن لوحة التحكم.</strong><strong></strong></p>\n\n<figure class=\"wp-block-image aligncenter size-large\"><!--IMG:15--></figure>\n\n<p><a></a><a><strong>الشكل (</strong></a><strong>‏4</strong><strong>‑</strong><strong>17</strong><strong>): استعلام عن جميع التبرعات ضمن جدول التبرعات.</strong><strong></strong></p>\n\n<figure class=\"wp-block-image size-large\"><!--IMG:16--></figure>\n\n<p><a></a><a><strong>الشكل (</strong></a><strong>‏4</strong><strong>‑</strong><strong>18</strong><strong>): </strong><strong>الإحصائيات ضمن لوحة التحكم.</strong><strong></strong></p>\n\n<h2 class=\"wp-block-heading\" id=\"h-الخاتمة\"><strong>الخاتمة</strong><strong></strong></h2>\n\n<p>في الختام، يعد نظام إدارة التبرعات أداة حيوية لتعزيز العمل الخيري وضمان وصول المساعدات إلى مستحقيها بكفاءة وشفافية. من خلال توفير واجهة سهلة الاستخدام وإجراءات مبسطة للتبرع، يسهم النظام في تشجيع المزيد من الأفراد على المشاركة في الأنشطة الخيرية. كما أن التكامل بين المستخدمين والمديرين يضمن تسيير العمليات بسلاسة، مما يعزز الثقة والمصداقية في النظام.</p>\n\n<p>تم تصميم النظام ليكون مرنًا وقابلًا للتطوير، مما يتيح إضافة ميزات جديدة وتوسيع نطاق الخدمات المقدمة في المستقبل. باستخدام تقنيات مثل التطبيقات المحمولة والتكامل مع منصات الدفع الإلكتروني، يمكن للنظام أن يتكيف مع احتياجات المستخدمين المتغيرة ويوفر لهم تجربة أكثر ملاءمة وأمانًا.</p>\n\n<p>إن التطوير المستمر لهذا النظام يمكن أن يسهم بشكل كبير في تحقيق الأهداف الإنسانية والاجتماعية للمؤسسات الخيرية، مما يعزز دورها في المجتمع ويضمن أن التبرعات تصل إلى الأماكن التي تشتد فيها الحاجة. نتطلع إلى رؤية تأثير هذا النظام في تحسين كفاءة العمل الخيري وتعزيز الشفافية والمساءلة في إدارة التبرعات.</p>\n\n<p><strong>الآفاق والتطويرات المستقبلية</strong></p>\n\n<p>مع تطور التكنولوجيا وزيادة اعتماد المجتمع على الأنظمة الرقمية، تبرز العديد من الفرص لتطوير وتحسين نظام إدارة التبرعات.</p>\n\n<p>يمكن دمج تقنيات البلوك تشين لضمان شفافية وأمان أعلى في عمليات التبرع، مما يعزز ثقة المستخدمين والمتبرعين.</p>\n\n<p>&nbsp;بالإضافة إلى ذلك، يمكن أن يساهم تطوير نظام إشعارات فورية في إبقاء المستخدمين على اطلاع دائم بحالة تبرعاتهم وأي تطورات تتعلق بالمشاريع التي يساهمون فيها.</p>\n\n<p>مع توفر خدمات الدفع يمكن أن تكون على هذا التطبيق وسائل دفع أكثر مرونة.</p>\n\n<p>من المفضل ان يتم وضع البرمجة الخلفية للمشروع على استضافة من نوع VPS مما يوفر موارد أقوى تلبي طلبات جميع المستخدمين في حال تم نشر التطبيق.</p>\n\n<p>نوصي مستقبلاً بنشر التطبيق على متجر Google Play وانشاء حملة تسويقية ليتم نشر التطبيق بين المستخدمين.</p>\n\n<p>مع استمرار الابتكار في هذا المجال، يمكن أن يصبح نظام إدارة التبرعات أكثر كفاءة وفعالية، مما يساهم في تحقيق أهداف التنمية المستدامة وتعزيز الرفاه الاجتماعي على نطاق واسع.</p>",
+  "images": [
+   {
+    "i": 0,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-55.png",
+    "context": "1-1 مقدمة"
+   },
+   {
+    "i": 1,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-56.png",
+    "context": "1-1 الأهداف"
+   },
+   {
+    "i": 2,
+    "real": false,
+    "src": null,
+    "orig": "/assets/img/image-57.png",
+    "context": "1-2 الدراسات السابقة"
+   },
+   {
+    "i": 3,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-59.png",
+    "context": "1-2 الدراسات السابقة"
+   },
+   {
+    "i": 4,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-60.png",
+    "context": "1-3 المتطلبات الوظيفية"
+   },
+   {
+    "i": 5,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-61.png",
+    "context": "1-1 تطبيق المستخدم النهائي"
+   },
+   {
+    "i": 6,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-62.png",
+    "context": "1-1 تطبيق المستخدم النهائي"
+   },
+   {
+    "i": 7,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-63-460x1024.png",
+    "context": "1-1 تطبيق المستخدم النهائي"
+   },
+   {
+    "i": 8,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-66-459x1024.png",
+    "context": "1-1 تطبيق المستخدم النهائي"
+   },
+   {
+    "i": 9,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-65-539x1024.png",
+    "context": "1-1 تطبيق المستخدم النهائي"
+   },
+   {
+    "i": 10,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-67-460x1024.png",
+    "context": "1-1 تطبيق المستخدم النهائي"
+   },
+   {
+    "i": 11,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-68.png",
+    "context": "1-1 تطبيق المستخدم النهائي"
+   },
+   {
+    "i": 12,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-69.png",
+    "context": "1-1 تطبيق المستخدم النهائي"
+   },
+   {
+    "i": 13,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-70.png",
+    "context": "1-1 تطبيق المستخدم النهائي"
+   },
+   {
+    "i": 14,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-71-1024x372.png",
+    "context": "1-2 لوحة التحكم للمدير"
+   },
+   {
+    "i": 15,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-72-1024x490.png",
+    "context": "1-2 لوحة التحكم للمدير"
+   },
+   {
+    "i": 16,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-73-1024x375.png",
+    "context": "1-2 لوحة التحكم للمدير"
+   }
+  ]
+ },
+ {
+  "slug": "تطبيق-تعليم-لغات-البرمجة-باستخدام-إطا",
+  "date": "2024-10-06",
+  "path": "/2024/10/06/تطبيق-تعليم-لغات-البرمجة-باستخدام-إطا/",
+  "url": "/2024/10/06/%D8%AA%D8%B7%D8%A8%D9%8A%D9%82-%D8%AA%D8%B9%D9%84%D9%8A%D9%85-%D9%84%D8%BA%D8%A7%D8%AA-%D8%A7%D9%84%D8%A8%D8%B1%D9%85%D8%AC%D8%A9-%D8%A8%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D8%A5%D8%B7%D8%A7/",
+  "title": "تطبيق تعليم لغات البرمجة باستخدام إطار العمل فلاتر",
+  "cats": [
+   "برمجة"
+  ],
+  "tags": [
+   "برمجة",
+   "فلاتر",
+   "لارافل"
+  ],
+  "excerpt": "يهدف هذا المشروع إلى مساعدة الطلاب في تعلم لغات البرمجة باستخدام إطار العمل فلاتر. يتم ذلك من خلال ربط التطبيق بموقع W3schools التعليمي لتسهيل تسلسل الكورسات بالإضافة إلى فيديوهات من…",
+  "minutes": 2,
+  "feature_real": null,
+  "body": "<h2 class=\"wp-block-heading\" id=\"h-الملخص\"><a>الملخص</a></h2>\n\n<p>يهدف هذا المشروع إلى مساعدة الطلاب في تعلم لغات البرمجة باستخدام إطار العمل فلاتر. يتم ذلك من خلال ربط التطبيق بموقع W3schools التعليمي لتسهيل تسلسل الكورسات بالإضافة إلى فيديوهات من روابط عدة. كما يتم ربط التطبيق مع نموذج GPT-Turbo-3.5 من OpenAI باستخدام API تجريبية لإعطاء استشارات برمجية. يدعم التطبيق نظام تسجيل دخول يتيح للمستخدمين الوصول كطلاب أو مدرسين، يمكن أيضاً بناء نظام امتحانات مع إمكانية إضافة ملاحظات للطلاب من قبل المدرسين لتعزيز التفاعل والتواصل داخل بيئة التعلم الافتراضية.</p>\n\n<p>الكلمات المفتاحية: التعليم، المنصة، التكنولوجيا، الطلاب، المهنة، النجاح، التفاعل.</p>\n\n<h2 class=\"wp-block-heading has-text-align-left\"><a></a><a></a><a>Abstract</a></h2>\n\n<p class=\"has-text-align-left\" dir=\"ltr\">This project aims to help students learn programming languages using the Filters framework. This is done by linking the application to the W3schools educational website to facilitate the sequence of courses, in addition to videos from several links. The application is also linked to OpenAI's GPT-Turbo-3.5 model using an experimental API to provide code consulting. The application supports a login system that allows users to access as students or teachers. An examination system can also be built with the ability to add notes to students by teachers to enhance interaction and communication within the virtual learning environment.</p>\n\n<p class=\"has-text-align-left\" dir=\"ltr\">Keywords: Education, Platform, Technology, Students, Career, Success, Interaction.</p>\n\n<h2 class=\"wp-block-heading\" id=\"h-مخطط-المشروع\">مخطط المشروع:</h2>\n\n<figure class=\"wp-block-image size-large\"><!--IMG:0--></figure>\n\n<h2 class=\"wp-block-heading\" id=\"h-مخطط-حالات-الاستخدام\">مخطط حالات الاستخدام:</h2>\n\n<figure class=\"wp-block-image size-large\"><!--IMG:1--></figure>\n\n<h2 class=\"wp-block-heading\" id=\"h-مخطط-الصفوف\">مخطط الصفوف:</h2>\n\n<figure class=\"wp-block-image size-large\"><!--IMG:2--></figure>\n\n<h2 class=\"wp-block-heading\" id=\"h-الجزء-العملي\">الجزء العملي:</h2>\n\n<h2 class=\"wp-block-heading\" id=\"h-لوحة-التحكم-laravel\"><a>لوحة التحكم </a>Laravel:</h2>\n\n<p> تم بناء موقع Academy LMS باستخدام إطار العمل Laravel يوفر الموقع مجموعة من الدروس والفيديوهات التفاعلية التي تستهدف المتعلمين من جميع المستويات، سواء كانوا مبتدئين أو محترفين مما يجعل تجربة التعلم سلسة وفعّالة كما يمكن المدرسين من التفاعل والتعديل والاضافة وغيره داخل الموقع بينما يمكن الطلبة من التصفح والقاء نظرة.</p>\n\n<p>ميزة نتائج البحث في التطبيق، حيث يتمكن المتعلمون من تطبيق الفلاتر والبحث عن الدورات للعثور على النتائج الأكثر ملاءمة، والمعروضة في صفحة منظمة لعرض الدورات. الميزات تتضمن الإكمال التلقائي، واجهة مستخدم بديهية، وخيارات البحث الشائعة. هذه العناصر تساهم في تحسين تجربة المستخدم من خلال تسهيل الوصول إلى الدورات المناسبة وتعزيز كفاءة عملية البحث.</p>\n\n<h2 class=\"wp-block-heading\" id=\"h-لقطات-شاشة-من-لوحة-التحكم\">لقطات شاشة من لوحة التحكم</h2>\n\n<figure class=\"wp-block-image size-large\"><!--IMG:3--></figure>\n\n<figure class=\"wp-block-image size-full\"><!--IMG:4--></figure>\n\n<figure class=\"wp-block-image size-large\"><!--IMG:5--></figure>\n\n<figure class=\"wp-block-image size-large\"><!--IMG:6--></figure>\n\n<h2 class=\"wp-block-heading\" id=\"h-لقطات-شاشة-من-تطبيق-الموبايل\">لقطات شاشة من تطبيق الموبايل:</h2>\n\n<figure class=\"wp-block-image aligncenter size-large\"><!--IMG:7--></figure>\n\n<figure class=\"wp-block-image aligncenter size-large is-resized\"><!--IMG:8--></figure>\n\n<h2 class=\"wp-block-heading\" id=\"h-الخاتمة\">الخاتمة:</h2>\n\n<p>ختامًا، يعكس هذا المشروع التزامنا بتقديم حل تعليمي مبتكر وفعّال للطلاب الخريجين الذين يواجهون تحديات في الانتقال من البيئة الأكاديمية إلى سوق العمل. من خلال توفير منصة تعليمية إلكترونية متكاملة تعتمد على أسس نظرية متينة مثل نظريات التعلم البنائي والنشط وتصميم التعلم والاعتماد على التقنية، نسعى لتمكين الطلاب من اكتساب المهارات والمعرفة العملية الضرورية للنجاح في مجالاتهم المهنية. تُظهر النتائج الأولية نجاح التطبيق في تعزيز تجربة التعلم وتقديم محتوى تفاعلي وذو جودة عالية يلبي احتياجات الطلاب المتنوعة.</p>",
+  "images": [
+   {
+    "i": 0,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-7-718x1024.png",
+    "context": "مخطط المشروع:"
+   },
+   {
+    "i": 1,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-8-732x1024.png",
+    "context": "مخطط حالات الاستخدام:"
+   },
+   {
+    "i": 2,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-9-793x1024.png",
+    "context": "مخطط الصفوف:"
+   },
+   {
+    "i": 3,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-1-1024x578.png",
+    "context": "لقطات شاشة من لوحة التحكم"
+   },
+   {
+    "i": 4,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-2.png",
+    "context": "لقطات شاشة من لوحة التحكم"
+   },
+   {
+    "i": 5,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-3-1024x587.png",
+    "context": "لقطات شاشة من لوحة التحكم"
+   },
+   {
+    "i": 6,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-4-1024x580.png",
+    "context": "لقطات شاشة من لوحة التحكم"
+   },
+   {
+    "i": 7,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-5-535x1024.png",
+    "context": "لقطات شاشة من تطبيق الموبايل:"
+   },
+   {
+    "i": 8,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-6-559x1024.png",
+    "context": "لقطات شاشة من تطبيق الموبايل:"
+   }
+  ]
+ },
+ {
+  "slug": "تصميم-نظارة-تساعد-المكفوفين-على-الرؤي",
+  "date": "2024-10-06",
+  "path": "/2024/10/06/تصميم-نظارة-تساعد-المكفوفين-على-الرؤي/",
+  "url": "/2024/10/06/%D8%AA%D8%B5%D9%85%D9%8A%D9%85-%D9%86%D8%B8%D8%A7%D8%B1%D8%A9-%D8%AA%D8%B3%D8%A7%D8%B9%D8%AF-%D8%A7%D9%84%D9%85%D9%83%D9%81%D9%88%D9%81%D9%8A%D9%86-%D8%B9%D9%84%D9%89-%D8%A7%D9%84%D8%B1%D8%A4%D9%8A/",
+  "title": "تصميم نظارة تساعد المكفوفين على الرؤية",
+  "cats": [
+   "arduino",
+   "esp32cam",
+   "برمجة",
+   "هاردوير"
+  ],
+  "tags": [
+   "هاردوير",
+   "برمجة",
+   "ArduinoC",
+   "Arduino",
+   "ESP32CAM"
+  ],
+  "excerpt": "يهدف هذا المشروع إلى تصميم وتنفيذ نظام نظارة ذكية لمساعدة الأشخاص المكفوفين على التنقل والتفاعل مع البيئة المحيطة بهم بشكل أكثر فعالية واستقلالية. تعتمد النظارة الذكية على تقنيات…",
+  "minutes": 16,
+  "feature_real": null,
+  "body": "<p dir=\"ltr\">Designing Glasses that Help Blind People to See</p>\n\n<h2 class=\"wp-block-heading\" id=\"h-جدول-المصطلحات\"><a>جدول المصطلحات</a></h2>\n\n<figure class=\"wp-block-table\"><table class=\"has-fixed-layout\"><tbody><tr><td><strong>الشرح</strong><strong></strong></td><td><strong>الاختصار</strong><strong></strong></td></tr><tr><td>Artificial Intelligence: تقنية تصميم نظم حاسوبية قادرة على التعلم واتخاذ القرارات.</td><td>AI</td></tr><tr><td>Machine Learning: فرع من الذكاء الصنعي يركز على تطوير خوارزميات تتعلم من البيانات.</td><td>ML</td></tr><tr><td>You Only Look Once: خوارزمية تستخدم في التعرف على الأجسام وتحديدها في الصور.</td><td>YOLO</td></tr><tr><td>ESP32 Camera: وحدة كاميرا متقدمة تستخدم في التقاط الصور.</td><td>ESP CAM 32</td></tr><tr><td>Arduino: منصة إلكترونية مفتوحة المصدر تستخدم للتحكم في الأجهزة.</td><td>Arduino</td></tr><tr><td>MP3 Mini Module: وحدة لتشغيل الملفات الصوتية المسجلة مسبقاً.</td><td>MP3 mini</td></tr><tr><td>Secure Digital Card: بطاقة تُستخدم لتخزين البيانات كالملفات الصوتية.</td><td>SD Card</td></tr></tbody></table></figure>\n\n<h2 class=\"wp-block-heading\"><a>ملخص</a></h2>\n\n<p>يهدف هذا المشروع إلى تصميم وتنفيذ نظام نظارة ذكية لمساعدة الأشخاص المكفوفين على التنقل والتفاعل مع البيئة المحيطة بهم بشكل أكثر فعالية واستقلالية. تعتمد النظارة الذكية على تقنيات الذكاء الصنعي المتقدمة لتحليل البيانات البصرية الملتقطة بوساطة كاميرا ESP CAM 32 وتحويل هذه البيانات إلى إشارات صوتية مفهومة. يتم توصيل هذه الإشارات الصوتية للمستخدمين، مما يمكنهم من فهم البيئة المحيطة بهم والاستجابة لها. يتكون النظام من عدة مكونات رئيسة: كاميرا ESP CAM 32 لالتقاط البيانات البصرية في الوقت الفعلي، خادم يقوم بتشغيل خوارزمية YOLO (You Only Look Once) باستخدام لغة البرمجة بايثون لتحليل وتحديد الأجسام، وحدة تحكم Arduino للإدارة والتحكم في تدفق البيانات بين المكونات المختلفة، وحدة MP3 mini لتشغيل الملفات الصوتية المسجلة مسبقاً، ومكبر صوت لتوصيل المعلومات السمعية إلى المستخدم. يتم تخزين الملفات الصوتية على بطاقة SD وتحتوي على وصف تفصيلي للأجسام والمعالم التي تم تحديدها. تبدأ العملية بالتقاط كاميرا ESP CAM 32 للبيانات البصرية وإرسالها إلى الخادم عبر عنوان IP. يقوم الخادم بمعالجة هذه البيانات باستخدام خوارزمية YOLO لتحديد وتصنيف الأجسام في محيط المستخدم. ثم تُرسل النتائج إلى وحدة التحكم Arduino، التي تقوم بتشغيل وحدة MP3 mini لتشغيل الملفات الصوتية المناسبة من بطاقة SD. يقوم مكبر الصوت بإخراج هذه الإشارات السمعية، مما يساعد المستخدم على التنقل والتفاعل مع البيئة المحيطة بشكل فعال ومستقل.</p>\n\n<p><strong>كلمات مفتاحية:</strong> نظارة ذكية، المكفوفين، الذكاء الصنعي، التعلم الآلي، الشبكات العصبونية، كاميرا ESP CAM 32، خوارزمية YOLO، الأردوينو.</p>\n\n<h2 class=\"wp-block-heading has-text-align-left\"><a>Abstract</a></h2>\n\n<p dir=\"ltr\">This project aims to design and implement a smart glasses system to aid visually impaired individuals in navigating and interacting with their surroundings more effectively and independently. The smart glasses leverage advanced artificial intelligence (AI) techniques to analyze visual data captured by an ESP CAM 32 camera and convert this data into comprehensible auditory signals. These auditory cues are then conveyed to the users, enabling them to understand and respond to their environment. The system comprises several key components: an ESP CAM 32 for real-time visual data capture, a server running YOLO (You Only Look Once) algorithm in Python for object detection and analysis, an Arduino microcontroller for managing data flow between components, an MP3 mini module for playing pre-recorded audio files, and a speaker to deliver auditory information to the user. The audio files, stored on an SD card, provide detailed descriptions of the detected objects and landmarks. The process begins with the ESP CAM 32 capturing visual data and transmitting it to the server via an IP address. The server processes this data using the YOLO algorithm to identify and classify objects in the user's vicinity. The results are then sent to the Arduino microcontroller, which triggers the MP3 mini module to play the corresponding audio files from the SD card. The speaker outputs these auditory signals, guiding the user through their environment. The primary objective of this project is to create an innovative technological tool that enhances the independence and quality of life for visually impaired individuals.</p>\n\n<p dir=\"ltr\"><strong>Keywords:</strong> Smart Glasses, Visually Impaired, Artificial Intelligence, Machine Learning, Neural Networks, ESP CAM 32 Camera, YOLO Algorithm, Arduino, MP3 mini, SD Card</p>\n\n<h2 class=\"wp-block-heading\"><a></a><a>الهدف من المشروع</a></h2>\n\n<p>هو تطوير نظارة ذكية مزودة بتقنيات متقدمة لمساعدة الأشخاص المكفوفين على التنقل والتفاعل مع البيئة المحيطة بشكل أكثر فاعلية واستقلالية.</p>\n\n<p>يهدف هذا المشروع إلى استخدام الذكاء الصنعي لتحليل البيانات البصرية الملتقطة عن طريق كاميرا ESP CAM 32، ومن ثم تحويل هذه البيانات إلى إشارات صوتية مفهومة يمكن للمستخدمين المكفوفين استيعابها واستخدامها لتوجيه تحركاتهم وتفاعلاتهم.</p>\n\n<p>من خلال هذا المشروع، سيتم توفير أداة تكنولوجية تساهم في تعزيز قدرات الأشخاص المكفوفين على الاعتماد على أنفسهم وتحسين جودة حياتهم.</p>\n\n<h2 class=\"wp-block-heading\"><a>مشكلة البحث</a></h2>\n\n<p>يواجه الأشخاص المكفوفون تحديات كبيرة في التنقل والتفاعل مع البيئة المحيطة بهم نظرًا لعدم قدرتهم على رؤية المعالم البصرية التي يعتمد عليها معظم الأفراد في حياتهم اليومية.</p>\n\n<p>على الرغم من توفر بعض الأدوات المساعدة مثل العصي البيضاء والكلاب المرشدة، فإن هذه الحلول لا توفر دائمًا الدعم الكافي لتحقيق استقلالية كاملة لهؤلاء الأفراد.</p>\n\n<p>التكنولوجيا الحديثة، وخاصة الذكاء الصنعي، تقدم فرصًا جديدة لتحسين حياة المكفوفين من خلال توفير أدوات أكثر تطورًا ودقة.</p>\n\n<p>ومع ذلك، فإن تطوير جهاز يمكنه تحليل البيانات البصرية وتحويلها إلى إشارات صوتية مفهومة لا يزال يمثل تحديًا كبيرًا.</p>\n\n<p>تكمن مشكلة البحث في كيفية تصميم وتنفيذ نظارة ذكية مزودة بكاميرا ESP CAM 32 وتقنيات الذكاء الصنعي لتحليل البيانات البصرية في الوقت الفعلي، ومن ثم تحويل هذه البيانات إلى إشارات صوتية تساعد المكفوفين على التنقل والتفاعل مع بيئتهم بشكل فعال ومستقل.</p>\n\n<p>يتطلب هذا إيجاد حلول تقنية للتعرف على الأجسام والمعالم المختلفة بدقة عالية، وتقديم المعلومات الصوتية بطريقة سريعة ومفهومة للمستخدمين، بالإضافة إلى ضمان سهولة استخدام الجهاز وملاءمته لاحتياجات المكفوفين.</p>\n\n<h2 class=\"wp-block-heading\"><a></a><a>1.1 مقدمة</a></h2>\n\n<p>تطبيق الذكاء الصنعي يلعب دورًا حاسمًا في مساعدة الأشخاص المكفوفين على الوصول إلى المحتوى البصري وتسهيل حياتهم اليومية.</p>\n\n<p>تقدر منظمة الصحة العالمية أن عدد الأشخاص الذين لديهم ضعف في البصر يبلغ 285 مليون شخص (65% منهم أعمارهم تزيد عن 50 عاماً)، مستعينة بذلك بأحدث الدراسات في هذا المجال. وتقول المنظمة أن 246 مليون من هؤلاء يعانون من ضعف في الرؤية (63% منهم أعمارهم تزيد عن 50 عاما) و39 مليون يقدر إصابتهم بالعمى (82% منهم أعمارهم تزيد عن 50 عاما).</p>\n\n<p>&nbsp;يواجه الأشخاص المكفوفون صعوبات في الوصول إلى المعلومات المتاحة في المدارس والجامعات والعمل وحتى في المنزل، وبالتالي يحتاجون إلى مساعدة لتحويل المحتوى البصري إلى نص قابل للقراءة باللغة العربية.</p>\n\n<p>تطبيقات الذكاء الصنعي مثل تطبيقات النصوص إلى كلام وتطبيقات التعرف على الصوت يمكن أن تساعد على تحويل المحتوى البصري إلى نصوص قابلة للقراءة باللغة العربية.</p>\n\n<p>كما يمكن لتطبيقات الذكاء الصنعي أن تحسن جودة حياة الأشخاص المكفوفين عن طريق تحسين الدقة والسرعة في الكشف عن الصور وتحويلها إلى نصوص قابلة للقراءة باللغة العربية. وبالتالي، فإن تطبيق الذكاء الصنعي يمكن أن يساعد على توفير مساعدة فعالة للأشخاص المكفوفين وتحسين جودة حياتهم اليومية.</p>\n\n<p>كما يظهر الشكل (‏1.1) تصميم تم إنشاؤه باستخدام الذكاء الصنعي لتصور المشروع.</p>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:0--></figure>\n\n<h2 class=\"wp-block-heading\"><a></a><a>1.1 التعلم الآلي والذكاء الصنعي</a></h2>\n\n<p>يعد التعلم الآلي والذكاء الصنعي من أكثر المفاهيم انتشارًا في الوقت الحالي، إذ أنهما يشكلان عصب حيوي في تقنيات الحوسبة الحديثة. يقوم التعلم الآلي على تصميم نظم حاسوبية قادرة على التعلم من البيانات بشكل مستقل، وتحسين أدائها بشكل تلقائي عندما يتلقى النظام مزيدًا من البيانات، وتستخدم هذه التقنية في مجالات مثل التوقعات والتصنيف والتحليل والتعرف.</p>\n\n<p>بالمثل، يستخدم الذكاء الصنعي لتطوير النظم الحاسوبية التي تستطيع التفكير والتعرف على الأنماط والمعالجة الذاتية واتخاذ القرارات. ويمكن استخدام الذكاء الصنعي في مجالات مختلفة مثل الصحة والتجارة الإلكترونية والترفيه والتعليم.</p>\n\n<h3 class=\"wp-block-heading\"><a></a><a>1.1.1 أنواع التعلم الآلي وفوائده</a></h3>\n\n<p>تعتبر التكنولوجيا المتقدمة من أهم العوامل التي تدعم التقدم الاقتصادي والاجتماعي، ومن أهم هذه التقنيات هو التعلم الآلي والذكاء الصنعي. ويمكن تقسيم التعلم الآلي إلى عدة أنواع رئيسية، والتي تشمل:</p>\n\n<p>1- التعلم الآلي الضعيف: وهو نوع من التعلم يتم فيه تدريب النظام على مجموعة محددة من البيانات، ويستطيع بعد ذلك التنبؤ بقيمة جديدة استناداً إلى القواعد المستخلصة من تلك البيانات.</p>\n\n<p>2- التعلم الآلي العميق: وهو تعلم يستخدم شبكات عصبونية لتحليل وفهم البيانات، ويعتبر أكثر تعقيداً وأكثر فعالية من التعلم الآلي الضعيف، ويستخدم بشكل واسع في مجالات مثل التصنيع والطب والروبوتات والتعليم.</p>\n\n<p>وتعتبر فوائد التعلم الآلي كثيرة، فهو يمكن أن يحل مشاكل عديدة في مجالات مختلفة، منها:</p>\n\n<p>1- الكشف المبكر عن الأمراض: حيث يمكن استخدام التعلم الآلي لتحليل البيانات الطبية وتشخيص الأمراض في مراحل مبكرة.</p>\n\n<p>2- التنبؤ بالمخاطر: حيث يمكن استخدام التعلم الآلي لتحليل البيانات والتنبؤ بالمخاطر في مجالات مثل التمويل والتأمين.</p>\n\n<p>3- تحسين تجربة المستخدم: حيث يمكن استخدام التعلم الآلي في تحليل سلوك المستخدمين وتحسين تجربتهم في المواقع الإلكترونية والتطبيقات.</p>\n\n<h2 class=\"wp-block-heading\"><a></a><a>1.2 الشبكات العصبونية</a></h2>\n\n<p>تُعد الشبكات العصبونية نموذجًا للتعلم الآلي يستوحي فكرته من الدماغ البشري، حيث تتألف الشبكات العصبونية من عدة طبقات متصلة بعضها ببعض، وتستخدم الشبكات العصبونية لمعالجة البيانات واستخراج المعلومات منها. يتم تدريب الشبكات العصبونية على البيانات المتاحة، وبعد ذلك يتم استخدامها لإجراء التنبؤات والتصنيفات والتعرف على الأشياء والأنماط.</p>\n\n<p>تتميز الشبكات العصبونية بالقدرة على التعلم الذاتي، والتكيف مع التغييرات في البيانات المتاحة، كما أنها تتميز بالقدرة على استخلاص الأنماط المعقدة والعلاقات غير الخطية بين البيانات، وتتميز أيضًا بالقدرة على التعامل مع الضوضاء والأخطاء في البيانات.</p>\n\n<p>تستخدم الشبكات العصبونية الشكل (2.1) في مجالات عديدة مثل التعرف على الكلام والنصوص والصور، والتحكم في الروبوتات والمركبات، والتنبؤ بالأحداث المستقبلية والتحليل الإحصائي، وأيضًا في تصميم الألعاب والتفاعل الإنسان-الحاسوب.</p>\n\n<figure class=\"wp-block-image size-full\"><!--IMG:1--></figure>\n\n<p><a><strong>الشكل (</strong></a><strong>‏2</strong><strong>.</strong><strong>1</strong><strong>): الشبكة العصبونية العميقة </strong><strong>DNN</strong><strong>.</strong><strong></strong></p>\n\n<p>يمكن استخدام تقنيات الرؤية الحاسوبية في العديد من المجالات، مثل التعرف على الصور والأشخاص والأشياء، والتحقق من الهوية، والأمن، والطب، وتحسين تجربة المستخدم، والتصوير الفوتوغرافي، والتحكم في الروبوتات. ويعد تطبيق التعرف على الصور والأشخاص من أكثر الاستخدامات الشائعة لتقنيات الرؤية الحاسوبية، حيث يتم استخدامه في التعرف على الوجوه وتصنيفها وتتبعها وتحديدها.</p>\n\n<p>تتطلب تقنيات الرؤية الحاسوبية العمل بشكل متزامن بين عدة تقنيات مختلفة، مثل الشبكات العصبونية العميقة والتعلم الآلي ومعالجة الصور. ويمكن استخدامها لتحليل الصور والفيديوهات بشكل دقيق وفعال، وهي تقنية حيوية في عالم التصوير والمعالجة الرقمية.</p>\n\n<h2 class=\"wp-block-heading\"><a></a><a>1.3 تقنيات التعلم العميق</a></h2>\n\n<p>تقنيات التعلم العميق هي فرع من فروع الذكاء الصنعي يستخدم الشبكات العصبونية العميقة لتدريب النظم على استخراج المعلومات من البيانات الكبيرة والمتنوعة. ويعد هذا النوع من التعلم أكثر تطورًا وتعقيدًا من التعلم الآلي ، حيث يمكن للشبكات العصبونية العميقة تعلم التمثيلات المستوحاة من البيانات واستخدامها لإنشاء نماذج تنبؤية ومتقدمة.</p>\n\n<p>يتم تدريب الشبكات العصبونية العميقة على البيانات باستخدام خوارزميات التعلم الآلي مثل الشبكات العصبونية الصنعية والشبكات العصبونية التكرارية والشبكات العصبونية المتعددة الطبقات. ويمكن استخدام هذه التقنيات في مجالات مختلفة مثل التعلم الآلي، والمعالجة اللغوية الطبيعية، وتحليل الصور والفيديو، وتحليل الصوت والنص.</p>\n\n<p>تتميز تقنيات التعلم العميق بفوائد عدة، من بينها قدرتها على التعامل مع البيانات الكبيرة والمتنوعة، وتحسين دقة النماذج التنبؤية والتصنيفية، وتحسين الأداء في المهام الروتينية والمعقدة. كما يمكن استخدام تقنيات التعلم العميق في تطوير التطبيقات والأنظمة الذكية المتقدمة في مجالات مختلفة مثل الروبوتات والمركبات الذاتية القيادة والرعاية الصحية.</p>\n\n<h2 class=\"wp-block-heading\"><a></a><a>1.4 تدريب المودل باستخدام الذكاء الصنعي</a></h2>\n\n<p>تدريب المودل باستخدام الذكاء الصنعي هو عملية تعليم الحاسوب على التعرف على الأنماط الموجودة في البيانات باستخدام مجموعة من الخوارزميات والتقنيات المختلفة التي تمكنه من الاستدلال والتنبؤ والتصنيف. يتم تعليم الحاسوب عن طريق تغذية النظام بمجموعة كبيرة من البيانات المسماة بالبيانات التدريبية، ومن خلال معالجة هذه البيانات يتم بناء نموذج للتعرف على الأنماط الجديدة التي يتم تقديمها للنظام.</p>\n\n<p>يعتمد تدريب المودل باستخدام الذكاء الصنعي على الشبكات العصبونية الصنعية والتي تعد أحد أشهر تقنيات التعلم العميق. يتم بناء هذه الشبكات بشكل مشابه لعملية بناء الجهاز العصبي البشري، حيث تتكون من طبقات من العقد الصغيرة المرتبطة ببعضها البعض والتي تعمل على معالجة البيانات بشكل موازٍ. يتم تدريب هذه الشبكات عن طريق إدخال مجموعة من البيانات التدريبية ومقارنة نتائج النظام مع النتائج المعروفة سلفاً، وعلى أساس هذه المقارنة يقوم النظام بتعديل معاملات شبكاته لتحسين أداء النظام في المرات اللاحقة.</p>\n\n<h2 class=\"wp-block-heading\"><a>1.5 الرؤية الحاسوبية</a></h2>\n\n<p>يبين الشكل (2.2) مبدأ الرؤية الحاسوبية هي حقل متقدم من مجالات الذكاء الصنعي وعلوم الحاسب، يهدف إلى تمكين الآلات من فهم وتحليل الصور والفيديوهات بنفس الطريقة التي يقوم بها البشر. تعتبر الرؤية الحاسوبية واحدة من أكثر المجالات تطورًا وإثارة في العصر الرقمي الحديث، حيث تساهم في تحسين وتطوير العديد من التطبيقات العملية والصنعية.</p>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:2--></figure>\n\n<p><a><strong>الشكل (</strong></a><strong>‏2</strong><strong>.</strong><strong>2</strong><strong>): الرؤية الحاسوبية.</strong><strong></strong></p>\n\n<p><strong>المفاهيم الأساسية:</strong></p>\n\n<p>الرؤية الحاسوبية تعتمد على مجموعة متنوعة من المفاهيم الأساسية مثل معالجة الصور، وتحليل الأنماط، والتعرف على الأجسام، وتقدير الحركة، وإعادة بناء المشاهد ثلاثية الأبعاد. تتضمن معالجة الصور تقنيات لتحسين جودة الصورة، واستخراج المعلومات المهمة منها، مثل الكشف عن الحواف والتعرّف على الأشكال. أما تحليل الأنماط فيركز على تصنيف العناصر واكتشاف الأنماط المتكررة داخل الصور.</p>\n\n<p><strong>التطبيقات العملية:</strong></p>\n\n<p>التطبيقات العملية للرؤية الحاسوبية واسعة ومتنوعة، وتشمل مجالات مثل:</p>\n\n<p>الطب: حيث تُستخدم في تحليل الصور الطبية مثل الأشعة السينية والتصوير بالرنين المغناطيسي لاكتشاف الأمراض ومتابعة تطور العلاج.</p>\n\n<p>السيارات ذاتية القيادة: تعتمد هذه السيارات على الرؤية الحاسوبية لفهم البيئة المحيطة، التعرف على العوائق، قراءة إشارات المرور، وتحديد المسارات الآمنة.</p>\n\n<p>الأمن والمراقبة: تُستخدم الرؤية الحاسوبية في أنظمة المراقبة الذكية لتحليل الفيديوهات واكتشاف السلوكيات المشتبه بها، والتعرف على الوجوه في الأماكن العامة.</p>\n\n<p>التجارة الإلكترونية: تمكن تقنيات الرؤية الحاسوبية من تحسين تجربة المستخدم من خلال تطبيقات مثل التعرف على المنتجات، وتقديم توصيات مخصصة بناءً على تحليل الصور.</p>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:3--></figure>\n\n<p><a><strong>الشكل (</strong></a><strong>‏2</strong><strong>.</strong><strong>3</strong><strong>): تطبيقات الرؤية الحاسوبية.</strong><strong></strong></p>\n\n<p><strong>التقنيات الحديثة:</strong></p>\n\n<p>يتقدم مجال الرؤية الحاسوبية بسرعة بفضل التطورات في تقنيات التعلم العميق والشبكات العصبونية الصنعية. تعتبر خوارزميات التعلم العميق، مثل الشبكات العصبونية التلافيفية (CNNs)، أدوات قوية لتحليل الصور والتعرف على الأنماط المعقدة. هذه الخوارزميات قادرة على التعلم من كميات كبيرة من البيانات وتحسين دقتها باستمرار.</p>\n\n<p><strong>التحديات والآفاق المستقبلية:</strong></p>\n\n<p>على الرغم من التطورات الكبيرة، هناك تحديات مستمرة تواجه الرؤية الحاسوبية، منها التعامل مع الصور في بيئات معقدة أو ظروف إضاءة سيئة، والتعرف على الأجسام في زوايا مختلفة أو حالات تشويش. كما أن الحاجة إلى كميات هائلة من البيانات لتدريب النماذج يمكن أن تكون عائقًا.</p>\n\n<p>من ناحية أخرى، الآفاق المستقبلية للرؤية الحاسوبية مشرقة، حيث يمكن توقع المزيد من التطورات التي ستزيد من دقة وكفاءة الأنظمة. من المتوقع أن تندمج الرؤية الحاسوبية بشكل أكبر مع تقنيات أخرى مثل الواقع المعزز والواقع الافتراضي، مما يفتح آفاقًا جديدة في مجالات الترفيه والتعليم والصناعة.</p>\n\n<p><strong>الخلاصة:</strong></p>\n\n<p>الرؤية الحاسوبية تمثل مجالًا حيويًا ومتطورًا يساهم في تحويل الطريقة التي نفهم بها العالم من حولنا ونتفاعل معه. بفضل الابتكارات المستمرة والتطورات التكنولوجية، يُتوقع أن تظل الرؤية الحاسوبية في طليعة الابتكار، مقدمةً حلولًا ذكية ومستدامة لتحديات متعددة في حياتنا اليومية.<br></p>\n\n<h2 class=\"wp-block-heading\"><a>1.1 الأردوينو أونو</a></h2>\n\n<p>الأردوينو أونو هو لوح تطوير مفتوح المصدر يُستخدم على نطاق واسع في مشاريع الأتمتة والروبوتات نظرًا لسهولة استخدامه ومرونته. يتميز بمعالج ATmega328، ويوفر 14 مدخل/مخرج رقمي و6 مداخل للتناظرية، مما يجعله مناسبًا لجمع البيانات والتحكم في المحركات والمستشعرات. يتميز أيضًا بوجود مبرمج USB مدمج، مما يسهل برمجته من خلال الكمبيوتر بلغة ArduinoC مع توفير مكتبة واسعة لدعم الأجهزة المتنوعة.</p>\n\n<p>يُستخدم الأردوينو أونو بشكل فعال في التعليم والبحوث نظرًا لقدرته على تسهيل عملية تعلم أساسيات البرمجة والإلكترونيات. يمكن للمستخدمين تطوير أنظمة معقدة من خلال توصيل الأردوينو بمجموعة متنوعة من الأجهزة الإلكترونية مثل الحساسات، المحركات، ووحدات العرض، مما يوفر منصة مثالية لتطوير مشاريع التحكم والأتمتة بكفاءة واقتصادية.</p>\n\n<p>الدوائر الكهربائية المستخدمة مع الأردوينو تعتمد عادةً على توصيلات بسيطة وأكواد برمجية يمكن تعديلها بسهولة لتلبية الحاجات المختلفة للمشروع، وهذه المرونة تجعل الأردوينو خيارًا ممتازًا لمشاريع متعددة الأغراض في مجالات الروبوتات والتحكم الآلي.</p>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:4--></figure>\n\n<p><a><strong>الشكل ( </strong></a><strong>‏3.1 ) مخطط تفصيلي لشريحة الأردوينو أونو.</strong></p>\n\n<h2 class=\"wp-block-heading\" id=\"h-1-2-البلوتوث-hc-05\"><a></a><a>1.2 البلوتوث </a>HC-05</h2>\n\n<p>الوحدة HC-05 هي واحدة من الأجهزة الشائعة المستخدمة لتوفير الاتصالات اللاسلكية بتقنية البلوتوث في مشاريع التحكم الآلي والأتمتة. تتميز بسهولة الاستخدام والتكامل مع الأردوينو وأنظمة المتحكمات الأخرى.</p>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:5--></figure>\n\n<p><strong>الشكل (‏3.2): مخطط لشريحة HC-05.</strong></p>\n\n<p>نلاحظ أن الجدول (1-3) يوضح المواصفات الفنية الرئيسة لوحدة البلوتوث HC-05.</p>\n\n<p><a><strong>الجدول (</strong></a><strong>‏3</strong><strong>‑</strong><strong>1</strong><strong>): المواصفات الفنية للشريحة </strong><strong>HC-05</strong><strong>.</strong></p>\n\n<figure class=\"wp-block-table\"><table class=\"has-fixed-layout\"><tbody><tr><td><strong>القيمة</strong><strong></strong></td><td><strong>المواصفة</strong><strong></strong></td></tr><tr><td>30mA &nbsp;نموذجي</td><td>تيار العمل</td></tr><tr><td>2.4 GHz إلى &nbsp;GHz2.48</td><td>تردد العمل</td></tr><tr><td>v2.0+EDR بلوتوث</td><td>البروتوكول المستخدم</td></tr><tr><td>تقنية إدارة الطاقة المتقدمة</td><td>وضع الطاقة</td></tr></tbody></table></figure>\n\n<p>وحدة HC-05 كما موضح ضمن الشكل (3.2) تدعم بروتوكول بلوتوث الإصدار 2.0+EDR (Enhanced Data Rate)، مما يسمح بنقل البيانات بسرعات أعلى تصل إلى 3 ميجابت في الثانية. كما أنها مزودة بميزات متقدمة لإدارة الطاقة، مما يجعلها خيارًا اقتصاديًا وفعالًا من حيث الطاقة للتطبيقات التي تتطلب اتصالاً لاسلكياً مستمراً أو متكرراً.</p>\n\n<h2 class=\"wp-block-heading\"><a>1.3 الشريحة </a>DFRobot DFPlayer Mini - MP3 Module</h2>\n\n<p>تُعتبر شريحة DFRobot DFPlayer Mini - MP3 Module ضمن الشكل (3.2) واحدة من الحلول المتقدمة والصغيرة لتشغيل الملفات الصوتية MP3 بشكل مستقل أو من خلال التحكم عبر ميكروكنترولر مثل Arduino. تتميز هذه الشريحة بالعديد من الخصائص التي تجعلها مثالية للاستخدام في المشاريع المدمجة والتفاعلية.</p>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:6--></figure>\n\n<p><a><strong>الشكل (</strong></a><strong>‏3</strong><strong>.</strong><strong>3</strong><strong>): شريحة </strong><strong>DFPlayer Mini</strong><strong>.</strong><strong></strong></p>\n\n<p><strong>الميزات:</strong></p>\n\n<p>تشغيل مستقل أو عن طريق ميكروكنترولر: يمكن للشريحة تشغيل الملفات الصوتية بشكل مستقل من خلال وحدة التحكم المدمجة، أو يمكن التحكم بها باستخدام أوامر تسلسلية من ميكروكنترولر مثل Arduino.</p>\n\n<p>دعم أنواع ملفات متعددة: تدعم تشغيل ملفات بصيغتي MP3 وWAV.</p>\n\n<p>تخزين الملفات: يمكنها قراءة الملفات الصوتية المخزنة على بطاقات الذاكرة MicroSD أو TF Card تصل سعتها إلى 32 جيجابايت.</p>\n\n<p>مستوى إخراج الصوت: توفر مخرج صوتي عالي الجودة يمكن توصيله مباشرة بسماعات صغيرة.</p>\n\n<p>التحكم في مستوى الصوت: يمكن التحكم بمستوى الصوت برمجياً من خلال الأوامر التسلسلية.</p>\n\n<p>المزايا التفاعلية: تدعم أوامر مثل تشغيل، إيقاف، إيقاف مؤقت، تشغيل الملف التالي أو السابق، وتكرار التشغيل.</p>\n\n<p><strong>الخصائص التقنية:</strong></p>\n\n<p>الجهد التشغيلي: تتطلب الشريحة جهد تشغيل من 3.2 إلى 5 فولت.</p>\n\n<p>تيار التشغيل: يبلغ تيار التشغيل النمطي حوالي 20 ميلي أمبير.</p>\n\n<p>مكبرات الصوت: تحتوي الشريحة على مكبرين صوتيين داخليين يمكنهما توفير خرج صوتي بقدرة تصل إلى 3 وات، مما يجعلها قادرة على تشغيل سماعات خارجية مباشرة بدون الحاجة إلى مكبرات صوت إضافية.</p>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:7--></figure>\n\n<p><a><strong>الشكل (</strong></a><strong>‏3</strong><strong>.</strong><strong>4</strong><strong>): اتصال شريحة </strong><strong>DFPlayer Mini</strong><strong> مع الأردوينو نانو.</strong><strong></strong></p>\n\n<p>واجهات الاتصال: تدعم الشريحة واجهة UART للتواصل التسلسلي مع الميكروكنترولر، بالإضافة إلى وجود دبابيس GPIO يمكن استخدامها لتشغيل ملفات صوتية معينة عند توصيلها بمفاتيح أو أزرار.</p>\n\n<p>حجم الشريحة: تتميز بحجم صغير يجعلها مناسبة للتطبيقات المدمجة، حيث يبلغ أبعادها حوالي 22 مم × 22 مم.</p>\n\n<p>بفضل هذه الميزات، تعتبر شريحة DFRobot DFPlayer Mini - MP3 Module خياراً ممتازاً لتطبيقات الصوت في المشاريع الإلكترونية، مما يسهل على المطورين إضافة وظيفة تشغيل الصوت إلى مشاريعهم بسهولة وفعالية.</p>\n\n<h2 class=\"wp-block-heading\"><a>1.4 الشريحة </a>ESP32-CAM</h2>\n\n<p>تُعد الشريحة ESP32-CAM من الحلول المدمجة والمتميزة لتطبيقات الرؤية الحاسوبية والاتصال اللاسلكي. تتميز هذه الشريحة بقدرتها على التقاط الصور والفيديوهات بالإضافة إلى إمكانيات معالجة البيانات البصرية والاتصال بشبكات Wi-Fi وبلوتوث، مما يجعلها مناسبة لتطبيقات متنوعة في مجالات المراقبة والأتمتة المنزلية والمشاريع التفاعلية تظهر ضمن الشكل (3.5).</p>\n\n<p><strong>الميزات:</strong></p>\n\n<p>معالج قوي: تعتمد الشريحة على معالج ESP32 من عائلة Xtensa® 32-bit LX6،</p>\n\n<p>الذي يحتوي على نواتين بتردد يصل إلى 240 ميجاهرتز، مما يوفر قدرة معالجة عالية لتطبيقات الذكاء الصنعي ومعالجة الصور.</p>\n\n<p>كاميرا مدمجة: تأتي الشريحة مع كاميرا OV2640 بدقة تصل إلى 2 ميجابكسل، وتدعم دقة تصوير تصل إلى 1600×1200 بكسل، مما يتيح التقاط صور وفيديوهات عالية الجودة.</p>\n\n<p>اتصال لاسلكي: تدعم الشريحة الاتصال بشبكات Wi-Fi بمعيار 802.11 b/g/n وبلوتوث 4.2، مما يسمح بنقل البيانات اللاسلكية والتحكم عن بعد.</p>\n\n<p>دعم بطاقة الذاكرة: تحتوي الشريحة على فتحة لبطاقة MicroSD يمكن استخدامها لتخزين الصور والفيديوهات مباشرة على الشريحة.</p>\n\n<p>واجهات متعددة: تدعم الشريحة العديد من الواجهات مثل UART، SPI، I2C، PWM، مما يتيح ربطها بسهولة مع أجهزة استشعار ومكونات أخرى.</p>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:8--></figure>\n\n<p><a><strong>الشكل (</strong></a><strong>‏3</strong><strong>.</strong><strong>5</strong><strong>): شريحة </strong><strong>ESP32 CAM</strong><strong>.</strong><strong></strong></p>\n\n<p><strong>الخصائص التقنية:</strong></p>\n\n<p>الجهد التشغيلي: تتطلب الشريحة جهد تشغيل من 3.3 فولت إلى 5 فولت.</p>\n\n<p>تيار التشغيل: يبلغ تيار التشغيل النمطي حوالي 160 ميلي أمبير، ويمكن أن يصل إلى 310 ميلي أمبير عند استخدام الاتصال اللاسلكي بشكل مكثف.</p>\n\n<p>ذاكرة فلاش وRAM: تحتوي الشريحة على 4 ميجابايت من ذاكرة الفلاش و520 كيلوبايت من SRAM، مما يوفر مساحة كافية لتخزين البرامج والبيانات.</p>\n\n<p>دبابيس GPIO: تحتوي الشريحة على 9 دبابيس GPIO يمكن استخدامها لتوصيل المكونات الخارجية والتحكم بها.</p>\n\n<p>حجم الشريحة: تتميز الشريحة بحجم صغير يبلغ حوالي 27 مم × 40.5 مم، مما يجعلها مناسبة للتطبيقات المدمجة.</p>\n\n<p><strong>الكاميرا المدمجة:</strong></p>\n\n<p>نوع الكاميرا: OV2640</p>\n\n<p>الدقة: تصل إلى 2 ميجابكسل (1600×1200 بكسل)</p>\n\n<p>دعم الدقة المتعددة: QCIF، CIF، VGA، SVGA، XGA، SXGA، UXGA</p>\n\n<p>استهلاك الطاقة: تستهلك الكاميرا تياراً منخفضاً، مما يساهم في تقليل إجمالي استهلاك الطاقة للشريحة.</p>\n\n<p>بفضل هذه الميزات، تُعد الشريحة ESP32-CAM خياراً ممتازاً لمشاريع الرؤية الحاسوبية، وإنترنت الأشياء (IoT)، والتطبيقات التي تتطلب اتصالاً لاسلكياً وقدرات معالجة متقدمة في حزمة صغيرة ومتكاملة.</p>\n\n<h2 class=\"wp-block-heading\"><a>1.1 YOLOv3 (You Only Look Once, Version 3)</a></h2>\n\n<p>هو نموذج شبكة عصبونية تلافيفية (CNN) يستخدم في التعرف على الأشياء واكتشافها في الصور والفيديوهات. يتميز YOLOv3 بسرعته ودقته مقارنة بالنماذج الأخرى، مما يجعله مناسبًا للتطبيقات في الزمن الحقيقي. فيما يلي شرح لخصائص ومواصفات YOLOv3:</p>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:9--></figure>\n\n<p><a><strong>الشكل (</strong></a><strong>‏3</strong><strong>.</strong><strong>7</strong><strong>): </strong><strong>YOLOv3</strong><strong>.</strong><strong></strong></p>\n\n<h2 class=\"wp-block-heading\"><a>1.1 المخطط الصندوقي</a></h2>\n\n<p>يوضح الشكل (‏4.1) المخطط الصندوقي لكيفية تكامل المكونات المختلفة لنظام النظارة الذكية، بدءًا من التقاط البيانات البصرية وحتى تقديم الإرشادات الصوتية للمستخدم المكفوف. يتم تحقيق ذلك من خلال التفاعل المنسق بين الكاميرا، معالجة الصور، وحدة التحكم Arduino، وشريحة MP3 Mini لإخراج الصوت.</p>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:10--></figure>\n\n<p><a></a><a><strong>الشكل (</strong></a><strong>‏4</strong><strong>.</strong><strong>1</strong><strong>): المخطط الصندوقي.</strong><strong></strong></p>\n\n<h2 class=\"wp-block-heading\"><a>1.1 المقارنة مع المشاريع المشابهة:</a></h2>\n\n<p><a>الجدول (</a>‏4‑1): مقارنة مشروعنا مع الدراسات السابقة</p>\n\n<figure class=\"wp-block-table\"><table class=\"has-fixed-layout\"><thead><tr><td>وجه المقارنة</td><td>المشروع الحالي</td><td>تطبيق Seeing AI</td><td>تطبيق Be My Eyes</td><td>تطبيق Lazarillo</td><td>تطبيق Signily</td></tr></thead><tbody><tr><td>لغة البرمجة المستخدمة</td><td>بايثون (Python)</td><td>سي شارب (C#)</td><td>جافا (Java)</td><td>جافا (Java)</td><td>جافا سكريبت (JavaScript)</td></tr><tr><td>الأجهزة المستخدمة</td><td>ESP32-CAM، Arduino، DFPlayer Mini</td><td>كاميرا الهاتف الذكي</td><td>كاميرا الهاتف الذكي</td><td>الهاتف الذكي</td><td>الهاتف الذكي</td></tr><tr><td>الخوارزميات المستخدمة</td><td>YOLOv3 للتعرف على الأجسام</td><td>خوارزميات التعرف على الصور والنصوص</td><td>خوارزميات الفيديو والتعرف على الألوان</td><td>خوارزميات الملاحة والتوجيه</td><td>خوارزميات التعرف على الإشارات</td></tr><tr><td>الهدف</td><td>مساعدة المكفوفين على التنقل باستخدام النظارات الذكية</td><td>مساعدة المكفوفين في التعرف على الأشياء والأماكن</td><td>مساعدة المكفوفين من خلال المتطوعين</td><td>مساعدة المكفوفين في التعرف على الأماكن والمواقع</td><td>مساعدة الصم في التواصل باستخدام الإشارة</td></tr><tr><td>طريقة تقديم المساعدة</td><td>تحويل البيانات البصرية إلى إشارات صوتية</td><td>تحويل النصوص المكتوبة إلى كلام مسموع</td><td>الاتصال المرئي بين المكفوفين والمتطوعين</td><td>توجيه المستخدمين بإشارات صوتية</td><td>تحويل الكلمات إلى إشارات مرئية</td></tr><tr><td>المتطلبات (الموارد)</td><td>كاميرا، خادم، وحدة تحكم، وحدة صوت، بطاقة SD</td><td>هاتف ذكي</td><td>هاتف ذكي</td><td>هاتف ذكي</td><td>هاتف ذكي</td></tr></tbody></table></figure>\n\n<p>يوضح الجدول (‏4‑1): مقارنة مشروعنا مع الدراسات السابقة وأوجه التشابه والاختلاف بينهم.</p>\n\n<h2 class=\"wp-block-heading\"><a></a><a>1.1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; الشكل النهائي للمشروع:</a></h2>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:11--></figure>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:12--></figure>\n\n<figure class=\"wp-block-image aligncenter size-full is-resized\"><!--IMG:13--></figure>",
+  "images": [
+   {
+    "i": 0,
+    "real": false,
+    "src": null,
+    "orig": "/assets/img/image-30.png",
+    "context": "1.1 مقدمة"
+   },
+   {
+    "i": 1,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-34.png",
+    "context": "1.2 الشبكات العصبونية"
+   },
+   {
+    "i": 2,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-35.png",
+    "context": "1.5 الرؤية الحاسوبية"
+   },
+   {
+    "i": 3,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-36.png",
+    "context": "1.5 الرؤية الحاسوبية"
+   },
+   {
+    "i": 4,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-37.png",
+    "context": "1.1 الأردوينو أونو"
+   },
+   {
+    "i": 5,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-38.png",
+    "context": "1.2 البلوتوث HC-05"
+   },
+   {
+    "i": 6,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-39.png",
+    "context": "1.3 الشريحة DFRobot DFPlayer Mini - MP3 Module"
+   },
+   {
+    "i": 7,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-40.png",
+    "context": "1.3 الشريحة DFRobot DFPlayer Mini - MP3 Module"
+   },
+   {
+    "i": 8,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-41.png",
+    "context": "1.4 الشريحة ESP32-CAM"
+   },
+   {
+    "i": 9,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-42.png",
+    "context": "1.1 YOLOv3 (You Only Look Once, Version 3)"
+   },
+   {
+    "i": 10,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-43.png",
+    "context": "1.1 المخطط الصندوقي"
+   },
+   {
+    "i": 11,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-31.png",
+    "context": "1.1      الشكل النهائي للمشروع:"
+   },
+   {
+    "i": 12,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-33.png",
+    "context": "1.1      الشكل النهائي للمشروع:"
+   },
+   {
+    "i": 13,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/10/image-32.png",
+    "context": "1.1      الشكل النهائي للمشروع:"
+   }
+  ]
+ },
+ {
+  "slug": "تصميم-وتنفيذ-نظام-حجوزات-طيران-باستخد",
+  "date": "2024-03-02",
+  "path": "/2024/03/02/تصميم-وتنفيذ-نظام-حجوزات-طيران-باستخد/",
+  "url": "/2024/03/02/%D8%AA%D8%B5%D9%85%D9%8A%D9%85-%D9%88%D8%AA%D9%86%D9%81%D9%8A%D8%B0-%D9%86%D8%B8%D8%A7%D9%85-%D8%AD%D8%AC%D9%88%D8%B2%D8%A7%D8%AA-%D8%B7%D9%8A%D8%B1%D8%A7%D9%86-%D8%A8%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF/",
+  "title": "تصميم وتنفيذ نظام حجوزات طيران باستخدام بطاقة RFID",
+  "cats": [
+   "uncategorized"
+  ],
+  "tags": [],
+  "excerpt": "المشكلة التي يتناولها المشروع هي التحديات المتعلقة بالأعباء الورقية والتعقيدات في نظام إدارة المسافرين في المطار. قبل تنفيذ النظام، كانت المعلومات تُسجل يدوياً أو تُحفظ على ورق، مما…",
+  "minutes": 4,
+  "feature_real": null,
+  "body": "<h2 class=\"wp-block-heading\" id=\"h-الملخص\"><a>الملخص</a></h2>\n\n<p>المشكلة التي يتناولها المشروع هي التحديات المتعلقة بالأعباء الورقية والتعقيدات في نظام إدارة المسافرين في المطار. قبل تنفيذ النظام، كانت المعلومات تُسجل يدوياً أو تُحفظ على ورق، مما أدى إلى تأخير وتعقيد في العمليات اليومية. باستخدام تقنية RFID ونظام إدارة البيانات باستخدام بايثون، تم التغلب على هذه المشكلة من خلال التخلص من الأوراق وتسريع عمليات الوصول إلى المعلومات. يُمكّن النظام إدارة المسافرين بشكل أكثر فعالية، مما يؤدي إلى توفير الوقت والجهد وتحسين مستوى الأمان والدقة في تتبع وإدارة بيانات المسافرين في المطار. يتضمن التصميم تنفيذ نظام RFID لتخصيص بطاقة لكل مسافر، ويتيح الوصول إلى قاعدة بيانات المسافرين من خلال واجهة مستخدم تم تصميمها بلغة البرمجة بايثون، مما يسهم في تحسين كفاءة نظام إدارة الطيران وتحقيق تطور في سرعة وأمان العمليات.</p>\n\n<h2 class=\"wp-block-heading has-text-align-left\" id=\"h-abstract\"><strong>Abstract</strong></h2>\n\n<p dir=\"ltr\">This project addresses the challenges associated with paper-based burdens and complexities in the passenger management system at airports. Prior to system implementation, information was manually recorded or stored on paper, leading to delays and intricacies in daily operations. By leveraging RFID technology and data management system using Python, this issue has been mitigated by eliminating paperwork and accelerating access to information. The system enables more efficient passenger management, resulting in time and effort savings, and enhancing security and accuracy in tracking and managing passenger data at airports. The design includes the implementation of an RFID system to allocate a card for each passenger, and provides access to the passenger database through a user interface designed in Python, thereby improving the efficiency of the aviation management system and achieving advancements in operational speed and security.</p>\n\n<h2 class=\"wp-block-heading\" id=\"h-الاختصارات\"><a>الاختصارات</a></h2>\n\n<figure class=\"wp-block-table\"><table><tbody><tr><td><strong>Radio Frequency Identification</strong></td><td><strong>RFID</strong><strong></strong></td></tr><tr><td><strong>Identification</strong><strong></strong></td><td><strong>ID</strong></td></tr><tr><td><strong>Low Frequency</strong><strong></strong></td><td><strong>LF</strong><strong></strong></td></tr><tr><td><strong>High Frequency</strong><strong></strong></td><td><strong>HF</strong><strong></strong></td></tr><tr><td><strong>Ultra-High Frequency</strong><strong></strong></td><td><strong>UHF</strong><strong></strong></td></tr><tr><td><strong>Proximity Coupling Device</strong><strong></strong></td><td><strong>&nbsp;(PCD)</strong><strong></strong></td></tr><tr><td><strong>Radio Frequency</strong><strong></strong></td><td><strong>&nbsp;(RF)</strong><strong></strong></td></tr><tr><td><strong>Proximity Integrated Circuit Card</strong><strong></strong></td><td><strong>(PICC)</strong><strong></strong></td></tr><tr><td><strong>International Standardization Organization</strong><strong></strong></td><td><strong>&nbsp;(ISO)</strong></td></tr><tr><td><strong>Universal Asynchronous Receive Transmute</strong><strong></strong></td><td><strong>UART</strong></td></tr><tr><td><strong>Sequential Query Language</strong></td><td><strong>SQL</strong></td></tr></tbody></table></figure>\n\n<h2 class=\"wp-block-heading\" id=\"h-مفهوم-المشروع\"><a><strong>مفهوم المشروع:</strong></a><strong></strong></h2>\n\n<p>مفهوم المشروع هو تصميم وتنفيذ نظام إدارة بيانات المسافرين في المطار باستخدام لغة البرمجة بايثون. يتم تحسين عمليات تتبع وإدارة المسافرين من خلال تقنية RFID، حيث يُخصص تعريف فريد لكل مسافر. يتيح النظام الوصول إلى معلومات المسافرين عبر واجهة مستخدم مصممة بلغة البرمجة بايثون، مما يزيل الأعباء الورقية ويسرع العمليات. يُعد هذا النظام تحسينًا فعّالًا لنظام إدارة الطيران، حيث يتيح تتبع دقيق وآمن للمسافرين، ويقدم تحسيناً في الكفاءة العامة لعمليات المطار.</p>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:0--></figure>\n\n<p class=\"has-text-align-center\"><a>الشكل </a>25 الواجهة الرئيسية للبرنامج.</p>\n\n<p>عند الضغط على زر \"المسافرين\" فإن ذلك يقود مباشرة إلى إظهار واجهة تحتوي قاعدة بيانات المسافرين المخزنة على الحاسب موضحة بالشكل 26 والتي من خلالها يمكن للمستخدم استعراض بيانات المسافرين وتعديلها وحفظها، ونلاحظ وجود حقلين مميزين في الواجهة وهما رقم التعريف وهو نفسه رقم البطاقة التي أرسلتها دارة ARDUINO &nbsp;إلى الحاسوب ويشكل المفتاح الرئيس في قاعدة البيانات هذه، والرقم الوطني وهو رقم مرتبط بالمسافر يجري إدخاله من قبل المستخدم، إضافة لحقول أخرى مثل رقم الهاتف وصلاحية جواز السفر...، كما تتيح هذه الواجهة إمكانية إضافة حالة الموافقة الأمنية للمسافر وحفظها على الحاسوب. يتواجد أيضاً بعض أزرار التحكم للتنقل ضمن الواجهة، كما نلاحظ وجود زر \"حفظ\" وهو زر لحفظ البيانات التي عدلّها المستخدم.</p>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:1--></figure>\n\n<p class=\"has-text-align-center\"><a>الشكل </a>26 واجهة بيانات المسافر</p>\n\n<p>نكون بذلك قد استعرضنا البرنامج المصمم ضمن المشروع، بقي أن نذكر أنه تم العمل عليه ضمن بيئة Anaconda وهي بيئة من عمل تتيح إمكانية البرمجة فيها بلغة PYTHON. ننتقل الآن إلى شرح خوارزميات عمل البرنامج وبنى قواعد المعطيات المستخدمة ضمنه.</p>\n\n<p><strong>واجهة إدارة الرحلات:</strong></p>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:2--></figure>\n\n<p class=\"has-text-align-center\"><a>الشكل </a>27 واجهة إدارة الرحلات</p>\n\n<p>يمكن خلال الواجهة اعداد بيانات جميع الرحلات من أجل ربطها مع المسافرين.</p>\n\n<h2 class=\"wp-block-heading\" id=\"h-مجلد-البرنامج\"><a>  مجلد البرنامج</a></h2>\n\n<p>نتناول ضمن هذه الفقرة مجلد عمل البرنامج فقبل تشغيله أول مرة وإدخال بيانات إلى البطاقة.</p>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:3--></figure>\n\n<p>بهذا نكون قد تناولنا القسم البرمجي من المشروع وشرحنا كيفية التحقق من وصل الدارة ARDUINO &nbsp;وعلى أية بوابة تسلسلية تم وصلها. وصفنا بعد ذلك قواعد البيانات المستخدمة في مشروعنا وكيفية ربطها مع بعضها وأهمية استخدام مفتاح رئيسي لكا سجل في هذه القواعد وطريقة اختياره.</p>\n\n<p>انتقلنا بعد ذلك لعرض واجهات البرنامج المصمم، لنذكر طريقة استعماله واستثماره، والخوارزميات التي تم من خلالها برمجته. وكنا قد ذكرنا أيضاً بعض أقسام الكود البرمجي الذي جرى تصميمه من أجل تحقيق البرنامج.</p>\n\n<h2 class=\"wp-block-heading\" id=\"h-الخاتمة\"><a> الخاتمة</a></h2>\n\n<p>&nbsp;قدمنا في هذا المشروع، دراسة مرجعية عن أنظمة RFID، وضحنا أهمية أنظمة RFID في العصر الحالي، وتحدثنا عن أنواعه وبرتوكوله.</p>\n\n<p>فدرسنا البرتوكول ISO-14443، وهو الميثاق المعتمد في آليات التخاطب اللاسلكي بين القارئ والبطاقة.</p>\n\n<p>قدمنا بعد ذلك البنية الوظيفية للمشروع، مع ذكر العناصر المستخدمة فيها وكيفية توصيلها مع بعضها، وأهمية كل منها، حيث شرحنا دارة قارئ RFID، ودارة UART ، موضحين أسباب اختيار هذه الدارات، وميزات كل منها.</p>\n\n<p>انقلنا بعدها لنوضح الجزء البرمجي الذي يتضمن تصميم برنامج على الحاسوب لتحقيق الاتصال مع دارة قارئ RFID، وعرض معلومات المسافرين، وشرحنا الخوارزميات التي صممناها لإدارة البرنامج.</p>\n\n<p>ووضحنا بعد ذلك سبل تطوير المشروع ونقله إلى الواقع العملي، وتكييفه باستخدامات متعددة مثل استخدامه في برنامج إدارة سجلات المرضى لمشفى.</p>\n\n<p>من أهم المشكلات التي عانينا منها، صعوبة توفير قارئ RFID، والبطاقات لذلك اكتفينا بطاقتين لعرض نتائجنا.</p>",
+  "images": [
+   {
+    "i": 0,
+    "real": false,
+    "src": null,
+    "orig": "/assets/img/image-5.png",
+    "context": "مفهوم المشروع:"
+   },
+   {
+    "i": 1,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/03/image-4.png",
+    "context": "مفهوم المشروع:"
+   },
+   {
+    "i": 2,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/03/image-6.png",
+    "context": "مفهوم المشروع:"
+   },
+   {
+    "i": 3,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/03/image-7.png",
+    "context": "مجلد البرنامج"
+   }
+  ]
+ },
+ {
+  "slug": "تصميم-وتنفيذ-ذراع-روبوتية",
+  "date": "2024-03-02",
+  "path": "/2024/03/02/تصميم-وتنفيذ-ذراع-روبوتية/",
+  "url": "/2024/03/02/%D8%AA%D8%B5%D9%85%D9%8A%D9%85-%D9%88%D8%AA%D9%86%D9%81%D9%8A%D8%B0-%D8%B0%D8%B1%D8%A7%D8%B9-%D8%B1%D9%88%D8%A8%D9%88%D8%AA%D9%8A%D8%A9/",
+  "title": "تصميم وتنفيذ ذراع روبوتية",
+  "cats": [
+   "uncategorized"
+  ],
+  "tags": [],
+  "excerpt": "تتناول فكرة مشروع التخرج تصميم وتنفيذ ذراع روبوتية على شكل ذراع روبوتية، وربطها بمتحكم Arduino. سيتم التحكم في حركة المحركات داخل الذراع باستخدام تقنيات معالجة الصور بواسطة تطبيق برمجي…",
+  "minutes": 2,
+  "feature_real": null,
+  "body": "<h2 class=\"wp-block-heading\" id=\"h-الملخص\">الملخص:</h2>\n\n<p>تتناول فكرة مشروع التخرج تصميم وتنفيذ ذراع روبوتية على شكل ذراع روبوتية، وربطها بمتحكم Arduino. سيتم التحكم في حركة المحركات داخل الذراع باستخدام تقنيات معالجة الصور بواسطة تطبيق برمجي تم بناؤه بلغة البرمجة بايثون. الهدف الرئيسي للمشروع هو تمكين التحكم الدقيق في زوايا الحركة لتحقيق تشابه مع حركة اليد البشرية.</p>\n\n<p>يتيح المشروع استخدامات متعددة، مثل التعامل مع المواد الخطرة للإنسان بشكل فعال وآمن، ومساعدة في حل المشكلات الخطرة مثل تفكيك الألغام. بالإضافة إلى ذلك، يمكن نقل حركة اليد العاملة لتنفيذ أعمال يدوية مثل اللحام، وفي حالة تحقيق دقة مناسبة، يمكن استخدام الروبوت في العمليات الجراحية الطبية عن بعد.</p>\n\n<p>باستخدام مفهوم معالجة الصور، يتيح المشروع تحقيق تفاعل دقيق بين الذراع الروبوتية والتحكم فيها، مما يفتح أفقًا واسعًا لتطبيقات مستقبلية في مجالات متعددة، بما في ذلك الصناعة والطب.</p>\n\n<h2 class=\"wp-block-heading\" id=\"h-abstract\">Abstract:</h2>\n\n<p dir=\"ltr\">This graduation project revolves around the design and implementation of a robotic arm, connected to an Arduino controller. The movement of motors within the robotic arm will be controlled using image processing techniques through a Python-built software application. The primary objective of the project is to enable precise control of the angles of movement to achieve similarity with human hand motion.</p>\n\n<p dir=\"ltr\">The project offers diverse applications, such as effectively and safely handling hazardous materials, assisting in solving perilous issues like mine dismantling, and potentially transferring the working hand's motion to execute manual tasks like welding. With the attainment of suitable precision, the robot can also be employed in remote medical surgeries.</p>\n\n<p dir=\"ltr\">Utilizing the concept of image processing, the project facilitates accurate interaction between the robotic arm and its control, opening broad avenues for future applications in various fields, including industry and medicine.</p>\n\n<h1 class=\"wp-block-heading\"><a></a><a>الفكرة الأساسية:</a></h1>\n\n<p>سيتم تصميم وتنفيذ ذراع روبوتية وسيتم وصلها مع متحكم الأردوينو الذي بدوره سيقوم بالتحكم بتشغيل المحركات الموجودة ضمن الذراع الروبوتية عن طريق ادخال قيم زوايا الحركة المطلوبة باستخدام معالجة الصورة عبر تطبيق تم بناؤه باستخدام لغة البرمجة بايثون.</p>\n\n<p>طبعا الفكرة المقترحة انطلقت من أجل التحكم بذراع روبوتية على شكل يد الانسان وهذا مساعد جداً للعديد من الحالات كما هو موضح ضمن <em>الشكل </em><em>1</em><em>‑</em>1-2.</p>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:0--></figure>\n\n<p class=\"has-text-align-center\"><a><em>الشكل </em></a><em>1‑2 ذراع روبوتية على شكل اليد البشرية</em></p>\n\n<h1 class=\"wp-block-heading\"><a>التعرف على اليد:</a></h1>\n\n<p>استخدام البايثون في اكتشاف وتتبع اليد يتيح للمطورين إمكانية تطبيق تقنيات معالجة الصور ورؤية الحاسوب لتحديد مواقع وحركات اليد بشكل دقيق. في عمليات اكتشاف اليد باستخدام البايثون، يتم تحديد مجموعة من النقاط على اليد، والنقاط الرئيسية تتبع الهيكل العظمي لليد.</p>\n\n<p>أحد الأساليب الشائعة لاكتشاف اليد باستخدام البايثون هي استخدام مكتبة معالجة الصور OpenCV بالإضافة إلى تقنيات تعلم الآلة (Machine Learning)، مثل تصنيف المراقبة (Convolutional Neural Networks).</p>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:1--></figure>\n\n<h1 class=\"wp-block-heading\"><a>صورة المشروع النهائي:</a></h1>\n\n<p>هذا هو شكل التنفيذ العملي النهائي للمشروع:</p>\n\n<figure class=\"wp-block-image aligncenter size-large\"><!--IMG:2--></figure>\n\n<p><em>الشكل 5‑7 الشكل النهائي</em><em></em></p>\n\n<p>التطويرات والآفاق المستقبلية:</p>\n\n<ol>\n<li>استخدام ذراع روبوتية تشبه اليد البشرية وتنفيذها بنفس المبدأ للمشروع.<ol><li>العمليات الطبية عن بعد.</li></ol><ol><li>تخزين ونقل المهن اليدوية وتدريب الروبوتات عليها.</li></ol><ol><li>إضافة ميزات جديدة لتحكم الروبوت عن بعد، مثل الاستجابة للأوامر الصوتية</li></ol><ol><li>تحسين تصميم الروبوت وتجهيزه بالمزيد من الحساسات والأدوات التي تتيح له أداء مهام أكثر تعقيداً وتحدياً.</li></ol>\n<ol>\n<li>تطوير البرمجيات والتطبيقات المستخدمة في التحكم بالروبوت، وذلك لتسهيل عملية التحكم وجعلها أكثر دقة وسلاسة.</li>\n</ol>\n</li>\n</ol>",
+  "images": [
+   {
+    "i": 0,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/03/image-2.png",
+    "context": "Abstract:"
+   },
+   {
+    "i": 1,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/03/image-3.png",
+    "context": "Abstract:"
+   },
+   {
+    "i": 2,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2024/03/image-1-768x1024.png",
+    "context": "Abstract:"
+   }
+  ]
+ },
+ {
+  "slug": "تغذية-مزرعة-بالطاقة-الشمسية-مع-تحسين",
+  "date": "2023-10-13",
+  "path": "/2023/10/13/تغذية-مزرعة-بالطاقة-الشمسية-مع-تحسين/",
+  "url": "/2023/10/13/%D8%AA%D8%BA%D8%B0%D9%8A%D8%A9-%D9%85%D8%B2%D8%B1%D8%B9%D8%A9-%D8%A8%D8%A7%D9%84%D8%B7%D8%A7%D9%82%D8%A9-%D8%A7%D9%84%D8%B4%D9%85%D8%B3%D9%8A%D8%A9-%D9%85%D8%B9-%D8%AA%D8%AD%D8%B3%D9%8A%D9%86/",
+  "title": "تغذية مزرعة بالطاقة الشمسية مع تحسين معامل الاستطاعة والتحكم بها عن طريق الانترنت",
+  "cats": [
+   "uncategorized",
+   "هاردوير"
+  ],
+  "tags": [
+   "هاردوير",
+   "متحكمات صغرية",
+   "NodeMCU"
+  ],
+  "excerpt": "يتمثل المشروع في تغذية مزرعة باستخدام الطاقة الشمسية وتحسين عامل الاستطاعة والتحكم بها عن طريق الانترنت. يهدف هذا المشروع إلى توفير طاقة نظيفة ومستدامة لتشغيل المزارع وتحسين كفاءة…",
+  "minutes": 5,
+  "feature_real": null,
+  "body": "<h1 class=\"wp-block-heading hidden\"> مشروع المزرعة الذكية</h1>\n\n<h2 class=\"wp-block-heading has-ast-global-color-5-color has-text-color\">مشروع المزرعة الذكية</h2>\n\n<h2 class=\"wp-block-heading\">مقدمة:</h2>\n\n<h2 class=\"wp-block-heading\"><a>شرح المشروع وما هي فوائده.</a></h2>\n\n<p>يتمثل المشروع في تغذية مزرعة باستخدام الطاقة الشمسية وتحسين عامل الاستطاعة والتحكم بها عن طريق الانترنت. يهدف هذا المشروع إلى توفير طاقة نظيفة ومستدامة لتشغيل المزارع وتحسين كفاءة الإنتاج وتخفيض التكاليف والتلوث البيئي.</p>\n\n<p>تستخدم المزارع كميات كبيرة من الطاقة الكهربائية لتشغيل أجهزة الري والإضاءة والتهوية والتدفئة وغيرها من المعدات الزراعية. ومع ذلك، يتطلب استخدام الطاقة الكهربائية توليد الطاقة باستخدام مصادر غير متجددة وتسبب انبعاثات ضارة بالبيئة.</p>\n\n<p>باستخدام الطاقة الشمسية كمصدر لتشغيل المزارع، يتم الحصول على طاقة نظيفة ومجانية من الشمس. وبما أن الطاقة الشمسية هي مصدر طاقة متجدد، فإن استخدامها لتغذية المزارع يجعل العملية مستدامة بشكل كبير.</p>\n\n<p>علاوة على ذلك، يساعد استخدام الطاقة الشمسية في تحسين كفاءة الإنتاج وخفض التكاليف. يمكن توفير المزيد من الطاقة وتقليل تكاليف التشغيل والصيانة. كما يمكن تحسين الكفاءة الطاقوية للمزرعة بشكل عام.</p>\n\n<p>أخيراً، يوفر المشروع فوائد بيئية كبيرة. إذ أنه يساهم في تخفيض انبعاثات الكربون والتلوث البيئي، مما يعود بالفائدة على البيئة والمجتمع بشكل عام.</p>\n\n<figure class=\"wp-block-image size-full\"><!--IMG:0--></figure>\n\n<h2 class=\"wp-block-heading\"><a>أهداف المشروع.</a></h2>\n\n<p>يهدف مشروعنا الى تطوير نظام تغذية مزرعة يعتمد على الطاقة الشمسية ويتيح التحكم به عن بعد عبر الإنترنت. وتهدف أهداف المشروع إلى:</p>\n\n<p>1- تحسين كفاءة استخدام الطاقة وتقليل استهلاك الوقود الأحفوري في المزرعة.</p>\n\n<p>2- توفير نظام تغذية مزرعة مستدام وصديق للبيئة يحسن جودة الهواء ويقلل التلوث البيئي.</p>\n\n<p>3- توفير نظام يساعد على تحسين إنتاجية المزرعة وتقليل التكاليف والصيانة.</p>\n\n<p>4- توفير نظام يتيح التحكم في عوامل الإضاءة والتهوية والري والتدفئة وغيرها من المعدات الزراعية بشكل فعال ومريح عن بعد عبر الإنترنت.</p>\n\n<p>5- تعزيز الوعي بأهمية استخدام الطاقة الشمسية في التنمية المستدامة وتشجيع استخدامها في الزراعة.</p>\n\n<h2 class=\"wp-block-heading\"><a>سيرفر </a>MQTT:</h2>\n\n<p>MQTT هو اختصار لـ \"Message Queuing Telemetry Transport\"، وهو بروتوكول اتصال خفيف الوزن يستخدم على نطاق واسع في تطبيقات الإنترنت الأشياء (IoT). يتم استخدام MQTT لتبادل الرسائل بين الأجهزة المختلفة عبر شبكة TCP/IP.</p>\n\n<p>تعتمد فكرة MQTT على نموذج النشر/الاشتراك (Publish/Subscribe)، حيث تتكون الشبكة من وحدات مستخدمة تسمى \"الناشرين\" (Publishers) و\"المشتركين\" (Subscribers) و\"الوسيط\" (Broker). يقوم الناشر بنشر رسائل على مواضيع (Topics) معينة، ويقوم المشترك بالاشتراك في المواضيع التي يهتم بها لاستقبال الرسائل ذات الصلة. يقوم الوسيط بتوجيه الرسائل بين الناشرين والمشتركين المناسبين بناءً على المواضيع المشترك فيها.</p>\n\n<p>تعمل الرسائل في MQTT بطريقة بسيطة وخفيفة. تتألف الرسالة من رأس (Header) يحتوي على معلومات التحكم ومحتوى الرسالة نفسها. يتم تعيين كل رسالة لموضوع محدد وتحمل قيمة (Payload) التي تحمل البيانات الفعلية المراد نقلها.</p>\n\n<p>بالنسبة لإعداد الخادم MQTT، يجب تثبيت وتكوين برنامج الوسيط (Broker) على الخادم الذي تعمل عليه. هناك العديد من خوادم MQTT المتاحة، بما في ذلك Mosquitto و HiveMQ و EMQ X وأكثر من ذلك. يمكنك اختيار الخادم الذي يناسب احتياجاتك ونظام التشغيل الذي تستخدمه.</p>\n\n<p>بمجرد تثبيت وتكوين الوسيط، يمكنك استخدام NodeMCU وتحميل برنامج له للاتصال بالخادم MQTT. يمكنك استخدام مكتبة MQTT مثل \"PubSubClient\" لإجراء عمليات النشر والاشتراك والتفاعل مع الوسيط MQTT من خلال NodeMCU.</p>\n\n<p>عند الاتصال بالخادم MQTT باستخدام NodeMCU، يمكنك بسهولة نشر الرسائل على المواضيع المناسبة والاشتراك في المواضيع لاستقبال الرسائل المنشورة من الأجهزة الأخرى.</p>\n\n<figure class=\"wp-block-image size-full\"><!--IMG:1--></figure>\n\n<h2 class=\"wp-block-heading\"><a>&nbsp; شريحة </a>NodeMCU:</h2>\n\n<figure class=\"wp-block-image size-full\"><!--IMG:2--></figure>\n\n<p class=\"has-text-align-center\"><a>الشكل </a>‏4‑2 شريحة NodeMCU</p>\n\n<p>شريحة NodeMCU هي عبارة عن لوحة تطوير قائمة على متحكم مدمج ESP8266. تم تطويرها خصيصًا لتسهيل برمجة وتطوير تطبيقات الإنترنت الأشياء (IoT) بسهولة وفعالية. تتميز شريحة NodeMCU بقدرتها على الاتصال بالإنترنت وتبادل البيانات مع السحابة أو الخوادم البعيدة، وذلك باستخدام اتصال Wi-Fi المدمج.</p>\n\n<p>شريحة NodeMCU تُعتبر نظامًا مضمنًا (Embedded System)، وهي تدخل تحت تصنيف الأنظمة المضمنة بسبب طبيعتها الخاصة وقدرتها على تنفيذ وظائف محددة بشكل مستقل. إليك شرحًا لكيفية اعتبار NodeMCU كنظام مضمن:</p>\n\n<p>1. المعالج المدمج: شريحة NodeMCU تحتوي على معالج مدمج ESP8266 الذي يعمل كوحدة المعالجة المركزية للنظام. يحتوي هذا المعالج على الموارد اللازمة لتنفيذ البرامج والتحكم في عمليات النظام والتفاعل مع الأجهزة الأخرى.</p>\n\n<p>2. الذاكرة: تحتوي NodeMCU على ذاكرة برنامج وذاكرة وصول عشوائي (RAM) لتخزين الشفرات والبيانات الضرورية أثناء تشغيل النظام. هذه الذاكرة تكفي لتنفيذ تطبيقات الإنترنت الأشياء البسيطة إلى المتوسطة.</p>\n\n<p>3. التوصيلات: تتضمن NodeMCU مجموعة من المنافذ والمخارج التناظرية والرقمية ومنافذ الاتصال مثل GPIO وSPI وI2C وUART. تسمح هذه التوصيلات بالتفاعل مع مجموعة متنوعة من الأجهزة الخارجية مثل حساسات البيئة والشاشات والمحركات وأجهزة الاتصال اللاسلكية وغيرها.</p>\n\n<p>4. الاتصال بالشبكة: تُعتبر القدرة على الاتصال بالشبكة أحد العناصر الرئيسية لأنظمة الإنترنت الأشياء، ويوفر NodeMCU وحدة Wi-Fi مدمجة تسمح بالاتصال بالشبكة المحلية والاتصال بالإنترنت. يمكن استخدام هذه القدرة لتبادل البيانات مع الخوادم البعيدة وخدمات السحابة وتنفيذ التحكم عن بُعد.</p>\n\n<p>5. البرمجة: يمكن برمجة شريحة NodeMCU باستخدام العديد من لغات البرمجة مثل لغة Arduino والتي تستخدم لبرمجة المتحكمات القائمة على Arduino. يمكن تطوير تطبيقات مختلفة باستخدام مجموعة متنوعة من المكتبات والأدوات المتاحة.</p>\n\n<p>باستخدام شريحة NodeMCU كنظام مضمن، يمكنك بناء تطبيقات الإنترنت الأشياء بسهولة والتحكم في الأجهزة المختلفة. إنها خيار شائع للهواة والمطورين الذين يرغبون في بناء نماذج وأنظمة بسيطة في مجال الإنترنت الأشياء.</p>\n\n<h2 class=\"wp-block-heading\"><a> واجهة التطبيق:</a></h2>\n\n<figure class=\"wp-block-image size-full\"><!--IMG:3--></figure>\n\n<p><a>الشكل </a>‏5‑2 واجهة التطبيق</p>\n\n<p>لدينا على الواجهة الأزرار التالية:</p>\n\n<p>Auto: تفعيل او إيقاف تفعيل الوضع التلقائي.</p>\n\n<p>Humidity: &nbsp;قيم الرطوبة في التربة.</p>\n\n<p>Fan: تشغيل \\ إيقاف المروحة.</p>\n\n<p>Pump: تشغيل \\ إيقاف المضخة.</p>\n\n<p>Lamp: تشغيل \\ إيقاف الانارة.</p>\n\n<p>Temperature: درجة الحرارة.</p>\n\n<p>LDR: شدة الضوء.</p>\n\n<div><h2 class=\"uagb-heading-text\">مشروع المزرعة الذكية</h2></div>\n\n<p>للحصول على تفاصيل أكثر تواصل مع المهندس <a href=\"../../../../index.html\">عبد الغني الحمدي</a></p>\n\n<p>فيديو العرض التقديمي</p>\n\n<figure class=\"wp-block-embed is-provider-youtube\"><div class=\"yt-wrap\"><iframe src=\"https://www.youtube-nocookie.com/embed/77twkMoelNg?rel=0\" title=\"مشغل فيديو يوتيوب\" loading=\"lazy\" allowfullscreen allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\"></iframe></div></figure>\n\n<h2 class=\"wp-block-heading\"><a>المراجع:</a></h2>\n\n<ol type=\"1\">\n<li>F. Kreith and J. F. Kreider, \"Principles of Solar Engineering,\" 3rd ed. CRC Press, 2015.</li>\n\n<li>M. Green, \"Solar Cells: Operating Principles, Technology, and System Applications,\" 2nd ed. Prentice Hall, 2017.</li>\n\n<li>B. Norton, \"Renewable Energy: A Practical Guide for Beginners,\" 2nd ed. McFarland &amp; Company, 2017.</li>\n\n<li>M. R. Islam, \"Internet of Things (IoT): Architecture, Protocols, and Applications,\" CRC Press, 2017.</li>\n\n<li>B. K. Johnson and K. M. Johnson, \"Fundamentals of Sustainable Engineering,\" 2nd ed. CRC Press, 2017.\n<ol>\n<li>Mellit and M. Benghanem, \"Artificial Intelligence Techniques for Photovoltaic Applications,\" Springer, 2018.</li>\n</ol>\n</li>\n\n<li>S. A. Kalogirou, \"Solar Energy Engineering: Processes and Systems,\" 2nd ed. Academic Press, 2013.</li>\n\n<li>J. A. Duffie and W. A. Beckman, \"Solar Engineering of Thermal Processes,\" 4th ed. Wiley, 2013.</li>\n\n<li>C. D. Jansen and R. J. van de Braak, \"Solar Energy Materials and Solar Cells,\" Elsevier, 2016.</li>\n\n<li>J. A. S. Herrera, \"Sustainability Engineering: A Design Guide for the Chemical Process Industry,\" Wiley, 2016.</li>\n\n<li><a href=\"https://electronics-go.com/active-reactive-and-apparent-power/\">https://electronics-go.com/active-reactive-and-apparent-power/</a></li>\n</ol>",
+  "images": [
+   {
+    "i": 0,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2023/10/image.png",
+    "context": "شرح المشروع وما هي فوائده."
+   },
+   {
+    "i": 1,
+    "real": false,
+    "src": null,
+    "orig": "/assets/img/image-1.png",
+    "context": "سيرفر MQTT:"
+   },
+   {
+    "i": 2,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2023/10/image-2.png",
+    "context": "شريحة NodeMCU:"
+   },
+   {
+    "i": 3,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2023/10/image-3.png",
+    "context": "واجهة التطبيق:"
+   }
+  ]
+ },
+ {
+  "slug": "تصميم-وتنفيذ-كراج-ذكي",
+  "date": "2023-10-13",
+  "path": "/2023/10/13/تصميم-وتنفيذ-كراج-ذكي/",
+  "url": "/2023/10/13/%D8%AA%D8%B5%D9%85%D9%8A%D9%85-%D9%88%D8%AA%D9%86%D9%81%D9%8A%D8%B0-%D9%83%D8%B1%D8%A7%D8%AC-%D8%B0%D9%83%D9%8A/",
+  "title": "تصميم وتنفيذ كراج ذكي",
+  "cats": [
+   "هاردوير"
+  ],
+  "tags": [
+   "هاردوير",
+   "متحكمات صغرية",
+   "ATMEGA328P"
+  ],
+  "excerpt": "تنظيم حركة كراج سيارات وعملية الدخول والخروج في الكراج من خلال استخدام عدد من الحساسات المتوزعة في أماكن عدة من الكراج، حيث يتواجد في الكراج فيه اربعة مواقف مع باب دخول وباب خروج…",
+  "minutes": 2,
+  "feature_real": null,
+  "body": "<h2 class=\"wp-block-heading\">الفكرة من المشروع:</h2>\n\n<p>تنظيم حركة كراج سيارات وعملية الدخول والخروج في الكراج من خلال استخدام عدد من الحساسات المتوزعة في أماكن عدة من الكراج، حيث يتواجد في الكراج فيه اربعة مواقف مع باب دخول وباب خروج وحساسات IR موجودة عند الأبواب لتحسس اقتراب السيارة وبكل مكان اصطفاف لتبيين حالة الموقف إذا كان فارغ او مشغول عند اقتراب السيارة من باب الدخول يطلب من السائق إدخال كلمة مرور ويتم الإظهار على شاشة المحلات الفارغة في الكراج.</p>\n\n<p>كما يوجد في الكراج حساس لهب لتحسس حالة وجود حرائق او دخان غير آمنة عندها يفتح الأبواب لخروج السيارات ويظهر على الشاشة إنذار لوجود الحريق.</p>\n\n<p>كذلك حساسات وجود السيارة بأماكن الوقوف وحساسات حركة تعطي أوامر بتشغيل أضوية الكراج عند وجود أي حركة.</p>\n\n<h2 class=\"wp-block-heading\">الهدف من المشروع</h2>\n\n<p>تصـميم وتنفيـذ كراج سيارات مؤتـمت ومزود بقاعدة بيانات، يمكـنّنا من إدارة الأماكن المخـصـصـة لأربعـة سيارات...فـهو أحـد أنــظـمة مواقـف السـيارات الذكـيـة الـذي ركـز على الـجمـع بيـن مـحـورين أساسيـين.. الأول هو استغلال تقنيات إدارة قواعد البيانات من اجل تنظيم الركن للسيارات ضمن الكراج بشكل أكثر دقة، وضمان الحد الأقصى لعدد أماكن وقوف السيارات.. والثاني تحسين إدارة مواقف السيارات بتوفير مكان خالي بسهولة بدون اي معوقات أثناء الدخول والخروج</p>\n\n<p>فيتم مراقبة حركة السيارات بحيث تمكن من ركن السيارات وتنظيم حركتها بأقصر وقت ممكن وطبعا بشكل مريح وآمن.. وهو نظام صديق لـلبيئة كما يؤدي إلى زيـادة الأرباح الاقتصـادية حيـث يمكن استـغـلال المساحـات الضيـقة للكراج بتثبـيت لوحات إعـلانيـة.. او شاشات LCD وغيرها...</p>\n\n<h2 class=\"wp-block-heading\">المخطط الصندوقي:</h2>\n\n<figure class=\"wp-block-image aligncenter size-full is-resized\"><!--IMG:0--></figure>\n\n<h2 class=\"wp-block-heading\">صورة من تطبيق الموبايل:</h2>\n\n<figure class=\"wp-block-image aligncenter size-large\"><!--IMG:1--></figure>\n\n<h2 class=\"wp-block-heading\">شكل دارة التحكم الداخلية:</h2>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:2--></figure>\n\n<figure class=\"wp-block-embed is-provider-youtube\"><div class=\"yt-wrap\"><iframe src=\"https://www.youtube-nocookie.com/embed/NVj3dl0r64k?rel=0\" title=\"مشغل فيديو يوتيوب\" loading=\"lazy\" allowfullscreen allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\"></iframe></div><figcaption class=\"wp-element-caption\">فيديو عن عمل المشروع</figcaption></figure>",
+  "images": [
+   {
+    "i": 0,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2023/10/image-9.png",
+    "context": "المخطط الصندوقي:"
+   },
+   {
+    "i": 1,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2023/10/image-10-1024x552.png",
+    "context": "صورة من تطبيق الموبايل:"
+   },
+   {
+    "i": 2,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2023/10/image-11.png",
+    "context": "شكل دارة التحكم الداخلية:"
+   }
+  ]
+ },
+ {
+  "slug": "بناء-وتنفيذ-منظومه-روبوت-آلي-لنقل-وتوص",
+  "date": "2023-10-13",
+  "path": "/2023/10/13/بناء-وتنفيذ-منظومه-روبوت-آلي-لنقل-وتوص/",
+  "url": "/2023/10/13/%D8%A8%D9%86%D8%A7%D8%A1-%D9%88%D8%AA%D9%86%D9%81%D9%8A%D8%B0-%D9%85%D9%86%D8%B8%D9%88%D9%85%D9%87-%D8%B1%D9%88%D8%A8%D9%88%D8%AA-%D8%A2%D9%84%D9%8A-%D9%84%D9%86%D9%82%D9%84-%D9%88%D8%AA%D9%88%D8%B5/",
+  "title": "بناء وتنفيذ منظومه روبوت آلي لنقل وتوصيل الطلبات",
+  "cats": [
+   "هاردوير"
+  ],
+  "tags": [
+   "هاردوير",
+   "متحكمات صغرية",
+   "ATMEGA328P"
+  ],
+  "excerpt": "يهدف هذا البحث إلى تصميم وتنفيذ منظومة روبوتية متحركة قابلة للتحكم عن بعد باستخدام موجه الأوامر Terminal.",
+  "minutes": 2,
+  "feature_real": null,
+  "body": "<h2 class=\"wp-block-heading\">ملخص:</h2>\n\n<p>يهدف هذا البحث إلى تصميم وتنفيذ منظومة روبوتية متحركة قابلة للتحكم عن بعد باستخدام موجه الأوامر Terminal.</p>\n\n<p>يتم استخدام تقنيات الروبوتات الحديثة وتحكمها بواسطة لوحة تحكم عن بعد تتمثل في موجه الأوامر Terminal.</p>\n\n<p>تم استخدام لغة برمجة مثل Arduino IDE لتطوير واجهة المستخدم في Terminal للتحكم في حركة وتوجيه المنظومة المتحركة.</p>\n\n<p>تم تحليل وتصميم المنظومة المتحركة بالإضافة إلى تطوير البرمجيات اللازمة للتحكم فيها.</p>\n\n<p>يهدف البحث إلى تحسين العمليات الصناعية والتحكم عن بعد والحوسبة المتصلة بالإنترنت.</p>\n\n<p>توصلت الدراسة إلى أن استخدام موجه الأوامر Terminal يمكن أن يكون طريقة فعالة للتحكم عن بعد في المنظومات المتحركة، ويمكن أن يساعد في تحسين العمليات الصناعية والبحثية.</p>\n\n<h2 class=\"wp-block-heading has-text-align-left\">Abstract</h2>\n\n<p>This research aims to design and implement a remotely controlled mobile system using the Terminal command prompt. Modern robot technologies are used and controlled using a remote-control panel represented by the Terminal command prompt. Programming languages such as Arduino IDE are used to develop a user interface in the Terminal for controlling the movement and direction of the mobile system. The mobile system is analyzed, designed, and software is developed for its control. The research aims to improve industrial processes, remote control, and internet-connected computing. The study concludes that using the Terminal command prompt can be an effective way to remotely control mobile systems, and it can help improve industrial and research processes.</p>\n\n<h2 class=\"wp-block-heading\"><a>1.1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; مقدمـــــة:</a></h2>\n\n<p><strong>علم الروبوت</strong>: هو علم قديم وخاصة في مجال الروبوتات المتنقلة.</p>\n\n<p>في الماضي كان التحكم يتم بالروبوتات المتنقلة عن طريق انظمة حاسوب كبيرة وثقيلة وغالية الثمن، اما اليوم فبالإمكان بناء روبوت صغير مع مشغلات وحساسات عدة يتحكم بها من خلال انظمة حاسوب ضمنية صغيرة التي تكون محمولة على لوحة الروبوت.</p>\n\n<p>الروبوت: هو آلة ذكية تعتمد بشكل آلي أو نصف آلي على نفسها للقيام بوظيفة ما عن طريق الاستعانة بحساسات مختلفة للتعرف على البيئة التي يعمل فيها واكتشافها ومن ثم اصدار الأوامر المناسبة للتحكم بعناصر التنفيذ حسب المهمة المكلف بها.</p>\n\n<p>تكون الغاية من دراسة علم الروبوت (Robotics) وفق الآتي:</p>\n\n<ol type=\"1\">\n<li>الأعمال اليومية والتكرارية</li>\n\n<li>الأعمال التي تتطلب دقة وسرعة وكفاءة وتحسين، وأيضاً جهد.</li>\n\n<li>التحكم الالي ونص الالي</li>\n\n<li>البحث العلمي والتطوير في العديد من المجالات</li>\n\n<li>الأماكن صعبة الوصول والخطرة</li>\n\n<li>منصة تجارب تطبيقية</li>\n\n<li>نمذجة الذكاء والترفيه والتسلية والمسابقات</li>\n\n<li>البحث والاستكشاف والاستدلال</li>\n\n<li>التعرف الى البيئة والاجسام</li>\n</ol>\n\n<p>وتستخدم الروبوتات في الأماكن التي لا يستطيع البشر البقاء فيها وتحملها.</p>\n\n<ol type=\"1\">\n<li>روبوتات التعويضات والعلاج الطبي: يمكن ترويض التقنية الروبوتية وأجهزة الإحساس فيها لإنتاج أعضاء تعويضية وتتمتع بحاسة اللمس.</li>\n\n<li>روبوتات معالجة المواد الخطرة: وتستعمل لإزالة القنابل ومعالجة المواد الخطرة.</li>\n\n<li>روبوتات الخدمة: لأغراض الحراسة، ضبط الأبواب، تسليم البريد والوقاية من الحرائق.</li>\n</ol>\n\n<h2 class=\"wp-block-heading\"><a>1.2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; الهدف من المشروع:</a></h2>\n\n<p>الهدف من المشروع هو انجاز العمل</p>\n\n<ul>\n<li>&nbsp;بدقة أعلى</li>\n\n<li>وسرعة أكبر</li>\n\n<li>وتكلفة أقل</li>\n\n<li>واختصار الوقت والجهد</li>\n\n<li>وتوسيع مجال استخداماته وادخاله للبيئات الصناعية</li>\n\n<li>تقليل اليد العاملة&nbsp;</li>\n</ul>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:0--></figure>\n\n<h2 class=\"wp-block-heading\"><a>المخطط الصندوقي:</a></h2>\n\n<figure class=\"wp-block-image size-full is-resized\"><!--IMG:1--></figure>\n\n<h2 class=\"wp-block-heading\"><a>المخطط التدفقي للتحريك:</a></h2>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:2--></figure>\n\n<h2 class=\"wp-block-heading\">المتحكم المستخدم هو شريحة الأردوينو:</h2>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:3--></figure>\n\n<h2 class=\"wp-block-heading\">واجهة التطبيق النهائي:</h2>\n\n<figure class=\"wp-block-image size-full\"><!--IMG:4--></figure>",
+  "images": [
+   {
+    "i": 0,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2023/10/image-4.png",
+    "context": "1.2      الهدف من المشروع:"
+   },
+   {
+    "i": 1,
+    "real": false,
+    "src": null,
+    "orig": "/assets/img/image-5.png",
+    "context": "المخطط الصندوقي:"
+   },
+   {
+    "i": 2,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2023/10/image-6.png",
+    "context": "المخطط التدفقي للتحريك:"
+   },
+   {
+    "i": 3,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2023/10/image-7.png",
+    "context": "المتحكم المستخدم هو شريحة الأردوينو:"
+   },
+   {
+    "i": 4,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2023/10/image-8.png",
+    "context": "واجهة التطبيق النهائي:"
+   }
+  ]
+ },
+ {
+  "slug": "تطبيق-الجلاء-المدرسي",
+  "date": "2023-08-22",
+  "path": "/2023/08/22/تطبيق-الجلاء-المدرسي/",
+  "url": "/2023/08/22/%D8%AA%D8%B7%D8%A8%D9%8A%D9%82-%D8%A7%D9%84%D8%AC%D9%84%D8%A7%D8%A1-%D8%A7%D9%84%D9%85%D8%AF%D8%B1%D8%B3%D9%8A/",
+  "title": "تطبيق الجلاء المدرسي",
+  "cats": [
+   "برمجة"
+  ],
+  "tags": [
+   "برمجة",
+   "Visual Basic"
+  ],
+  "excerpt": "تطبيق الجلاء المدرسي: في عصرنا الحالي عصر الثورة الرقمية والمعلوماتية أصبحت التكنولوجيا عنصراً أساسيا ومهماً تلامس كل شيء يقوم به الإنسان يومياً. ويمكن تعريف التكنولوجيا على أنه فرع من…",
+  "minutes": 3,
+  "feature_real": null,
+  "body": "<h2 class=\"wp-block-heading\">تطبيق الجلاء المدرسي:</h2>\n\n<p>تطبيق الجلاء المدرسي: في عصرنا الحالي عصر الثورة الرقمية والمعلوماتية أصبحت التكنولوجيا عنصراً أساسيا ومهماً تلامس كل شيء يقوم به الإنسان يومياً. ويمكن تعريف التكنولوجيا على أنه فرع من أفرُع المعرفة. التي تعتمد على عملية الابتكار واستخدام الوسائل التقنية الحديثة وربطها مع الحياة اليومية والمجتمع. لإنجاز مُهمة ما بشكل أسرع وأدق وبدون أخطاء.</p>\n\n<p>يمكن القول ان كل شيء يتغير مع مرور الوقت. حيث أصبحت معظم الأمور الآن تسير في طرق مختلفة عما كانت عليه في العقود الماضية. وأصبح معظم اعتماد الأشخاص حالياً على التكنولوجيا والاستفادة من الحاسب الآلي.</p>\n\n<p>ومن خلال البحث عن المشاكل التي تواجه اغلبنا وجدنا انه من الضروري إيجاد برنامج خاص للمدارس لإضافة البيانات. والقيام بالعمليات الحسابية في حساب العلامات حيث سيتم في هذا العمل البرمجي إتمام خدمات المشروع كافة.</p>\n\n<p>وسوف يقوم بمساعدتنا على هذا البرنامج مجموعة من المدرسين على حل المشكلة. من حيث إضافة بيانات الطلاب والمواد وكيفية حساب العلامات وإدخالها على الجلاء المدرسي.</p>\n\n<p>وسنحاول جاهدين وبكل الوسائل المتاحة أن نقدم عملاً متكاملاً وذلك بعد أن شاهدنا المصاعب التي تقع على عاتق المدرسين والإداريين من ناحية إدخال العلامات والقيام بالعمليات الحسابية وإدخالها ورقياً بالطريقة التقليدية مع عدد كبير من الأخطاء التي يحتمل حدوثها أثناء تدوين البيانات.</p>\n\n<p>بالإضافة الى تسهيل عمل الإدارة أيضا وتسريع عملية توزيع الجلائات وإدخال البيانات بسرعة مع تفادي حدوث اخطاء أثناء القيام بالعمليات الحسابية.</p>\n\n<p>ونظراً لكون عملية ادخال البيانات التقليدية بشكل ورقي أصبحت تزداد صعوبة بعد ازدياد عدد السكان وازدياد الحاجة للأتمتة والعمل مع البيانات بشكل رقمي تم تصميم مشروعنا ليلبي هذه الحاجة عبر انشاء تطبيق عبر لغة Visual Basic ليتم عبره ادخال بيانات طلاب المدرسة بشكل مؤتمت حاسوبياً .</p>\n\n<p>سيتم بناء واجهة تسجيل دخول بالإضافة للواجهات الداخلية وسيتم ربط التطبيق مع قاعدة بيانات SQL.</p>\n\n<h2 class=\"wp-block-heading\">الهدف:</h2>\n\n<p>إنشاء تطبيق برمجي (Windows Application) يعمل على الشبكة حيث يكون قادر على إدارة بيانات الطلاب وإضافة علاماتهم بشكل أسرع والاستغناء عن العملية التقليدية الورقية مع إمكانية القيام بالعمليات الرياضية لحساب المحصلات الفصلية بدلاً من المدرسين وتفادي الوقوع بالأخطاء الحسابية التي من المحتمل وقوعها</p>\n\n<p>ويحتوي التطبيق على إدارة محتوى كامل قادر على فرز الطلاب حسب الصفوف والشعب والأعوام الدراسية والفصول والتعديل عليها كما يقوم أيضاً بعمليات الجرد للجلاء ليعطي كافة التفاصيل عن الطالب والقيام بالاستعلامات</p>\n\n<p>بالإضافة الى بناء واجهات تسجيل دخول وواجهات تحاكي ورقة الجلاء المدرسي ليتم ادخال العلامات وعرضها بشكل مؤتمت.</p>\n\n<h2 class=\"wp-block-heading\">&nbsp;<strong>المشكلة التي يعالجها الشروع:</strong></h2>\n\n<p>قبل ظهور تكنولوجيا المعلومات كان يتم إنجاز الأعمال الخدمية وغيرها بشكل يدوي وهذا يعني احتمال الوقوع في أخطاء إضافة إلى الوقت والجهد الذي يتطلبه إنجاز هذه الأعمال. ومن هنا نشأت الحاجة للاستفادة من الحاسوب في إنجاز المهام التي كانت تنجز بشكل يدوي بواسطة البشر، وهذا بدوره يسمح بالقيام بالأعمال بشكل سريع ودقيق ويقلل نسبة ظهور أخطاء بشكل كبير</p>\n\n<h2 class=\"wp-block-heading\"><strong>أهمية المشروع:</strong></h2>\n\n<p>يقدم المشروع للمهتمين تطبيقاً برمجياً يعمل على الشبكة يسمح للمستخدمين بإدخال العلامات الفصلية والمحصلات وإظهار النتائج.</p>\n\n<p><strong>التعريف بالمصطلحات المستخدمة إجرائياً:</strong></p>\n\n<ul>\n<li><strong>SQL: Structured Query Language</strong></li>\n\n<li><strong>TCP: Transmission Internet Protocol</strong></li>\n\n<li><strong>DBMS: Database Management System</strong></li>\n</ul>\n\n<h2 class=\"wp-block-heading\">لغة البرمجة:</h2>\n\n<p>فيجوال بيسك فور أبلكيشنز أو فيجوال بيسك للتطبيقات (بالإنجليزية: Visual Basic for Applications وتختصر إلى VBA)‏: هي بيئة لمايكروسوفت فيجوال بيسك، لغة البرمجة الحديثية. وكل ما يتصل بها في بيئة التطوير المتكاملة الموجودة في معظم تطبيقات مايكروسوفت أوفيس. تمكن المطورين من برمجة حلول مخصصة باستخدام مايكروسوفت فيجوال بيسك. تمت إضافته لتطبيقات أوفيس في أبل ماك أو إس إكس منذ عام 2004 وتطبيقات مايكروسوفت الأخرى، مثل مايكروسوفت ماببوينت ومايكروسوفت فيسو؛ بالإضافة إلى تطبيقها جزئيا على الأقل مع العديد من التطبيقات مثل أوتوكاد، وورد بيرفكت.</p>\n\n<p><a href=\"https://www.techtarget.com/whatis/definition/Visual-Basic-VB\">فيجوال بيسك</a> (<a href=\"https://ar.wikipedia.org/wiki/%D9%81%D9%8A%D8%AC%D9%88%D8%A7%D9%84_%D8%A8%D9%8A%D8%B3%D9%83\">بالإنجليزية: Visual BASIC</a>)‏ هي بيئة تطوير ولغة برمجة من شركة مايكروسوفت تستند إلى لغة البيسك الشهيرة. وهي تصنف ضمن لغات البرمجة بالكائنات. منذ أن بدأت شركة مايكروسوفت في إصدار الفيجوال بيسك وهي تلاقي نجاحا باهرا وشعبية لا بأس بها بين المبرمجين نظرا لسهولة الاستعمال في مقابل التعقيد الشديد الذي يواجهه أي مبرمج يسعى لبرمجة ويندوز باستخدام لغة سي أو برمجة C++.</p>\n\n<figure class=\"wp-block-image aligncenter size-full is-resized\"><!--IMG:0--></figure>\n\n<h2 class=\"wp-block-heading\">لقطات من المشروع:</h2>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:1--></figure>\n\n<p>واجهة ادخال العلامات:</p>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:2--></figure>\n\n<p>واجهة ادخال النتائج وتم تهيئتها وضبط كافة أدواتها بشكل مترابط</p>\n\n<p>لا يمكن زيادة علامة الشفهي أكثر من 20، أو علامة الوظائف أكثر من 20،أو علامة المذاكرة أكثر من 60</p>\n\n<p>يتم جمع كافة العلامات وتقسيمها على 2</p>\n\n<p>وفي النهاية يتم حساب المعدل بشكل كامل</p>\n\n<p>وعند البحث عن طالب قديم يتم إعادة علامات الطالب الى الواجهة من اجل ان تتم عملية التعديل</p>\n\n<p>مخطط ERD:</p>\n\n<figure class=\"wp-block-image size-full\"><!--IMG:3--></figure>\n\n<p>هذا المشروع من تنفيذ المهندس <a href=\"../../../../index.html\">عبد الغني الحمدي</a></p>\n\n<p>[dflip id=\"2316\" ][/dflip]</p>",
+  "images": [
+   {
+    "i": 0,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2023/08/image-3.png",
+    "context": "لغة البرمجة:"
+   },
+   {
+    "i": 1,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2023/08/image.png",
+    "context": "لقطات من المشروع:"
+   },
+   {
+    "i": 2,
+    "real": false,
+    "src": null,
+    "orig": "/assets/img/image-1.png",
+    "context": "لقطات من المشروع:"
+   },
+   {
+    "i": 3,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2023/08/image-2.png",
+    "context": "لقطات من المشروع:"
+   }
+  ]
+ },
+ {
+  "slug": "مسودة-تلقائية-تحسين-أمان-الصيانة-الكه",
+  "date": "2023-07-27",
+  "path": "/2023/07/27/مسودة-تلقائية-تحسين-أمان-الصيانة-الكه/",
+  "url": "/2023/07/27/%D9%85%D8%B3%D9%88%D8%AF%D8%A9-%D8%AA%D9%84%D9%82%D8%A7%D8%A6%D9%8A%D8%A9-%D8%AA%D8%AD%D8%B3%D9%8A%D9%86-%D8%A3%D9%85%D8%A7%D9%86-%D8%A7%D9%84%D8%B5%D9%8A%D8%A7%D9%86%D8%A9-%D8%A7%D9%84%D9%83%D9%87/",
+  "title": "نظارة البيانات لقياس الفولط: خطوة نحو تحسين السلامة والكفاءة",
+  "cats": [
+   "هاردوير"
+  ],
+  "tags": [
+   "هاردوير",
+   "متحكمات صغرية",
+   "ATMEGA328P"
+  ],
+  "excerpt": "الأمان في مجال الكهرباء هو بالتأكيد أمر حيوي. مع تزايد الإصابات الناجمة عن الصعقات الكهربائية، خصوصًا أثناء عمليات الصيانة، يأتي الحاجة إلى الابتكارات التي تمكن العمال من القيام…",
+  "minutes": 3,
+  "feature_real": null,
+  "body": "<h2 class=\"wp-block-heading\">نظارة البيانات لقياس الفولط</h2>\n\n<p>الأمان في مجال الكهرباء هو بالتأكيد أمر حيوي. مع تزايد الإصابات الناجمة عن الصعقات الكهربائية، خصوصًا أثناء عمليات الصيانة، يأتي الحاجة إلى الابتكارات التي تمكن العمال من القيام بأعمالهم بأمان أكبر. في هذا السياق، تم تصميم نظارة البيانات لقياس الفولط.</p>\n\n<p>هذه النظارة، التي تم تصميمها للعمال، تقوم بأخذ قراءات من جهاز الأفو متر وإظهار النتائج مباشرة أمام عيني العامل. تهدف هذه النظارة إلى تحسين التركيز والكفاءة خلال العمليات الصيانة الكهربائية، حيث يمكن للعامل البقاء مركزًا على المهمة المنجزة بدلاً من الالتفات لقراءة القياسات على الأفو متر.</p>\n\n<p>وفقًا للمخطط الصندوقي للنظارة، يتم تصميم جهاز الأفو متر باستخدام المايكرو كونترولر وجهاز إرسال. وعلى الجانب الآخر، يوجد مستقبل ومتحكم آخر لتحليل البيانات المستقبلة وإظهار النتائج على الشاشة. بالإضافة إلى ذلك، يحتوي الجهاز على بطارية صغيرة الحجم مع دائرة شحن.</p>\n\n<p>تستخدم النظارة مرسل ومستقبل راديوي RF433 لتقديم تردد الاستقبال المثالي. بالإضافة إلى ذلك، تستخدم شاشة Oled display تدعم بروتوكول I2C لإظهار القراءات بوضوح. بالنسبة للتشغيل، تستخدم بطارية ليثيوم بجهد 3.7 فولت.</p>\n\n<p>وأخيراً، يتم استخدام متحكم ATmega328p للتحكم في العمليات ومعالجة القراءات. يتميز هذا المتحكم بجهد تشغيل النظام الكهربائي بقيمة 5 فولت، مع العديد من المنافذ الرقمية والتناظرية للإدخال والإخراج.</p>\n\n<p>المخطط المقسم للجهد في النظارة يدل على دائرة تقسم الجهد لزيادة مجال القياس. بهذه الطريقة، يمكن للنظارة أن توفر قراءات دقيقة حتى في الأحوال الكهربائية الأكثر تطرفًا.</p>\n\n<p>بشكل عام، تمثل نظارة البيانات لقياس الفولط خطوة هامة نحو تحسين الأمان والكفاءة في مجال الصيانة الكهربائية.</p>\n\n<p>الكلمات المفتاحية: نظارة البيانات، قياس الفولت، الأمان الكهربائي، الصيانة الكهربائية، التركيز، الكفاءة، المايكرو كونترولر، RF433، Oled display، بطارية ليثيوم، ATmega328p.</p>\n\n<h2 class=\"wp-block-heading\">أهمية البحث في الحياة العملية</h2>\n\n<p>إن النظارات الذكية هي خطوة جديدة ومهمة في مسيرة طويلة من التطورات والاختراعات الذكية التي تطورت وتزايدت ونمت على مر العصور والتي تهدف إلى رفع الأمان و التقليل من المخاطر والأذى المحتمل أن يواجهها العامل أو الفني أو المهندس أثناء عمله مع الكهرباء أو المعدات الخطرة أو تواجده في أماكن قد تكون مرتفعة أو غير آمنه أو على أقل تقدير تحتاج للحرفية والانتباه والتركيز العالي لتفادي أي أذية محتملة وذلك من خلال مساعدته على عدم تشتيت تركيزه وانتباهه بأي حركه أو التفاته غير مهمة قد تودي بحياته</p>\n\n<h2 class=\"wp-block-heading\">التطبيق العملي</h2>\n\n<p>الهدف الأساسي من إنجاز المشروع هي مساعدة العامل على صب انتباهه وتركيزه على العمل دون القيام بأي حركة يمكن الاستغناء عنها حيث أننا قمنا بربط متحكم صغري مع مقياس الآفو ومتحكم آخر مع شاشه العرض &nbsp;oled وباستخدام RF-433 سيتم التواصل بين المتحكمين لإرسال الصورة من المتحكم الأول إلى الثاني وعرضها على شاشه oled المثبتة على النظارة أمام العين مباشرة وبذلك لا يحتاج العامل لأن يغير من مكانه أو للقيام بحركة ما للنظر إلى مقياس الآفو ومعرفة القراءة.</p>\n\n<h2 class=\"wp-block-heading\">الخبرات والمهارات المكتسبة</h2>\n\n<p>قمنا بجمع القطع اللازمة لعمل النظارة ابتداءً بالمتحكم حيث توقفنا أمام عدة خيارات لتحديد المتحكم الأنسب بما يتناسب مع المتطلبات والأداء والتكلفة, ومن ثم اخترنا شاشات الإظهار oled display وذلك بعد دراسة لأنواع شاشات الإظهار وخصائصها ومن ثم وصلنا لتحديد التغذية والبطاريات المناسبة مع تحديد منظم الجهد لتوفير التغذية المناسبة للقطع بالجهد المطلوب لعمل كل منهم ومن ثم تمت برمجة المتحكم والقطع لتؤدي العمل المطلوب ومن بعدها تمت عملية التركيب في الإطار النهائي.</p>\n\n<ul>\n<li>لذلك تم اكتساب خبرة في التعامل مع الشرائح الراديوية.</li>\n\n<li>كيفية برمجة المعالجات الصغرية.</li>\n\n<li>كتابة اكواد برمجية بلغة الـC.</li>\n\n<li>التعامل مع شاشات Oled Display.</li>\n</ul>\n\n<figure class=\"wp-block-image size-full\"><!--IMG:0--></figure>\n\n<p class=\"has-text-align-center\">المخطط الصندوقي للمشروع</p>\n\n<figure class=\"wp-block-image size-large\"><!--IMG:1--></figure>\n\n<h4 class=\"wp-block-heading has-large-font-size\">اقرأ كتاب المشروع</h4>\n\n<p class=\"has-text-align-center\"><code>[dflip id=\"2299\" type=\"thumb\" ][/dflip]</code></p>",
+  "images": [
+   {
+    "i": 0,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2023/07/image-11.png",
+    "context": "الخبرات والمهارات المكتسبة"
+   },
+   {
+    "i": 1,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2023/08/27-1024x683.png",
+    "context": "الخبرات والمهارات المكتسبة"
+   }
+  ]
+ },
+ {
+  "slug": "موقع-طلب-استشارات-للهندسة-المعمارية-ب",
+  "date": "2023-07-27",
+  "path": "/2023/07/27/موقع-طلب-استشارات-للهندسة-المعمارية-ب/",
+  "url": "/2023/07/27/%D9%85%D9%88%D9%82%D8%B9-%D8%B7%D9%84%D8%A8-%D8%A7%D8%B3%D8%AA%D8%B4%D8%A7%D8%B1%D8%A7%D8%AA-%D9%84%D9%84%D9%87%D9%86%D8%AF%D8%B3%D8%A9-%D8%A7%D9%84%D9%85%D8%B9%D9%85%D8%A7%D8%B1%D9%8A%D8%A9-%D8%A8/",
+  "title": "موقع طلب استشارات للهندسة المعمارية: استخدام الذكاء الصنعي وتقنيات NLP لتقديم استشارات هندسية دقيقة",
+  "cats": [
+   "uncategorized"
+  ],
+  "tags": [],
+  "excerpt": "مع تقدم التكنولوجيا وتزايد استخدام الذكاء الصنعي في العديد من القطاعات، يصبح من الواضح أن الهندسة المعمارية ليست استثناء. هنا، نستعرض مشروع تصميم وتنفيذ موقع لطلب استشارات هندسية…",
+  "minutes": 6,
+  "feature_real": null,
+  "body": "<p>مع تقدم التكنولوجيا وتزايد استخدام الذكاء الصنعي في العديد من القطاعات، يصبح من الواضح أن الهندسة المعمارية ليست استثناء. هنا، نستعرض مشروع تصميم وتنفيذ موقع لطلب استشارات هندسية معمارية يعتمد على تقنيات الذكاء الصنعي والتنبؤ باللغة الطبيعية (NLP).</p>\n\n<p>يتيح الموقع للعملاء الحصول على استشارات سريعة ودقيقة في مجالات متعددة تشمل التصميم الداخلي والخارجي والهيكلي. يتم تحقيق هذا من خلال استخدام API للتنبؤ باللغة من OpenAI، الذي يسمح بالتواصل مع المستخدمين وتقديم الإجابات والإرشادات اللازمة بشكل سريع وفعال.</p>\n\n<p>بالإضافة إلى ذلك، يسهل الموقع تبادل المعلومات والاستفسارات بين المستخدمين والخبراء الهندسيين، حيث يمكن للمستخدمين إرسال وإدخال الأوامر الخاصة بالاستشارات الهندسية بسهولة، ومن ثم يتم توجيههم بشكل سريع وفعال.</p>\n\n<p>استخدام تقنيات الذكاء الصنعي وNLP يتيح تحسين جودة الخدمات الهندسية المقدمة وتوفير تجربة مريحة وفعالة للمستخدمين. من خلال استخدام هذه التقنيات، يمكن للموقع تقديم استشارات هندسية متخصصة ودقيقة، مما يعزز قيمته العملية للعملاء الذين يبحثون عن خدمات استشارية متميزة.</p>\n\n<h1 class=\"wp-block-heading has-text-align-left\"><a></a><a><strong>Abstract</strong></a><strong></strong></h1>\n\n<p dir=\"ltr\">This project aims to design and implement a website for requesting architectural engineering consultations, utilizing Natural Language Processing (NLP) and Language Models (LLMs) APIs from OpenAI. The website serves as a graduation project and focuses on providing quick and accurate consulting solutions for clients seeking engineering advice in areas such as interior design, exterior design, and structural engineering.</p>\n\n<p dir=\"ltr\">The main objectives of the project revolve around providing an easy and efficient user experience for individuals in need of architectural consultations. These objectives are achieved through the implementation of artificial intelligence techniques and machine learning in the field of Natural Language Processing (NLP), employing OpenAI's language prediction model and API.</p>\n\n<p dir=\"ltr\">Additionally, the project aims to facilitate the exchange of information and inquiries between users and architectural experts. The website enables users to easily submit and input commands related to their engineering consultations, while receiving prompt and effective answers and guidance in return.</p>\n\n<p dir=\"ltr\">In summary, this project aims to design and develop a website that offers quick and accurate architectural consultations using artificial intelligence and NLP techniques, providing users with a convenient and efficient experience while enhancing the quality of engineering services provided.</p>\n\n<p dir=\"ltr\"><strong>Keywords:</strong> Artificial Intelligence techniques - Natural Language Processing (NLP) - Consultancy Solutions - User Experience - OpenAI API - Improving Engineering Services Quality - Specialized Engineering Consultations.</p>\n\n<h2 class=\"wp-block-heading\">جدول المصطلحات:</h2>\n\n<figure class=\"wp-block-table\"><table><tbody><tr><td><strong>الاختصار</strong><strong></strong></td><td><strong>المصطلح</strong></td><td><strong>الوصف</strong><strong></strong></td></tr><tr><td>T</td><td>Transformer</td><td>نموذج عمارة شبكات عصبية يتميز بقدرته على فهم السياق اللغوي بشكل متقدم.</td></tr><tr><td>NLP</td><td>Natural Language Processing</td><td>معالجة اللغة الطبيعية، وهي فرع من الذكاء الصنعي يهتم بتفاهم وتوليد اللغة البشرية.</td></tr><tr><td>LM</td><td>Language Model</td><td>نموذج لغوي، وهو نموذج يحاول تنبؤ الكلمات المقبلة في جملة معينة بناءً على السياق السابق.</td></tr><tr><td>LLM</td><td>Large Language Model</td><td>نموذج لغة كبير، وهو نموذج لغوي ضخم يتم تدريبه على كميات هائلة من البيانات اللغوية.</td></tr><tr><td>RNN</td><td>Recurrent Neural Network</td><td>شبكة عصبية متكررة، وهي شبكة عصبية تستخدم لمعالجة السلاسل والتسلسلات في البيانات.</td></tr><tr><td>AI</td><td>Artificial Intelligence</td><td>الذكاء الصنعي، وهو مجال يهدف إلى تطوير أنظمة قادرة على تنفيذ مهام تتطلب ذكاءً بشريًا.</td></tr><tr><td>ML</td><td>Machine Learning</td><td>التعلم الآلي ، وهو فرع من الذكاء الصنعي يهتم بتطوير نماذج تتعلم من البيانات وتحسن أداءها بمرور الوقت.</td></tr><tr><td>CNN</td><td>Convolutional Neural Network</td><td>شبكة عصبية تابعية التغذية، وهي شبكة عصبية تستخدم بشكل رئيسي في معالجة الصور والرؤية الحاسوبية.</td></tr><tr><td>API</td><td>Application Programming Interface</td><td>واجهة برمجة التطبيقات، وهي واجهة برمجية تسمح بتفاعل البرامج والتطبيقات مع بعضها البعض.</td></tr><tr><td>GPT</td><td>Generative Pre-trained Transformer</td><td>نموذج توليد النصوص، وهو نموذج يستخدم Transformer في توليد النصوص بشكل تلقائي.</td></tr></tbody></table></figure>\n\n<h2 class=\"wp-block-heading\"><a>1.1&nbsp;&nbsp;&nbsp; اختبار النموذج وتقويم أدائه ودقته</a></h2>\n\n<p>في هذا الفصل، سيتم إجراء اختبار شامل لنموذج التنبؤ باللغة المستخدم في موقع الاستشارات الهندسية، وذلك لتقييم أدائه ودقته في توفير الإجابات الهندسية المناسبة. سيتم استخدام مجموعة متنوعة من السيناريوهات والاستفسارات الهندسية لتحديد مدى قدرة النموذج على تقديم إجابات دقيقة ومفهومة.</p>\n\n<p>سيتم تصميم وتنفيذ مجموعة من الاختبارات الوظيفية للنموذج، حيث يتم إدخال استفسارات هندسية معروفة ومتنوعة ومقارنة الإجابات المقدمة من قبل النموذج مع الحلول الصحيحة أو المتوقعة. سيتم تسجيل وتحليل النتائج لتقييم أداء النموذج، مثل دقة الإجابات، وتفاعلية المحادثة، وقدرته على التعامل مع استفسارات معقدة أو غامضة.</p>\n\n<p>بالإضافة إلى الاختبارات الوظيفية، ستتم أيضًا استجواب مجموعة من المستخدمين الحقيقيين لتقييم تجربتهم مع النموذج ومدى رضاهم عن جودة ودقة الاستشارات التي تم تقديمها. ستتم جمع ملاحظاتهم وملاحظاتهم وتحليلها لتحسين أداء النموذج وتحسين خدمة الاستشارة الهندسية.</p>\n\n<p>باستنتاج هذا الفصل، سيتم تقييم أداء النموذج وتحليل نتائج الاختبارات وتعليقات المستخدمين لتحسين النموذج وضمان دقته وفعاليته في توفير استشارات هندسية موثوقة ومفيدة. سيتم استخدام هذه النتائج لضبط وتحسين المعلمات والمدخلات المستخدمة في النموذج بهدف تحقيق تجربة استشارية متميزة للمستخدمين.</p>\n\n<p>سؤال:</p>\n\n<figure class=\"wp-block-image size-full\"><!--IMG:0--></figure>\n\n<p>جواب:</p>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:1--></figure>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:2--></figure>\n\n<p class=\"has-text-align-center\"><strong>التجريب العملي</strong></p>\n\n<h2 class=\"wp-block-heading\"><a>الخاتمة</a></h2>\n\n<p>في نهاية هذه الأطروحة، يمكن الاستنتاج بأن تكنولوجيا GPT-3.5 Turbo تمثل تحفة رائدة في عالم الذكاء الاصطناعي وتنبؤ اللغة الطبيعية، وهي قادرة على تحقيق تطور ثوري في مجال الاستشارات الهندسية. تمثل هذه التقنية حلاً لمشكلات توفير الاستشارات الهندسية الدقيقة والسريعة وتحسين جودة الخدمات المقدمة للعملاء.</p>\n\n<p>تبين أن الموقع المقترح لطلب استشارات هندسية يعد أداة فعالة ومبتكرة لتلبية احتياجات العملاء في مجال الهندسة المعمارية.</p>\n\n<p>حيث يسهل هذا الموقع تبادل المعلومات بين المستخدمين والخبراء الهندسيين بشكل دقيق وسلس، وباستخدام التكنولوجيا المتطورة لتنبؤ اللغة الطبيعية يتم تحسين تجربة المستخدم بشكل لا مثيل له.</p>\n\n<p>وفي النهاية، يمثل هذا المشروع مساهمة قيمة في تحسين جودة الخدمات الهندسية المقدمة للعملاء وتسهيل الوصول إلى الاستشارات المتخصصة في المجال المعماري بطريقة سهلة وميسرة.</p>\n\n<p>يتيح استخدام تقنية GPT-3.5 Turbo للموقع توليد إجابات دقيقة وشاملة للاستفسارات وتقديم التوجيهات اللازمة للمستخدمين بشكل سريع وفعال.</p>\n\n<p>نتطلع إلى مستقبل واعد حيث ستستمر تطورات التكنولوجيا والذكاء الاصطناعي في تحسين حياة الناس وتسهيل العمليات والخدمات.</p>\n\n<p>إن استخدام تقنية GPT-3.5 Turbo في تصميم موقع طلب استشارات للهندسة المعمارية يمثل خطوة مهمة نحو تحقيق التميز في هذا المجال.</p>\n\n<p>وفي الختام، نتطلع إلى انتشار المزيد من التطبيقات المبتكرة لتقنيات الذكاء الاصطناعي وتنبؤ اللغة الطبيعية في مجالات مختلفة، مما سيسهم في تحقيق تقدم علمي وتطور تكنولوجي يخدم المجتمع ويساهم في تحسين جودة الحياة للجميع.</p>\n\n<p>وأخيرًا، نتوجه بالشكر الجزيل إلى OpenAI وفريق الباحثين العلماء الذين ساهموا في تطوير تقنية GPT-3.5 Turbo وجعلوا من هذا المشروع حقيقة مبهرة. كما نتوجه بالشكر للمشرفين والأساتذة الذين دعمونا وقدموا لنا الإرشاد والنصائح القيمة خلال هذه الرحلة العلمية.</p>\n\n<p>نطمح أن يكون هذا المشروع نقطة انطلاق لمشاريع مستقبلية تستفيد من تقنيات الذكاء الاصطناعي لخدمة الإنسانية وتعزز الابتكار والتطور في مجال الهندسة المعمارية وغيرها من المجالات التقنية والعلمية.</p>\n\n<p>نحن واثقون من أن الابتكارات القادمة ستشهد تطورات جديدة وإنجازات مبهرة في عالم التكنولوجيا والذكاء الاصطناعي.</p>\n\n<h2 class=\"wp-block-heading\"><a>المراجع</a></h2>\n\n<p dir=\"ltr\">1. Goodfellow, I., Bengio, Y., &amp; Courville, A. (2016). Deep Learning. MIT Press.</p>\n\n<p dir=\"ltr\">2. Jurafsky, D., &amp; Martin, J. H. (2020). Speech and Language Processing. Pearson.</p>\n\n<p dir=\"ltr\">3. Manning, C. D., &amp; Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.</p>\n\n<p dir=\"ltr\">4. Goldberg, Y. (2017). Neural Network Methods for Natural Language Processing. Morgan &amp; Claypool.</p>\n\n<p dir=\"ltr\">5. Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., ... &amp; Polosukhin, I. (2017). Attention is all you need. In Advances in Neural Information Processing Systems (pp. 5998-6008).</p>\n\n<p dir=\"ltr\">6. Brownlee, J. (2021). Deep Learning for Natural Language Processing. Machine Learning Mastery.</p>\n\n<p dir=\"ltr\">7. Radford, A., Wu, J., Child, R., Luan, D., Amodei, D., Sutskever, I. (2019). Language Models are Unsupervised Multitask Learners. OpenAI Blog</p>\n\n<p>الروابط:</p>\n\n<p>مقال عن GPT-4 تاريخ الزيارة 2023/07/23</p>\n\n<p dir=\"ltr\"><a href=\"https://tech-echo.com/2023/03/gpt-4-ai-openai-features-how-get/\">https://tech-echo.com/2023/03/gpt-4-ai-openai-features-how-get/</a></p>",
+  "images": [
+   {
+    "i": 0,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2023/07/image-7.png",
+    "context": "1.1    اختبار النموذج وتقويم أدائه ودقته"
+   },
+   {
+    "i": 1,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2023/07/image-8.png",
+    "context": "1.1    اختبار النموذج وتقويم أدائه ودقته"
+   },
+   {
+    "i": 2,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2023/07/image-6.png",
+    "context": "1.1    اختبار النموذج وتقويم أدائه ودقته"
+   }
+  ]
+ },
+ {
+  "slug": "تصميم-وتنفيذ-عربة-scooter-لذوي-الاحتياجات-ال",
+  "date": "2023-07-27",
+  "path": "/2023/07/27/تصميم-وتنفيذ-عربة-scooter-لذوي-الاحتياجات-ال/",
+  "url": "/2023/07/27/%D8%AA%D8%B5%D9%85%D9%8A%D9%85-%D9%88%D8%AA%D9%86%D9%81%D9%8A%D8%B0-%D8%B9%D8%B1%D8%A8%D8%A9-scooter-%D9%84%D8%B0%D9%88%D9%8A-%D8%A7%D9%84%D8%A7%D8%AD%D8%AA%D9%8A%D8%A7%D8%AC%D8%A7%D8%AA-%D8%A7%D9%84/",
+  "title": "عربة (Scooter) مبتكرة لذوي الاحتياجات الخاصة - (تصميم وتنفيذ)",
+  "cats": [
+   "uncategorized"
+  ],
+  "tags": [],
+  "excerpt": "في عالم يتطور بسرعة، تساهم التكنولوجيا في تحسين حياة الجميع، بما في ذلك الأشخاص ذوي الاحتياجات الخاصة. من هذا المنطلق، تم تصميم وتنفيذ عربة (Scooter) لذوي الاحتياجات الخاصة، مما يساعد…",
+  "minutes": 3,
+  "feature_real": null,
+  "body": "<h2 class=\"wp-block-heading\">ملخص:</h2>\n\n<p>في عالم يتطور بسرعة، تساهم التكنولوجيا في تحسين حياة الجميع، بما في ذلك الأشخاص ذوي الاحتياجات الخاصة. من هذا المنطلق، تم تصميم وتنفيذ عربة (Scooter) لذوي الاحتياجات الخاصة، مما يساعد في تحسين حركتهم ومنحهم حرية أكبر في التنقل.</p>\n\n<p><br>هذه العربة، التي تم تصميمها خصيصاً لأولئك الذين يعانون من إعاقات جسدية أو كبار السن أو ضحايا الحروب والمصابين، تقدم حلاً آمنًا وفعالًا لتحسين قدرات الحركة. من خلال مقعدها الخشبي الراحة، والذي تم تصميمه ليكون واسعًا ومقاومًا للرطوبة وخفيف الوزن، توفر العربة راحة طوال الوقت.</p>\n\n<p>تتميز العربة بمحركها الكهربائي بقوة 450 واط وجهد 36 فولت، مما يجعلها قادرة على التعامل مع الظروف المختلفة بكفاءة. تتوفر العربة بثلاث سرعات مختلفة، ويمكنها الوصول إلى سرعة قصوى تصل إلى 50 كيلومتراً في الساعة. كما تشمل ميزة تثبيت السرعة لراحة القيادة.</p>\n\n<p>العربة مصممة لتحمل وزن يصل إلى 150 كيلوغرام، مما يجعلها خيارًا مثاليًا لمجموعة واسعة من المستخدمين. بالإضافة إلى ذلك، تم تجهيز العربة بثلاث عجلات غير هوائية للحفاظ على الاستقرار، مما يزيد من الأمان.</p>\n\n<p>تستهدف التحسينات المستقبلية للعربة توفير نظام الفرملة الذاتي، وتركيب لوحة شمسية لشحن البطاريات، واستغلال الحركة الميكانيكية لتوليد الطاقة لشحن البطاريات، ونظام تتبع GPS، وتحديد طريق السفر باستخدام التطبيق على الهاتف المحمول.</p>\n\n<p>بشكل عام، توفر العربة المصممة والمنفذة حلاً آمنًا وفعالًا لتحسين قدرة الحركة لدى الأفراد ذوي الاحتياجات الخاصة وكبار السن. تساهم الابتكارات مثل هذه في تعزيز الاستقلالية والوصولية، وتحسين جودة الحياة لهذه الفئات المستهدفة.</p>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:0--></figure>\n\n<p class=\"has-text-align-center\">عربة Scooter لذوي الاحتياجات الخاصة</p>\n\n<h1 class=\"wp-block-heading has-text-align-left has-medium-font-size\">Abstract</h1>\n\n<p class=\"has-text-align-left has-medium-font-size\" dir=\"ltr\">The project aims to design and implement a scooter for individuals with special needs. The scooter is specifically tailored to accommodate individuals with physical disabilities, elderly individuals, war victims, and injured individuals, such as lower limb amputees who cannot operate conventional scooters that require foot control. The scooter features a comfortable, wide, moisture-resistant, lightweight wooden seat.</p>\n\n<p class=\"has-medium-font-size\" dir=\"ltr\">The scooter is powered by an electric motor with a power output of 450 watts and a voltage of 36 volts. It utilizes front-wheel drive, and the motor is connected to an electronic controller (electronic throttle), which regulates all the scooter's functions. The scooter operates at three different speeds, with a maximum speed of 50 kilometers per hour and includes a cruise control feature.</p>\n\n<p class=\"has-medium-font-size\" dir=\"ltr\">To ensure sufficient power supply, the scooter requires three batteries, each with a voltage of 12 volts, connected in series. The scooter is designed to withstand a weight capacity of up to 150 kilograms. It is equipped with three non-pneumatic wheels for stability.</p>\n\n<p class=\"has-medium-font-size\" dir=\"ltr\">The braking system is manually operated and utilizes caliper brakes on the front wheel. The scooter is equipped with a display screen that shows speed, battery charge percentage, lights, and indicators. The scooter's flooring is made of lightweight wooden material to reduce weight and cost.</p>\n\n<p class=\"has-medium-font-size\" dir=\"ltr\">Future enhancements for the scooter include a self-braking system, installation of a solar panel for battery charging, harnessing mechanical motion to generate power for battery charging, GPS tracking system, and mobile-based route mapping.</p>\n\n<p class=\"has-medium-font-size\" dir=\"ltr\">The designed and implemented scooter provides a safe and efficient mobility solution for individuals with special needs and elderly individuals. It promotes independence, accessibility, and improved quality of life for its target user groups.</p>",
+  "images": [
+   {
+    "i": 0,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2023/07/image-2.png",
+    "context": "ملخص:"
+   }
+  ]
+ },
+ {
+  "slug": "روبوت-تنظيف-الألواح-الشمسية",
+  "date": "2023-07-27",
+  "path": "/2023/07/27/روبوت-تنظيف-الألواح-الشمسية/",
+  "url": "/2023/07/27/%D8%B1%D9%88%D8%A8%D9%88%D8%AA-%D8%AA%D9%86%D8%B8%D9%8A%D9%81-%D8%A7%D9%84%D8%A3%D9%84%D9%88%D8%A7%D8%AD-%D8%A7%D9%84%D8%B4%D9%85%D8%B3%D9%8A%D8%A9/",
+  "title": "روبوت تنظيف الألواح الشمسية (تصميم وتنفيذ): الابتكار في صناعة الطاقة المتجددة",
+  "cats": [
+   "uncategorized"
+  ],
+  "tags": [],
+  "excerpt": "في عصر الطاقة المتجددة، أصبحت الألواح الشمسية جزءًا لا يتجزأ من مشهدنا اليومي. ولكن مع هذا النمو السريع، أصبح التحدي الكبير في الحفاظ على فعالية وكفاءة هذه الألواح. هنا يأتي دور \"روبوت…",
+  "minutes": 2,
+  "feature_real": null,
+  "body": "<p class=\"has-medium-font-size\">في عصر الطاقة المتجددة، أصبحت الألواح الشمسية جزءًا لا يتجزأ من مشهدنا اليومي. ولكن مع هذا النمو السريع، أصبح التحدي الكبير في الحفاظ على فعالية وكفاءة هذه الألواح. هنا يأتي دور \"روبوت تنظيف الألواح الشمسية\".</p>\n\n<p>هذا المشروع، والذي نُفذ كمشروع تخرج، يقدم حلاً فعالاً لمشكلة تنظيف الألواح الشمسية، التي قد تكون صعبة وتكلفية. الروبوت المُطور يتمتع بقدرة على تنظيف الألواح الشمسية بطريقة آمنة وفعالة، مع مهمة إضافية في تبريد الألواح لزيادة كفاءتها.</p>\n\n<div><!--IMG:0--><div>\n\n</div></div>\n\n<p><br>ما يجعل هذا الروبوت فريدًا من نوعه هو الاعتماد على مجموعة من المكونات الإلكترونية والبرمجية، بما في ذلك لوحة الأردوينو ودوائر القيادة <a href=\"https://opencircuit.shop/product/l298n-motor-driver-module-h-bridge\">L298N</a> وحساسات الحرارة والأمواج الصوتية. الروبوت مدعوم بمحركات كهربائية، ويستطيع الاستقرار على الألواح الشمسية باستخدام قاعدة مستقرة.</p>\n\n<p>تم تصميم الروبوت ليكون قابلاً للتحكم عن بُعد بواسطة وحدة تحكم لاسلكية، مما يسهل التنقل بين الألواح الشمسية وتوجيه الروبوت لأداء مهام التنظيف. كما يتميز الروبوت بمرونته في التعامل مع مختلف الأحوال الجوية والأوقات.</p>\n\n<p>كانت النتائج المحصلة من اختبارات الروبوت مشجعة، حيث أظهرت فعالية الروبوت في تنظيف الألواح الشمسية بطريقة سليمة ومستدامة. يوفر هذا الروبوت حلاً مبتكراً وآمناً لتنظيف الألواح الشمسية، مما يساعد على تحسين كفاءة توليد الكهرباء الشمسية والحد من المخاطر والتكاليف المرتبطة بعملية التنظيف.</p>\n\n<p>باختصار، يتميز الروبوت بكونه أداة تنظيف فعالة ومتعددة الاستخدامات للألواح الشمسية، مما يجعله أداة مهمة في الحفاظ على فعالية الألواح الشمسية والمساهمة في الاستدامة وكفاءة الطاقة الشمسية.</p>\n\n<h2 class=\"wp-block-heading has-text-align-left\">Abstract</h2>\n\n<p dir=\"ltr\">This graduation project aims to design and develop a robot that is capable of safely and efficiently cleaning solar panels, while also incorporating a task of cooling the panels to enhance their efficiency. The design involves the utilization of various electronic and programming components, including an Arduino board, L298N motor driver circuits, temperature sensors, and ultrasonic waves. The robot is propelled by electric motors and can stabilize itself on solar panels using a stable base. Remote control is implemented through a wireless control unit, enabling the robot to move the cleaning mechanism and utilize a water pump for panel cooling. The robot has been tested on different samples of solar panels, demonstrating its effectiveness in cleaning panels in a proper and sustainable manner. The main contribution of this project lies in providing an innovative and secure solution for solar panel cleaning, thereby improving solar electricity generation efficiency while reducing associated risks and costs.</p>\n\n<h2 class=\"wp-block-heading\">مخطط التوصيلات العملية:</h2>\n\n<figure class=\"wp-block-image size-full\"><!--IMG:1--></figure>\n\n<h3 class=\"wp-block-heading\">جدول توضيحي للمخطط</h3>\n\n<figure class=\"wp-block-table\"><table><tbody><tr><td>NUM</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>1</td><td>12Vمحرك تيار مستمر&nbsp;</td><td>DC MOTOR 12V</td></tr><tr><td>2</td><td>مفتاح كهربائي</td><td>switch</td></tr><tr><td>3</td><td>بطاريات ليثيوم</td><td>Lithium batteries</td></tr><tr><td>4</td><td>10Aفيوز حماية</td><td>Fuse 10A</td></tr><tr><td>5</td><td>مرحل (ريليه)</td><td>relay</td></tr><tr><td>6</td><td>5Vمضخة مياه</td><td>Pump water 5v</td></tr><tr><td>7</td><td>دارة قيادة &nbsp;l298n</td><td>L298n motor driver</td></tr><tr><td>8</td><td>لوحة اختبار</td><td>Test board</td></tr><tr><td>9</td><td>حساس مسافة</td><td><a href=\"https://www.sparkfun.com/products/15569\">Ultrasonic</a></td></tr><tr><td>10</td><td>اردوينو اونو</td><td><a href=\"https://store.arduino.cc/products/arduino-uno-rev3\">Arduino uno</a></td></tr><tr><td>&nbsp; 11 &nbsp;</td><td>&nbsp; حساس حرارة ورطوبة &nbsp; &nbsp;</td><td>Humitidy and Temperature sensor Dht</td></tr><tr><td>12</td><td>شريحة بلوتوث</td><td>Bluetooth HC-05</td></tr><tr><td>13</td><td>5v منظم جهد</td><td>Voltage regulator 7805</td></tr><tr><td>14</td><td>اسلاك توصيل</td><td>Connecting wires</td></tr><tr><td>15</td><td>مروحة تبريد</td><td>fan</td></tr></tbody></table></figure>",
+  "images": [
+   {
+    "i": 0,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2023/07/image.png",
+    "context": ""
+   },
+   {
+    "i": 1,
+    "real": false,
+    "src": null,
+    "orig": "/assets/img/image-1.png",
+    "context": "مخطط التوصيلات العملية:"
+   }
+  ]
+ },
+ {
+  "slug": "تطبيق-مساعدة-المكفوفين-باستخدام-الرؤ",
+  "date": "2023-07-27",
+  "path": "/2023/07/27/تطبيق-مساعدة-المكفوفين-باستخدام-الرؤ/",
+  "url": "/2023/07/27/%D8%AA%D8%B7%D8%A8%D9%8A%D9%82-%D9%85%D8%B3%D8%A7%D8%B9%D8%AF%D8%A9-%D8%A7%D9%84%D9%85%D9%83%D9%81%D9%88%D9%81%D9%8A%D9%86-%D8%A8%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D8%A7%D9%84%D8%B1%D8%A4/",
+  "title": "تطبيق مساعدة المكفوفين باستخدام الرؤية الحاسوبية: تحقيق الوصولية عبر التكنولوجيا",
+  "cats": [
+   "uncategorized"
+  ],
+  "tags": [],
+  "excerpt": "توفر التكنولوجيا الحديثة أدوات تحسين الوصولية للأشخاص ذوي الإعاقة البصرية. من بين هذه الأدوات، يعتبر تطبيق مساعدة المكفوفين باستخدام الرؤية الحاسوبية حلاً ثوريًا لمشكلات الوصول إلى…",
+  "minutes": 4,
+  "feature_real": null,
+  "body": "<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:0--></figure>\n\n<p><br>توفر التكنولوجيا الحديثة أدوات تحسين الوصولية للأشخاص ذوي الإعاقة البصرية. من بين هذه الأدوات، يعتبر تطبيق مساعدة المكفوفين باستخدام الرؤية الحاسوبية حلاً ثوريًا لمشكلات الوصول إلى المحتوى البصري.</p>\n\n<p>هذا التطبيق الذي تم تطويره باستخدام لغة البرمجة كوتلن ومنصة أندرويد ستوديو، يتيح للمستخدمين المكفوفين التعرف على العناصر الموجودة في الصور من خلال FirebaseVisionImageLabeler، وكذلك إنشاء الصور باستخدام CameraX API. وبالإضافة إلى ذلك، يمكن للتطبيق التحكم في الصوت من خلال AudioManager وتحويل النص إلى كلام باستخدام TextToSpeech.</p>\n\n<p>يأتي الذكاء الصنعي كعنصر حاسم في تقنية التعرف على الصور، حيث يتم استخدام مكتبات تعلم الآلة لتمكين التطبيق من التعرف على العناصر الموجودة في الصورة وتسميتها بشكل دقيق. هذا يساعد المستخدمين المكفوفين على التفاعل مع العالم البصري بشكل أكبر وأكثر ثقة.</p>\n\n<p>تعد لغة البرمجة كوتلن خيارًا مناسبًا لبناء تطبيقات الهاتف المحمول، بفضل سهولة استخدامها وقدرتها على التعامل مع العديد من الوظائف الحاسوبية. كما توفر اللغة أدوات قوية لتحليل الأخطاء وتصحيحها، مما يجعل من السهل على المطورين إنشاء تطبيقات ذات جودة عالية وتطويرها بشكل مستمر.</p>\n\n<p>بالإضافة إلى ذلك، يساعد استخدام الذكاء الصنعي في التطبيقات القائمة على كوتلن في توفير تجربة مستخدم محسنة وأكثر دقة للمستخدمين المكفوفين. يمكن تحسين قدرات التطبيق مع تحسين جودة التعرف على الصور والصوت، مما يعزز القيمة العملية للتطبيق.</p>\n\n<p>باستخدام هذا التطبيق، يمكن للأشخاص ذوي الإعاقات البصرية الاستفادة من التقدم التكنولوجي لتحقيق استقلالية أكبر وتحسين جودة الحياة.</p>\n\n<h1 class=\"wp-block-heading has-text-align-left\">Abstract</h1>\n\n<p dir=\"ltr\">Our project aims to develop an Android Studio-based application using the Kotlin programming language, which focuses on providing practical assistance to visually impaired individuals through the use of modern technology. This application enables them to access visual content more easily and efficiently. It allows image recognition through FirebaseVisionImageLabeler, image creation using CameraX API, sound control via AudioManager, and text-to-speech conversion using TextToSpeech. Artificial intelligence plays a critical role in image recognition technology, as machine learning libraries are utilized to enable the application to accurately recognize and label elements within an image. This assists visually impaired users in interacting with the visual world with greater confidence. Regarding the Kotlin programming language, it is user-friendly and capable of handling many computer functions, making it a suitable option for building mobile phone applications. The language offers powerful tools for error analysis and correction, making it easy for developers to create high-quality applications and continuously improve them. In addition, the use of artificial intelligence in Kotlin-based applications helps to provide an enhanced and more accurate user experience for visually impaired users, by improving the quality of image and voice recognition, which enhances the practical value of the application.</p>\n\n<h2 class=\"wp-block-heading\">تم استعمال TextToSpeech</h2>\n\n<p>TextToSpeech هو واجهة برمجة تطبيقات (API) في نظام الأندرويد تسمح لتطبيقك بتحويل النص إلى كلام مسموع بشكل آلي. يتم استخدام هذه الواجهة بشكل رئيسي في تطبيقات الصوت والمراسلة والقراءة الصوتية والإعلانات الصوتية والألعاب والتعليم عن بعد والعديد من التطبيقات الأخرى.</p>\n\n<p>تعتمد TextToSpeech على تقنيات الترجمة النصية إلى كلام مسموع باستخدام أنظمة ترجمة النص إلى كلام المدمجة في نظام الأندرويد. وتم تصميم وتطوير TextToSpeech لتوفير تجربة مستخدم متعددة اللغات ويدعم العديد من اللغات المختلفة ويوفر العديد من الخصائص التي تسمح للمطورين بتخصيص تجربة الصوت لتناسب احتياجات تطبيقهم.</p>\n\n<p>يمكن للمطورين استخدام TextToSpeech بسهولة في تطبيقاتهم عن طريق تعريف مثيل من واجهة TextToSpeech في الشفرة وتهيئتها واستخدامها لتحويل النص إلى كلام مسموع. يمكن تخصيص خصائص TextToSpeech لتحسين جودة الصوت وتحديد اللغة والنطق والأسلوب ومعدل الكلام والصوت وغيرها من الخصائص.</p>\n\n<p>يمكن أيضًا استخدام TextToSpeech في تطبيقات الواقع المعزز والواقع الافتراضي لتوفير تجربة صوتية أكثر واقعية وتفاعلية للمستخدم. يمكن استخدام TextToSpeech لتحويل النص إلى كلام مسموع في الوقت الحقيقي بشكل مستمر وتوفير تجربة صوتية ديناميكية وواقعية للمستخدمين.</p>\n\n<figure class=\"wp-block-image aligncenter size-full\"><!--IMG:1--></figure>\n\n<h2 class=\"wp-block-heading\"> تم استعمال تقنيات لتحليل الصورة:</h2>\n\n<figure class=\"wp-block-image size-full\"><!--IMG:2--></figure>\n\n<h2 class=\"wp-block-heading\">التطويرات والآفاق المستقبلية:</h2>\n\n<p>يمكن تطوير التطبيق لإضافة المزيد من الميزات والتحسينات المستقبلية، بما في ذلك:</p>\n\n<p>1- تحسين الدقة: يمكن تطوير خوارزميات التعرف على الصورة لتحسين الدقة وتعرف أكثر الأشياء بدقة أفضل.</p>\n\n<p>2- دعم اللغات المتعددة: يمكن إضافة دعم للغات المتعددة، حتى يتمكن المستخدمون من التفاعل بلغاتهم الأم.</p>\n\n<p>3- تحسين تجربة المستخدم: يمكن تحسين واجهة المستخدم وتصميمها بشكل أفضل لتحسين تجربة المستخدم.</p>\n\n<p>4- تطوير ميزات إضافية: يمكن إضافة ميزات جديدة مثل التعرف على الألوان، وتحويل النص المكتوب إلى كلام، والتعرف على الأشخاص.</p>\n\n<p>5- دمج تقنيات جديدة: يمكن دمج تقنيات جديدة مثل الذكاء الاصطناعي وتعلم الآلة لتحسين الأداء والدقة.</p>\n\n<p>6- تطوير نسخة لمستخدمي الهواتف الذكية الأخرى: يمكن تطوير نسخة من التطبيق للهواتف الذكية التي تعمل بأنظمة تشغيل أخرى.</p>\n\n<p>7- توفير دعم فني وصيانة للتطبيق: يمكن توفير دعم فني وصيانة للتطبيق لضمان استمرارية عمله وتلبية احتياجات المستخدمين.</p>\n\n<h2 class=\"wp-block-heading\">المراجع:</h2>\n\n<p class=\"has-medium-font-size\" dir=\"ltr\">1- Seeing AI. (n.d.). Microsoft. https://www.microsoft.com/en-us/ai/seeing-ai</p>\n\n<p class=\"has-medium-font-size\" dir=\"ltr\">2- Be My Eyes. (n.d.). Be My Eyes. https://www.bemyeyes.com/</p>\n\n<p class=\"has-medium-font-size\" dir=\"ltr\">3- Lazarillo. (n.d.). Lazarillo. https://www.lazarillo.cl/</p>\n\n<p class=\"has-medium-font-size\" dir=\"ltr\">4- Signily. (n.d.). Signily. <a href=\"https://www.signily.com/\">https://www.signily.com/</a></p>\n\n<p class=\"has-medium-font-size\" dir=\"ltr\">5- <a href=\"https://www.emro.who.int/ar/control-and-preventions-of-blindness-and-deafness/announcements/global-estimates-on-visual-impairment.html\">https://www.emro.who.int/ar/control-and-preventions-of-blindness-and-deafness/announcements/global-estimates-on-visual-impairment.html</a></p>\n\n<p class=\"has-medium-font-size\" dir=\"ltr\">6- Firebase ML Kit Documentation: <a href=\"https://firebase.google.com/docs/ml-kit\">https://firebase.google.com/docs/ml-kit</a></p>\n\n<p class=\"has-medium-font-size\" dir=\"ltr\">7- Building an Object Detection App Using Firebase ML Kit on Medium: https://medium.com/firebase-developers/building-an-object-detection-app-using-firebase-ml-kit-c87626a181f2</p>",
+  "images": [
+   {
+    "i": 0,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2023/07/image-3.png",
+    "context": ""
+   },
+   {
+    "i": 1,
+    "real": false,
+    "src": null,
+    "orig": "https://abdalgani.com/wp-content/uploads/2023/07/image-4.png",
+    "context": "تم استعمال TextToSpeech"
+   },
+   {
+    "i": 2,
+    "real": false,
+    "src": null,
+    "orig": "/assets/img/image-5.png",
+    "context": "تم استعمال تقنيات لتحليل الصورة:"
+   }
+  ]
+ }
+]

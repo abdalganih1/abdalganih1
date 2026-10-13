@@ -1,0 +1,18 @@
+{
+ "نظام-مراقبة-وحماية-منشأة-صناعية-من-الح": {"id": "fire-guard", "theme": "an industrial factory hall protected by a smart fire detection system, gas sensors, a water pump nozzle and red alarm beacons, a security camera watching"},
+ "موقع-وتطبيق-لبيع-منتجات-العناية-بالبش": {"id": "beauty-store", "theme": "luxury skincare and cosmetics products arranged elegantly next to a smartphone showing an online store, soft pastel and teal tones"},
+ "منصة-للتبرعات-والأعمال-الخيرية": {"id": "donations", "theme": "hands holding a smartphone with a charity donation app, stacked cardboard aid boxes decorated with simple heart shapes in the background, no cross symbols, hopeful atmosphere"},
+ "تطبيق-تعليم-لغات-البرمجة-باستخدام-إطا": {"id": "code-learning", "theme": "a student learning programming on a smartphone and laptop, floating abstract code symbols and course cards, modern desk"},
+ "تصميم-نظارة-تساعد-المكفوفين-على-الرؤي": {"id": "blind-glasses", "theme": "smart assistive glasses with a tiny camera module and earpiece for blind people, AI object detection bounding boxes in a city street"},
+ "تصميم-وتنفيذ-نظام-حجوزات-طيران-باستخد": {"id": "rfid-airport", "theme": "an airport check-in gate with an RFID card being tapped on a reader, boarding passes and airplanes through the window"},
+ "تصميم-وتنفيذ-ذراع-روبوتية": {"id": "robot-arm", "theme": "a desktop robotic arm with servo motors controlled by Arduino and a webcam doing image processing, picking up a colored cube"},
+ "تغذية-مزرعة-بالطاقة-الشمسية-مع-تحسين": {"id": "solar-farm", "theme": "a green farm powered by solar panels with an inverter box and IoT controller, controlled remotely from a phone"},
+ "تصميم-وتنفيذ-كراج-ذكي": {"id": "smart-garage", "theme": "a miniature smart parking garage model with four parking spots, infrared sensors, an automatic gate barrier and an LCD screen"},
+ "بناء-وتنفيذ-منظومه-روبوت-آلي-لنقل-وتوص": {"id": "delivery-robot", "theme": "a small autonomous wheeled delivery robot carrying a package through an office corridor"},
+ "تطبيق-الجلاء-المدرسي": {"id": "school-report", "theme": "a school report card management desktop application on a computer monitor in a school office, grades and student records"},
+ "مسودة-تلقائية-تحسين-أمان-الصيانة-الكه": {"id": "volt-glasses", "theme": "an electrician wearing smart data glasses with a heads-up voltage reading while inspecting an electrical panel safely"},
+ "موقع-طلب-استشارات-للهندسة-المعمارية-ب": {"id": "arch-consult", "theme": "an architecture consultation website on a laptop with 3D building models and AI generated floor plans on a drafting table"},
+ "تصميم-وتنفيذ-عربة-scooter-لذوي-الاحتياجات-ال": {"id": "mobility-scooter", "theme": "an innovative electric mobility scooter designed for people with disabilities, clean modern engineering prototype"},
+ "روبوت-تنظيف-الألواح-الشمسية": {"id": "solar-cleaner", "theme": "a tracked robot cleaning a rooftop solar panel array with a rotating brush"},
+ "تطبيق-مساعدة-المكفوفين-باستخدام-الرؤ": {"id": "vision-app", "theme": "a smartphone camera app that describes surroundings to a blind user with text-to-speech, sound waves and recognized objects"}
+}
