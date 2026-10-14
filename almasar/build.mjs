@@ -70,7 +70,7 @@ function emit(src, name, transform) {
   return (H[name] = rel);
 }
 emit('src/styles.css', 'masar.css', (css) => read('src/fonts.css') + css);
-emit('src/app.js', 'masar.js');
+emit('src/app.js', 'masar.js', (js) => js.replaceAll('__API__', SITE.api));
 emit('src/intro.js', 'intro.js');
 emit('node_modules/gsap/dist/gsap.min.js', 'gsap.js');
 emit('node_modules/gsap/dist/ScrollTrigger.min.js', 'st.js');
@@ -108,16 +108,18 @@ function header(active) {
       <ul>${NAV.map(([h, t]) => `<li><a href="${h}"${h === active ? ' aria-current="page"' : ''}>${t}</a></li>`).join('')}</ul>
       <div class="mh-auth" data-auth>
         <a href="/login" class="btn btn-g btn-sm">تسجيل الدخول</a>
-        <a href="/register" class="btn btn-p btn-sm">ابدأ مجاناً</a>
+        <a href="/courses" class="btn btn-p btn-sm">ابدأ مجاناً</a>
       </div>
     </nav>
+    <button class="mh-theme" type="button" data-theme-toggle aria-label="تبديل الوضع الليلي" title="الوضع الفاتح / الليلي"><svg class="i i-moon" aria-hidden="true"><use href="/assets/brand/icons.svg#moon"/></svg><svg class="i i-sun" aria-hidden="true"><use href="/assets/brand/icons.svg#sun"/></svg></button>
     <button class="mh-burger" id="mhBurger" aria-label="فتح القائمة" aria-expanded="false" aria-controls="mhNav"><span></span><span></span><span></span></button>
   </div>
+  <span class="sp" id="sp" aria-hidden="true"></span>
 </header>`;
 }
 
 function footer() {
-  return `<footer class="mf">
+  return `<footer class="mf dk">
   <div class="wrap">
     <div class="mf-top">
       <div class="mf-brand">
@@ -162,7 +164,7 @@ const ORG = {
   sameAs: ['https://abdalgani.com'],
 };
 
-function page({ file, path: p, title, desc, body, active, image, type = 'website', ld = [], dark = true, scripts = '', head = '', noindex = false, intro = false, crumbs }) {
+function page({ file, path: p, title, desc, body, active, image, type = 'website', ld = [], topDark = false, scripts = '', head = '', noindex = false, intro = false, crumbs }) {
   const url = URL_ + p;
   const og = image ? (image.startsWith('http') ? image : URL_ + image) : `${URL_}/assets/brand/og.jpg`;
   const graph = [ORG, { '@type': 'WebSite', '@id': `${URL_}/#site`, url: URL_, name: 'منصة مسار', inLanguage: 'ar', publisher: { '@id': `${URL_}/#org` },
@@ -177,7 +179,7 @@ function page({ file, path: p, title, desc, body, active, image, type = 'website
 <meta name="description" content="${esc(desc)}">
 <link rel="canonical" href="${url}">
 ${noindex ? '<meta name="robots" content="noindex, follow">' : '<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">'}
-<meta name="theme-color" content="#060a18">
+<meta name="theme-color" content="#f6f8fc">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/assets/brand/logo-180.png">
 <link rel="alternate" type="text/plain" title="llms.txt" href="/llms.txt">
@@ -200,7 +202,7 @@ ${head}
 <script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@graph': graph })}</script>
 ${GA_ID ? `<script async src="https://www.googletagmanager.com/gtag/js?id=${GA_ID}"></script><script src="${H['ga.js']}"></script>` : ''}
 </head>
-<body class="${dark ? 'm-dark' : 'm-light'}">
+<body${topDark ? ' class="top-dark"' : ''}>
 ${intro ? introMarkup() : ''}
 ${header(active)}
 <main id="main">
@@ -235,7 +237,7 @@ function introMarkup() {
     <circle id="introHead" r="9" fill="#fff" filter="url(#glow)"/>
   </svg>
   <div class="intro-words"><span>اكتشف ذاتك</span><span>حدّد مسارك</span><span>أبدع في حياتك</span></div>
-  <div class="intro-brand"><div class="intro-logo">${LOGO}</div><div class="intro-name">مسار</div><div class="intro-sub">ريادة المستقبل تبدأ بخطوة</div></div>
+  <div class="intro-brand"><div class="intro-logo">${LOGO.replace('id="lg"', 'id="lgi"').replace('url(#lg)', 'url(#lgi)')}</div><div class="intro-name">مسار</div><div class="intro-sub">ريادة المستقبل تبدأ بخطوة</div></div>
   <button class="intro-skip" id="introSkip" type="button">تخطَّ الانترو</button>
 </div>`;
 }
@@ -244,18 +246,59 @@ function introMarkup() {
 const img = (name, alt, cls = '', eager = false, sizes = '(max-width: 760px) 100vw, 50vw') =>
   `<img class="${cls}" src="/assets/gen/${name}.webp" srcset="/assets/gen/${name}-800.webp 800w, /assets/gen/${name}.webp 1600w" sizes="${sizes}" width="1600" height="900" alt="${esc(alt)}" ${eager ? 'fetchpriority="high"' : 'loading="lazy" decoding="async"'}>`;
 
+// extra search words per course, so "اردوينو", "arduino", "كمبيوتر" or "مواقع" all find the right course
+const KW = {
+  100: 'إرادة ارادة فرص تطوير الذات تحفيز نجاح',
+  101: 'محاضر مدرس مدرب تعليم نشر كورس',
+  102: 'css تنسيق تصميم مواقع ويب واجهات',
+  103: 'html تصميم مواقع ويب صفحات مبتدئ برمجة',
+  104: 'wordpress ووردبريس ووردبرس مواقع مدونة متجر',
+  105: 'arduino اردوينو أردوينو الكترونيات إلكترونيات روبوت دارات متحكم',
+  106: 'javascript js جافا سكربت جافاسكربت برمجة ويب',
+  107: 'icdl كمبيوتر حاسوب اوفيس أوفيس word excel وورد اكسل ويندوز',
+  108: 'ريادة مستقبل تخطيط ذات اكتشاف مسار شخصية',
+  109: 'icdl كمبيوتر حاسوب سريع مكثف اوفيس word excel',
+};
+const startBtn = (c, label = 'ابدأ الكورس الآن', cls = 'btn btn-p btn-lg') => `<a class="${cls}" href="/course?id=${c.id}" data-start="${c.id}">${label} ${icon('arrow')}</a>`;
+
 function courseCard(c, i = 0) {
-  return `<a class="cc reveal" href="${c.url}" data-cat="${esc(c.category)}" data-title="${esc(c.title)}" style="--d:${(i % 3) * 0.08}s">
+  return `<a class="cc reveal" href="${c.url}" data-cat="${esc(c.category)}" data-q="${esc(`${c.title} ${c.category} ${KW[c.id] || ''} ${c.intro}`)}" style="--d:${(i % 3) * 0.08}s">
   <div class="cc-img"><img src="${esc(c.thumbnail_url)}" alt="${esc(c.title)}" loading="lazy" decoding="async" width="640" height="360" onerror="this.onerror=null;this.src='https://pub-f2c0b43b09ea4983a05bdb7998fafdf3.r2.dev/covers/general.png'"><span class="tag tag-free">مجاني</span></div>
   <div class="cc-body">
     <span class="cc-cat">${esc(c.category)}</span>
     <h3>${esc(c.title)}</h3>
     <p>${esc(clip(c.intro, 120))}</p>
-    <div class="cc-meta"><span>${icon('play')} ${c.nLessons} درس</span><span>${icon('clock')} ${c.hours} ساعة</span></div>
+    <ul class="cc-meta"><li>${icon('play')} ${c.nLessons} درس</li><li>${icon('clock')} ${c.hours} ساعة</li><li>${icon('level')} من الصفر</li></ul>
+    <span class="cc-cta">تفاصيل وابدأ ${icon('arrow')}</span>
   </div>
 </a>`;
 }
 
+// "where do I start?" — four goals, each pointing at the first course to take
+const GOALS = [
+  ['code', 'بدي صمّم مواقع وأتعلّم البرمجة', 'من أول سطر HTML لموقع كامل', 103],
+  ['chip', 'بدي أدخل عالم الإلكترونيات والروبوت', 'الأردوينو من الصفر وبالتجربة', 105],
+  ['laptop', 'بدي أتقن الكمبيوتر وبرامج المكتب', 'ICDL: الويندوز والوورد والإكسل', 107],
+  ['compass', 'بدي أكتشف حالي وأخطط لمستقبلي', 'افهم قدراتك واختار مسارك', 108],
+];
+function pathFinder(h = 'h2') {
+  return `<div class="pf">${GOALS.map(([ic, t, s, id], i) => {
+    const c = courses.find((x) => x.id === id) || courses[i];
+    return `<a class="pf-c reveal zoom" href="${c.url}" style="--d:${i * 0.08}s"><span class="pf-i">${icon(ic)}</span><b>${t}</b><small>${s}</small><span class="pf-to"><span>ابدأ بـ: ${esc(c.title)}</span>${icon('arrow')}</span></a>`;
+  }).join('')}</div>`;
+}
+
+// enrolment in three steps
+const stepsBlock = (alt = true) => `<section class="sec${alt ? ' sec-alt' : ''}" id="how"><div class="wrap">
+  <div class="sec-h reveal"><span class="kick">التسجيل بالكورس</span><h2 class="split">أسهل من هيك ما في: ٣ خطوات وبتبلّش</h2><p>ما بتحتاج حساب ولا دفع لتبدأ. الحساب المجاني اختياري، بس ليحفظلك تقدّمك على كل أجهزتك.</p></div>
+  <ol class="steps">
+    <svg class="steps-line" viewBox="0 0 100 6" preserveAspectRatio="none" aria-hidden="true"><line x1="100" y1="3" x2="0" y2="3"/><line class="on" id="stepsOn" x1="100" y1="3" x2="0" y2="3" pathLength="1"/></svg>
+    <li class="reveal"><span class="sp-n">١</span><h3>اختار كورسك</h3><p>ابحث باسم الموضوع، أو اختار من التصنيفات، أو من «من وين أبدأ؟».</p></li>
+    <li class="reveal" style="--d:.12s"><span class="sp-n">٢</span><h3>اضغط «ابدأ الكورس»</h3><p>كبسة وحدة، والكورس بيفتح فوراً على أول درس. بدون استمارات.</p></li>
+    <li class="reveal" style="--d:.24s"><span class="sp-n">٣</span><h3>تعلّم وخذ شهادتك</h3><p>تابع الدروس والاختبارات القصيرة، ولما تخلّص اطلب شهادة إتمام باسمك.</p></li>
+  </ol>
+  <div class="steps-cta reveal"><a class="btn btn-p btn-lg" href="/courses">اختار كورسك الآن ${icon('arrow')}</a></div>
+</div></section>`;
 function postCard(p, i = 0) {
   return `<a class="pc reveal" href="${p.url}" style="--d:${(i % 3) * 0.08}s">
   <div class="pc-img">${img('post-' + p.slug, p.title, '', false, '(max-width: 760px) 100vw, 33vw')}</div>
@@ -283,12 +326,14 @@ function faqBlock(items, title = 'الأسئلة الشائعة') {
 }
 const faqLd = (items) => ({ '@type': 'FAQPage', mainEntity: items.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) });
 
-const ctaBand = (t = 'ابدأ مسارك اليوم، مجاناً', s = 'أنشئ حسابك خلال دقيقة، واختر أول كورس، وابدأ رحلة اكتشاف دورك المناسب في الحياة.') => `<section class="cta"><div class="cta-bg">${img('cta', 'مجموعة من الشباب يسيرون على مسار مضيء نحو الشروق', '', false, '100vw')}</div>
-<div class="wrap cta-in reveal"><h2 class="split">${t}</h2><p>${s}</p><div class="btns"><a href="/register" class="btn btn-p btn-lg magnetic">أنشئ حساباً مجانياً ${icon('arrow')}</a><a href="/courses" class="btn btn-g btn-lg">تصفّح الكورسات</a></div></div></section>`;
+const ctaBand = (t = 'ابدأ مسارك اليوم، مجاناً', s = 'اختار كورس واضغط «ابدأ»، وبتكون عم تتعلّم خلال ثواني. بدون حساب وبدون دفع.', primary = `<a href="/courses" class="btn btn-p btn-lg magnetic">اختار كورسك وابدأ ${icon('arrow')}</a>`) => `<section class="cta dk"><div class="cta-bg">${img('cta', 'مجموعة من الشباب يسيرون على مسار مضيء نحو الشروق', '', false, '100vw')}</div>
+<div class="wrap cta-in reveal"><h2 class="split">${t}</h2><p>${s}</p><div class="btns">${primary}<a href="/register" class="btn btn-g btn-lg">أنشئ حساب مجاني</a></div></div></section>`;
 
 const pageHero = (kick, title, sub, imgName, alt) => `<section class="ph">
-  ${imgName ? `<div class="ph-bg">${img(imgName, alt || title, '', true, '100vw')}</div>` : ''}
-  <div class="wrap ph-in"><span class="kick reveal">${kick}</span><h1 class="split">${title}</h1>${sub ? `<p class="reveal">${sub}</p>` : ''}</div>
+  <div class="wrap ph-grid${imgName ? '' : ' solo'}">
+    <div class="ph-in"><span class="kick reveal">${kick}</span><h1 class="split">${title}</h1>${sub ? `<p class="reveal">${sub}</p>` : ''}</div>
+    ${imgName ? `<figure class="ph-fig reveal-img">${img(imgName, alt || title, '', true, '(max-width: 860px) 100vw, 40vw')}</figure>` : ''}
+  </div>
 </section>`;
 
 /* ---------- home ---------- */
@@ -298,40 +343,60 @@ const pageHero = (kick, title, sub, imgName, alt) => `<section class="ph">
     ['02', 'حدّد', 'define', 'اختر المسار الأنسب لرغباتك وظروفك', 'بعد ما تعرف نفسك، تختار مساراً متكاملاً ومترابطاً، أكاديمياً وعملياً، من البرمجة والأردوينو إلى مهارات الحاسوب وريادة الأعمال.'],
     ['03', 'أبدع', 'create', 'طبّق وابنِ وتميّز في موهبتك', 'تتعلّم بالتطبيق: دروس خطوة بخطوة، اختبارات تفاعلية، تجارب ذكية تحاكي الواقع، وشهادة إتمام تثبت ما أنجزته.'],
   ];
-  const cats = [
-    ['cat-programming', 'البرمجة والإلكترونيات', 'HTML وCSS وJavaScript وووردبريس والأردوينو', '/courses?category=برمجة'],
-    ['cat-academic', 'أكاديمي ومهارات', 'ICDL ومهارات الحاسوب وتطوير الذات', '/courses?category=أكاديمي'],
-    ['cat-track', 'منهاج المسار', `المسار الكامل: ${courses.length} كورسات متكاملة`, '/courses'],
-    ['cat-ai', 'التجارب الذكية', 'تعلّم تفاعلي بالذكاء الاصطناعي', '/experiences'],
-  ];
   const why = [
     ['video', 'فيديوهات واضحة ومفصّلة', 'شرح عملي خطوة بخطوة، وكل درس مبني على الذي قبله.'],
     ['phone', 'تعلّم من أي مكان', 'على الويب، وعلى تطبيق أندرويد يشغّل دروسك بدون إنترنت.'],
     ['award', 'شهادات إتمام', 'شهادة باسمك برقم فريد ورمز QR يمكن التحقق منها.'],
     ['spark', 'اختبارات ومساعد ذكي', 'اختبارات تفاعلية بعد الدروس ومساعد يجيب عن أسئلتك.'],
-    ['gift', 'مجاني بالكامل', 'كل الكورسات المنشورة حالياً مجانية، ومعها منح ورموز خصم.'],
+    ['gift', 'مجاني بالكامل', 'كل الكورسات المنشورة حالياً مجانية، وبتبدأ بدون حساب.'],
     ['chat', 'دعم مباشر', 'فريق جاهز للإجابة على استفساراتك عبر البريد والهاتف.'],
   ];
+  const topics = ['HTML', 'CSS', 'JavaScript', 'WordPress', 'Arduino', 'ICDL', 'ريادة المستقبل', 'الذكاء الاصطناعي', 'تصميم المواقع', 'الإلكترونيات', 'مهارات الحاسوب', 'تطوير الذات'];
+  const row = (list) => [...list, ...list, ...list].map((t) => `<span>${t}</span>`).join('');
+  const quick = [['code', 'البرمجة', '/courses?category=برمجة'], ['chip', 'الأردوينو', '/courses/105/'], ['laptop', 'ICDL', '/courses/107/'], ['compass', 'ريادة المستقبل', '/courses/108/']];
   const body = `
 <section class="hero" id="top">
-  <div class="hero-bg" data-parallax>${img('hero', 'طالب يقف على تلة عند الفجر ينظر إلى مسار مضيء يمتد نحو مدينة من الضوء', '', true, '100vw')}</div>
-  <svg class="hero-path" viewBox="0 0 1200 800" preserveAspectRatio="none" aria-hidden="true"><path d="M-20 700 C 260 640, 300 420, 560 460 S 900 300, 1220 120" pathLength="1"/></svg>
-  <div class="wrap hero-in">
-    <span class="kick hero-kick">منصة تعليمية عربية · ريادة المستقبل</span>
-    <h1 class="hero-t"><span class="w">كيف</span> <span class="w hl">تحدّد</span> <span class="w hl">وتكتشف</span> <span class="w hl">وتبدع</span><br><span class="w">في</span> <span class="w">مسار</span> <span class="w">حياتك</span></h1>
-    <p class="hero-s">لإعداد جيل ريادي للمستقبل، واعٍ وقادر ومؤثر، ينطلق من فهم ذاته والتفوّق في موهبته واكتشاف دوره المناسب في الحياة.</p>
-    <div class="btns hero-b"><a href="/register" class="btn btn-p btn-lg magnetic">ابدأ مسارك مجاناً ${icon('arrow')}</a><a href="#journey" class="btn btn-g btn-lg">كيف يعمل المسار؟</a></div>
-    <dl class="stats hero-st">
-      <div><dt>كورس متكامل</dt><dd><b data-count="${courses.length}">${courses.length}</b></dd></div>
-      <div><dt>درس مسجّل</dt><dd><b data-count="${totalLessons}">${totalLessons}</b>+</dd></div>
-      <div><dt>ساعة تعليمية</dt><dd><b data-count="${totalHours}">${totalHours}</b>+</dd></div>
-      <div><dt>مجاني</dt><dd><b data-count="100">100</b>%</dd></div>
-    </dl>
+  <div class="hero-deco" aria-hidden="true"></div>
+  <svg class="hero-path" viewBox="0 0 1200 800" preserveAspectRatio="none" aria-hidden="true"><path d="M-20 760 C 120 700, 160 520, 300 470 S 520 300, 640 120" pathLength="1"/></svg>
+  <div class="wrap hero-grid">
+    <div class="hero-in">
+      <span class="kick hero-kick">منصة تعليمية عربية · كل الكورسات مجانية</span>
+      <h1 class="hero-t"><span class="w">كيف</span> <span class="w hl">تحدّد</span> <span class="w hl">وتكتشف</span> <span class="w hl">وتبدع</span><br><span class="w">في</span> <span class="w">مسار</span> <span class="w">حياتك</span></h1>
+      <p class="hero-s">${courses.length} كورسات مجانية في البرمجة والأردوينو والكمبيوتر وريادة المستقبل. اختار كورس، اضغط «ابدأ»، وبتكون عم تتعلّم خلال ثواني.</p>
+      <form class="hsearch hero-b" action="/courses" method="get" role="search"><label class="sr" for="hq">ابحث عن كورس</label>${icon('search')}<input id="hq" name="q" type="search" placeholder="شو حابب تتعلّم؟ مثلاً: HTML، أردوينو" autocomplete="off" enterkeyhint="search"><button class="btn btn-p" type="submit">ابحث</button></form>
+      <div class="hero-tags hero-b2"><span>أو اختار مباشرة:</span>${quick.map(([ic, t, h]) => `<a class="pill" href="${h}">${icon(ic)} ${t}</a>`).join('')}</div>
+      <dl class="stats hero-st">
+        <div><dt>كورس متكامل</dt><dd><b data-count="${courses.length}">${courses.length}</b></dd></div>
+        <div><dt>درس مسجّل</dt><dd><b data-count="${totalLessons}">${totalLessons}</b>+</dd></div>
+        <div><dt>ساعة تعليمية</dt><dd><b data-count="${totalHours}">${totalHours}</b>+</dd></div>
+        <div><dt>مجاني</dt><dd><b data-count="100">100</b>%</dd></div>
+      </dl>
+    </div>
+    <div class="hero-vis" aria-hidden="true">
+      <figure class="hero-frame">${img('hero-day', '', '', true, '(max-width: 860px) 100vw, 45vw')}</figure>
+      <div class="hero-float hf1">${icon('gift')}<span>مجاني 100%<small>بدون بطاقة</small></span></div>
+      <div class="hero-float hf2">${icon('play')}<span>${totalLessons}+ درس<small>فيديو وشرح عملي</small></span></div>
+      <div class="hero-float hf3">${icon('award')}<span>شهادة إتمام<small>قابلة للتحقق</small></span></div>
+    </div>
   </div>
-  <a class="hero-scroll" href="#journey" aria-label="انزل للأسفل"><span></span></a>
 </section>
 
-<section class="journey" id="journey">
+<div class="mq" aria-hidden="true"><div class="mq-row" data-mq="-1">${row(topics)}</div><div class="mq-row" data-mq="1">${row([...topics].reverse())}</div></div>
+
+<section class="sec" id="start"><div class="wrap">
+  <div class="sec-h reveal"><span class="kick">من وين أبدأ؟</span><h2 class="split">اختار هدفك، ومنقلّك من أي كورس تبلّش</h2><p>ما في داعي تحتار. كل هدف إلو كورس بداية واضح، ومنه بتكمّل على باقي المسار.</p></div>
+  ${pathFinder()}
+</div></section>
+
+${stepsBlock()}
+
+<section class="sec" id="courses"><div class="wrap">
+  <div class="sec-h sec-h-row reveal"><div><span class="kick">الكورسات</span><h2 class="split">كورسات بتناسب البداية</h2></div><a class="lnk" href="/courses">كل الكورسات (${courses.length}) ${icon('arrow')}</a></div>
+  <div class="cgrid">${courses.slice(0, 6).map(courseCard).join('')}</div>
+  <div class="center reveal"><a class="btn btn-g btn-lg" href="/courses">شوف كل الكورسات (${courses.length}) ${icon('arrow')}</a></div>
+</div></section>
+
+<section class="journey dk dk-x" id="journey">
   <div class="wrap">
     <div class="sec-h reveal"><span class="kick">رحلتك على المسار</span><h2 class="split">ثلاث محطات تصنع الفرق</h2><p>مسار ليس مجرد كورسات، بل منهجية تأخذك من فهم ذاتك إلى الإبداع في دورك.</p></div>
   </div>
@@ -339,22 +404,11 @@ const pageHero = (kick, title, sub, imgName, alt) => `<section class="ph">
     <svg class="jr-line" viewBox="0 0 100 1000" preserveAspectRatio="none" aria-hidden="true"><path class="jr-base" d="M50 0 C 90 160, 10 330, 50 500 S 90 840, 50 1000"/><path class="jr-glow" id="jrGlow" d="M50 0 C 90 160, 10 330, 50 500 S 90 840, 50 1000" pathLength="1"/></svg>
     ${goals.map(([n, t, im, h, p], i) => `<article class="st st-${i % 2 ? 'b' : 'a'}">
       <div class="st-img reveal-img">${img(im, h)}</div>
-      <div class="st-txt reveal"><span class="st-n">${n}</span><h3><span>${t}</span>${h}</h3><p>${p}</p></div>
+      <div class="st-txt reveal ${i % 2 ? 'from-e' : 'from-s'}"><span class="st-n">${n}</span><h3><span>${t}</span>${h}</h3><p>${p}</p></div>
       <span class="st-dot" aria-hidden="true"></span>
     </article>`).join('')}
   </div>
 </section>
-
-<section class="sec" id="categories"><div class="wrap">
-  <div class="sec-h reveal"><span class="kick">التصنيفات</span><h2 class="split">اختر المجال اللي بيشبهك</h2></div>
-  <div class="cats">${cats.map(([im, t, s, h], i) => `<a class="cat reveal" href="${h}" style="--d:${i * 0.08}s">${img(im, t, '', false, '(max-width: 760px) 100vw, 25vw')}<span class="cat-t"><b>${t}</b><small>${s}</small></span><span class="cat-go">${icon('arrow')}</span></a>`).join('')}</div>
-</div></section>
-
-<section class="sec sec-alt" id="courses"><div class="wrap">
-  <div class="sec-h sec-h-row reveal"><div><span class="kick">الكورسات</span><h2 class="split">ابدأ من أي محطة</h2></div><a class="lnk" href="/courses">كل الكورسات ${icon('arrow')}</a></div>
-  <div class="rail" data-rail><div class="rail-track">${courses.map(courseCard).join('')}</div></div>
-  <div class="rail-nav"><button type="button" data-rail-prev aria-label="السابق">${icon('arrow')}</button><button type="button" data-rail-next aria-label="التالي">${icon('arrow')}</button></div>
-</div></section>
 
 <section class="sec vision"><div class="wrap">
   <div class="sec-h reveal"><span class="kick">ريادة المستقبل</span><h2 class="split">رؤيتنا ورسالتنا وأهدافنا</h2></div>
@@ -377,9 +431,9 @@ const pageHero = (kick, title, sub, imgName, alt) => `<section class="ph">
   <div class="why">${why.map(([ic, t, s], i) => `<div class="why-c reveal" style="--d:${(i % 3) * 0.08}s"><span class="why-i">${icon(ic)}</span><h3>${t}</h3><p>${s}</p></div>`).join('')}</div>
 </div></section>
 
-<section class="app-band"><div class="wrap app-in">
-  <div class="app-txt reveal"><span class="kick">تطبيق أندرويد</span><h2 class="split">دروسك بجيبك، حتى بدون إنترنت</h2><p>حمّل الدروس وشاهدها أوفلاين، تابع تقدّمك، واسأل المساعد الذكي عن أي درس. مجاني 100%.</p>
-    <div class="btns"><a class="btn btn-p btn-lg" href="/download">${icon('download')} حمّل التطبيق</a><a class="btn btn-g btn-lg" href="/register">أو تعلّم من الويب</a></div></div>
+<section class="app-band"><div class="wrap app-in dk">
+  <div class="app-txt reveal from-s"><span class="kick">تطبيق أندرويد</span><h2 class="split">دروسك بجيبك، حتى بدون إنترنت</h2><p>حمّل الدروس وشاهدها أوفلاين، تابع تقدّمك، واسأل المساعد الذكي عن أي درس. مجاني 100%.</p>
+    <div class="btns"><a class="btn btn-p btn-lg" href="/download">${icon('download')} حمّل التطبيق</a><a class="btn btn-g btn-lg" href="/courses">أو تعلّم من الويب</a></div></div>
   <div class="app-img reveal-img">${img('app', 'هاتف ذكي يعرض تطبيق تعلّم بدروس فيديو')}</div>
 </div></section>
 
@@ -397,7 +451,7 @@ ${faqBlock(FAQ.slice(0, 6))}
 
 <section class="sec en" lang="en" dir="ltr"><div class="wrap narrow reveal">
   <h2>About Masar</h2>
-  <p><strong>Masar</strong> (almasar.org) is an Arabic-first, AI-native learning platform founded in 2026 by engineer Abdalgani Alhamdi and registered in the United Arab Emirates. It helps Arab learners discover and pursue their ideal path: ${courses.length} free structured courses with ${totalLessons}+ video and text lessons (≈${totalHours} hours), completion certificates with QR verification, an offline-capable Android app, and interactive AI learning experiences such as a 3D Arduino circuit simulator and an AI personality assessment.</p>
+  <p><strong>Masar</strong> (almasar.org) is an Arabic-first, AI-native learning platform founded in 2026 by engineer Abdalgani Alhamdi and registered in the United Arab Emirates. It helps Arab learners discover and pursue their ideal path: ${courses.length} free structured courses with ${totalLessons}+ video and text lessons (≈${totalHours} hours) that start in one click without an account, completion certificates with QR verification, an offline-capable Android app, and interactive AI learning experiences such as a 3D Arduino circuit simulator and an AI personality assessment.</p>
   <p class="en-meta">Founded 2026 · UAE-registered · <a href="mailto:${SITE.email}">${SITE.email}</a> · <a href="tel:${SITE.phone}">${SITE.phoneDisplay}</a></p>
 </div></section>
 
@@ -409,16 +463,29 @@ ${ctaBand()}`;
 /* ---------- courses list ---------- */
 {
   const cats = [...new Set(courses.map((c) => c.category))];
-  const body = `${pageHero('الكورسات', 'كل الكورسات، مجاناً', `${courses.length} كورسات و${totalLessons}+ درس في البرمجة والأردوينو ومهارات الحاسوب وريادة المستقبل. اختر محطتك وابدأ.`, 'cat-track', 'مسار جبلي مضيء بعلامات طريق')}
-<section class="sec"><div class="wrap">
-  <div class="filters reveal" role="toolbar" aria-label="تصفية الكورسات">
-    <button type="button" class="chip is-on" data-filter="">الكل <small>${courses.length}</small></button>
-    ${cats.map((c) => `<button type="button" class="chip" data-filter="${esc(c)}">${esc(c)} <small>${courses.filter((x) => x.category === c).length}</small></button>`).join('')}
-    <label class="search"><span class="sr">ابحث عن كورس</span>${icon('search')}<input type="search" id="courseSearch" placeholder="ابحث عن كورس…" autocomplete="off"></label>
+  const catIcon = { 'برمجة': 'code', 'أكاديمي': 'laptop' };
+  const tries = ['HTML', 'أردوينو', 'ICDL', 'ريادة'];
+  const body = `<section class="ph ph-sm"><div class="wrap ph-grid solo"><div class="ph-in">
+  <span class="kick reveal">الكورسات · كلها مجانية</span><h1 class="split">لاقِ كورسك بثواني</h1>
+  <p class="reveal">اكتب شو بدك تتعلّم، أو اختار تصنيف. وكل كورس بيبدأ بكبسة وحدة، بدون حساب.</p></div></div></section>
+<section class="sec" style="padding-top:10px"><div class="wrap">
+  <div class="fbar reveal" role="search">
+    <label class="search"><span class="sr">ابحث عن كورس</span>${icon('search')}<input type="search" id="courseSearch" placeholder="اكتب اسم الكورس أو الموضوع: HTML، أردوينو، كمبيوتر…" autocomplete="off" enterkeyhint="search"></label>
+    <div class="chips" role="toolbar" aria-label="تصفية حسب التصنيف">
+      <button type="button" class="chip is-on" data-filter="">الكل <small>${courses.length}</small></button>
+      ${cats.map((c) => `<button type="button" class="chip" data-filter="${esc(c)}">${icon(catIcon[c] || 'doc')} ${esc(c)} <small>${courses.filter((x) => x.category === c).length}</small></button>`).join('')}
+    </div>
   </div>
+  <p class="fcount" id="cCount" aria-live="polite">عم نعرضلك <b>${courses.length}</b> كورسات</p>
   <div class="cgrid" id="cgrid">${courses.map(courseCard).join('')}</div>
-  <p class="empty" id="cEmpty" hidden>ما في كورس بهالاسم حالياً. جرّب كلمة تانية.</p>
+  <div class="empty" id="cEmpty" hidden><b>ما لقينا كورس بهالكلمة</b>جرّب كلمة أقصر، أو وحدة من هدول:
+    <div class="btns">${tries.map((t) => `<button type="button" class="chip" data-try="${t}">${t}</button>`).join('')}<button type="button" class="chip is-on" data-try="">اعرض الكل</button></div></div>
 </div></section>
+<section class="sec sec-alt" id="start"><div class="wrap">
+  <div class="sec-h reveal"><span class="kick">محتار من وين تبلّش؟</span><h2 class="split">اختار هدفك، ومنقلّك أول كورس</h2></div>
+  ${pathFinder()}
+</div></section>
+${stepsBlock(false)}
 ${ctaBand()}`;
   page({ file: 'courses.html', path: '/courses', title: 'كل الكورسات المجانية | منصة مسار', desc: `${courses.length} كورسات مجانية على منصة مسار: HTML وCSS وJavaScript وووردبريس والأردوينو وICDL وريادة المستقبل، ${totalLessons}+ درس مع شهادات إتمام.`, body, active: '/courses', crumbs: [['الكورسات', '/courses']], pri: '0.9',
     ld: [{ '@type': 'ItemList', itemListElement: courses.map((c, i) => ({ '@type': 'ListItem', position: i + 1, url: URL_ + c.url })) }] });
@@ -429,10 +496,9 @@ for (const c of courses) {
   const descHtml = marked.parse(c.description.replace(/\*\*ماذا ستتعلم؟\*\*\s*/, ''));
   const exp = EXPERIENCES.find((e) => e.courseId === c.id);
   const related = courses.filter((x) => x.id !== c.id && x.category === c.category).slice(0, 3);
-  const app = `/course?id=${c.id}`;
   const curriculum = c.lessons.map((l, i) => `<li><span class="ls-n">${String(i + 1).padStart(2, '0')}</span><span class="ls-t">${esc(l.title)}</span><span class="ls-m">${l.type === 'video' ? icon('play') : icon('doc')}${l.duration_seconds ? Math.max(1, Math.round(l.duration_seconds / 60)) + ' د' : 'نص'}</span></li>`).join('');
+  const ok = `<ul class="start-ok"><li>${icon('check')} بدون حساب</li><li>${icon('check')} بدون دفع</li><li>${icon('check')} بيفتح أول درس فوراً</li></ul>`;
   const body = `<section class="ch">
-  <div class="ch-bg"><img src="${esc(c.thumbnail_url)}" alt="" aria-hidden="true" fetchpriority="high"></div>
   <div class="wrap ch-in">
     <nav class="crumbs reveal" aria-label="مسار التنقل"><a href="/">الرئيسية</a><span>/</span><a href="/courses">الكورسات</a><span>/</span><span aria-current="page">${esc(c.title)}</span></nav>
     <div class="ch-grid">
@@ -441,10 +507,11 @@ for (const c of courses) {
         <h1 class="split">${esc(c.title)}</h1>
         <p class="ch-lead reveal">${esc(c.intro)}</p>
         <dl class="ch-facts reveal"><div><dt>الدروس</dt><dd>${c.nLessons}</dd></div><div><dt>المدة</dt><dd>${c.hours} ساعة</dd></div><div><dt>المستوى</dt><dd>من الصفر</dd></div><div><dt>الشهادة</dt><dd>شهادة إتمام</dd></div></dl>
-        <div class="btns reveal"><a class="btn btn-p btn-lg magnetic" href="${app}">ابدأ الكورس مجاناً ${icon('arrow')}</a><a class="btn btn-g btn-lg" href="#curriculum">محتوى الكورس</a></div>
+        <div class="start reveal" id="startBox">${startBtn(c, 'ابدأ الكورس الآن، مجاناً', 'btn btn-p btn-lg magnetic')}${ok}<a class="start-more" href="#curriculum">أو شوف الدروس أول (${c.nLessons} درس)</a></div>
       </div>
-      <figure class="ch-cover reveal-img"><img src="${esc(c.thumbnail_url)}" alt="غلاف كورس ${esc(c.title)}" width="640" height="360"></figure>
+      <figure class="ch-cover reveal-img"><img src="${esc(c.thumbnail_url)}" alt="غلاف كورس ${esc(c.title)}" width="640" height="360" fetchpriority="high"></figure>
     </div>
+    <ol class="howto reveal"><li><span>١</span><div><b>اضغط «ابدأ الكورس»</b>كبسة وحدة بس، بلا استمارات.</div></li><li><span>٢</span><div><b>بيفتح أول درس فوراً</b>تابع بالترتيب وعلى راحتك.</div></li><li><span>٣</span><div><b>خلّص وخذ شهادتك</b>واعمل حساب مجاني لتحفظ تقدّمك.</div></li></ol>
   </div>
 </section>
 <section class="sec"><div class="wrap ch-body">
@@ -455,17 +522,18 @@ for (const c of courses) {
   </article>
   <aside class="ch-side reveal">
     <h2>تفاصيل الكورس</h2>
-    <ul><li>${icon('play')} ${c.nLessons} درس</li><li>${icon('clock')} ${c.hours} ساعة تقريباً</li><li>${icon('award')} شهادة إتمام قابلة للتحقق</li><li>${icon('phone')} يعمل على تطبيق أندرويد</li><li>${icon('gift')} مجاني بالكامل</li></ul>
-    <a class="btn btn-p btn-block" href="${app}">سجّل وابدأ الآن</a>
+    <ul><li>${icon('play')} ${c.nLessons} درس</li><li>${icon('clock')} ${c.hours} ساعة تقريباً</li><li>${icon('level')} من الصفر، بدون خبرة سابقة</li><li>${icon('award')} شهادة إتمام قابلة للتحقق</li><li>${icon('phone')} يعمل على تطبيق أندرويد</li><li>${icon('gift')} مجاني بالكامل</li></ul>
+    ${startBtn(c, 'ابدأ الكورس الآن', 'btn btn-p btn-block')}<small>بدون حساب وبدون دفع</small>
   </aside>
 </div></section>
 <section class="sec sec-alt" id="curriculum"><div class="wrap narrow">
   <div class="sec-h reveal"><span class="kick">محتوى الكورس</span><h2 class="split">${c.nLessons} درس خطوة بخطوة</h2></div>
   <ol class="lessons reveal">${curriculum}</ol>
-  <div class="center"><a class="btn btn-p btn-lg" href="${app}">ابدأ الدرس الأول ${icon('arrow')}</a></div>
+  <div class="center">${startBtn(c, 'ابدأ من الدرس الأول')}</div>
 </div></section>
 ${related.length ? `<section class="sec"><div class="wrap"><div class="sec-h reveal"><span class="kick">تابع مسارك</span><h2 class="split">كورسات قريبة</h2></div><div class="cgrid">${related.map(courseCard).join('')}</div></div></section>` : ''}
-${ctaBand('جاهز تبدأ هذا الكورس؟', 'أنشئ حسابك المجاني وابدأ الدرس الأول الآن، وتابع تقدّمك حتى الشهادة.')}`;
+${ctaBand('جاهز تبدأ هذا الكورس؟', 'كبسة وحدة وبتكون عم تتعلّم. وإذا حبيت، اعمل حساب مجاني لتحفظ تقدّمك وتطلب شهادتك.', startBtn(c, 'ابدأ الكورس الآن', 'btn btn-p btn-lg magnetic'))}
+<div class="sbar" id="sbar"><div class="wrap sbar-in"><span><b>${esc(c.title)}</b><small>مجاني · ${c.nLessons} درس · بدون حساب</small></span>${startBtn(c, 'ابدأ الآن', 'btn btn-p')}</div></div>`;
   page({ file: `courses/${c.id}/index.html`, path: c.url, title: `${c.title} | كورس مجاني على منصة مسار`, desc: clip(`${c.intro} ${c.nLessons} درساً مجانياً مع شهادة إتمام.`, 158), body, active: '/courses', image: c.thumbnail_url,
     crumbs: [['الكورسات', '/courses'], [c.title, c.url]], pri: '0.8', lastmod: (c.created_at || '').slice(0, 10) > BUILD_DATE ? BUILD_DATE : BUILD_DATE,
     ld: [{ '@type': 'Course', '@id': URL_ + c.url + '#course', name: c.title, description: c.intro, url: URL_ + c.url, image: c.thumbnail_url, inLanguage: 'ar',
@@ -510,11 +578,11 @@ for (const p of posts) {
   const updated = (p.updated_at || p.created_at);
   const body = `<article class="art">
   <header class="art-h">
-    <div class="art-bg">${img('post-' + p.slug, p.title, '', true, '100vw')}</div>
     <div class="wrap narrow art-hin">
       <nav class="crumbs reveal" aria-label="مسار التنقل"><a href="/">الرئيسية</a><span>/</span><a href="/blog">المدونة</a></nav>
       <h1 class="split">${esc(p.title)}</h1>
       <p class="art-meta reveal"><span>${icon('user')} ${esc(p.author_name || 'فريق مسار')}</span><span>${icon('clock')} ${mins} دقائق قراءة</span><time datetime="${iso(updated)}">${icon('cal')} ${fmtDate(updated)}</time></p>
+      <figure class="art-cover reveal-img">${img('post-' + p.slug, p.title, '', true, '(max-width: 900px) 100vw, 860px')}</figure>
     </div>
   </header>
   <div class="wrap narrow"><div class="prose art-body">${content}</div>
@@ -584,7 +652,8 @@ page({ file: 'faq.html', path: '/faq', title: 'الأسئلة الشائعة | �
 
 /* ---------- download ---------- */
 page({ file: 'download.html', path: '/download', title: 'حمّل تطبيق منصة مسار لأندرويد | تعلّم بدون إنترنت', desc: 'حمّل تطبيق منصة مسار المجاني لأندرويد: حمّل الدروس وشاهدها بدون إنترنت، مساعد ذكي، منح مجانية، وشهادات إتمام.', active: '', image: '/assets/gen/app.webp', crumbs: [['تطبيق أندرويد', '/download']],
-  body: `<section class="dl"><div class="dl-bg">${img('app', 'هاتف يعرض تطبيق منصة مسار', '', true, '100vw')}</div><div class="wrap dl-in">
+  topDark: true,
+  body: `<section class="dl dk"><div class="dl-bg">${img('app', 'هاتف يعرض تطبيق منصة مسار', '', true, '100vw')}</div><div class="wrap dl-in">
   <span class="kick reveal">تطبيق أندرويد · مجاني 100%</span><h1 class="split">كل الكورسات بجيبك</h1>
   <p class="reveal">تعلّم البرمجة والريادة ومهارات الحاسوب أونلاين أو بدون نت.</p>
   <div class="dl-card reveal"><a id="dlBtn" class="btn btn-p btn-lg btn-block" href="${SITE.apk}">${icon('download')} حمّل التطبيق الآن</a>
@@ -622,10 +691,10 @@ function authPage(kind) {
         <button type="submit" class="btn btn-p btn-lg btn-block">إنشاء حساب مجاني</button>
         <p class="fine">بإنشاء حساب فأنت توافق على <a href="/terms">الشروط والأحكام</a> و<a href="/privacy">سياسة الخصوصية</a>.</p></form>`;
   page({ file: `${kind}.html`, path: `/${kind}`, title: login ? 'تسجيل الدخول | منصة مسار' : 'إنشاء حساب مجاني | منصة مسار', desc: login ? 'سجّل دخولك إلى منصة مسار وتابع كورساتك ودروسك وشهاداتك.' : 'أنشئ حسابك المجاني على منصة مسار وابدأ التعلم فوراً في البرمجة والأردوينو ومهارات الحاسوب وريادة المستقبل.', active: '', noindex: login,
-    body: `<section class="auth"><div class="auth-art">${img(login ? 'discover' : 'hero', '', '', true, '50vw')}<div class="auth-quote"><b>${login ? 'أهلاً بعودتك إلى مسارك' : 'خطوتك الأولى على المسار'}</b><span>${login ? 'كمّل من حيث وقفت.' : `${courses.length} كورسات مجانية و${totalLessons}+ درس بانتظارك.`}</span></div></div>
-  <div class="auth-box"><div class="auth-card reveal"><h1>${login ? 'تسجيل الدخول' : 'إنشاء حساب'}</h1><p class="auth-sub">${login ? 'أدخل بياناتك للوصول إلى حسابك' : 'مجاني بالكامل، وخلال أقل من دقيقة'}</p>
+    body: `<section class="auth"><div class="auth-art">${img(login ? 'hero-day' : 'study-day', '', '', true, '50vw')}<div class="auth-quote"><b>${login ? 'أهلاً بعودتك إلى مسارك' : 'خطوتك الأولى على المسار'}</b><span>${login ? 'كمّل من حيث وقفت.' : `${courses.length} كورسات مجانية و${totalLessons}+ درس بانتظارك.`}</span></div></div>
+  <div class="auth-box"><div class="auth-card reveal"><h1>${login ? 'تسجيل الدخول' : 'إنشاء حساب'}</h1><p class="auth-sub">${login ? 'أدخل بياناتك للوصول إلى حسابك' : 'مجاني بالكامل، وخلال أقل من دقيقة. الحساب بيحفظلك تقدّمك وشهاداتك على كل أجهزتك.'}</p>
     <div class="form-err" id="${login ? 'loginError' : 'registerError'}" role="alert"></div>${form}
-    <p class="auth-alt">${login ? 'ما عندك حساب؟ <a href="/register">أنشئ حساباً مجانياً</a>' : 'عندك حساب؟ <a href="/login">سجّل دخولك</a>'}</p></div></div></section>`,
+    <p class="auth-alt">${login ? 'ما عندك حساب؟ <a href="/register">أنشئ حساباً مجانياً</a>' : 'عندك حساب؟ <a href="/login">سجّل دخولك</a><br>أو <a href="/courses">ابدأ أي كورس بدون حساب</a>'}</p></div></div></section>`,
     scripts: '<script src="/js/config.js"></script><script src="/js/api.js"></script><script src="/js/app.js?v=20261008"></script>' });
 }
 authPage('login');

@@ -8,12 +8,12 @@
 }
 body, button, input, select, textarea { font-family: 'IBM Plex Sans Arabic', 'Cairo', system-ui, sans-serif; }
 h1, h2, h3, .logo-text, .section-title, .page-title { font-family: 'Alexandria', 'IBM Plex Sans Arabic', sans-serif; }
-.navbar { background: rgba(6, 10, 24, .92) !important; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255,255,255,.08); }
-.navbar .logo-text, .navbar .nav-links a, .navbar .user-greeting { color: #eef2fb !important; }
-.navbar .nav-links a:hover, .navbar .nav-links a.active { color: #2fd3d9 !important; }
+.navbar { background: rgba(255, 255, 255, .92) !important; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid rgba(16, 32, 64, .09); box-shadow: 0 6px 24px -18px rgba(16, 32, 64, .4); }
+.navbar .logo-text, .navbar .nav-links a, .navbar .user-greeting { color: #0f1b35 !important; }
+.navbar .nav-links a:hover, .navbar .nav-links a.active { color: #0b7d88 !important; }
 .navbar .logo-icon { font-size: 0; width: 38px; height: 38px; border-radius: 12px; background: url(/favicon.svg) center/cover no-repeat; display: inline-block; }
-.navbar .btn-outline { color: #eef2fb; border-color: rgba(255,255,255,.25); }
-.navbar .mobile-menu-btn { color: #eef2fb; }
+.navbar .btn-outline { color: #0f1b35; border-color: rgba(16, 32, 64, .2); }
+.navbar .mobile-menu-btn { color: #0f1b35; }
 .btn-primary { background: var(--gradient); color: #04121a; border: 0; }
 .footer { background: #060a18; }
 @media (max-width: 640px) {

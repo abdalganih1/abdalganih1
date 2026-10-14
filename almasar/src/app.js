@@ -27,11 +27,22 @@
     });
   }
 
-  /* ---------- header ---------- */
-  const mh = $('#mh'), burger = $('#mhBurger');
+  /* ---------- light / night switch ---------- */
+  const meta = $('meta[name="theme-color"]');
+  const paint = () => meta && meta.setAttribute('content', h.classList.contains('theme-dark') ? '#060a18' : '#f6f8fc');
+  paint();
+  $$('[data-theme-toggle]').forEach((b) => b.addEventListener('click', () => {
+    const dark = h.classList.toggle('theme-dark');
+    try { localStorage.setItem('masar-theme', dark ? 'dark' : 'light'); } catch (e) { /* ignore */ }
+    paint();
+  }));
+
+  /* ---------- header + scroll progress ---------- */
+  const mh = $('#mh'), burger = $('#mhBurger'), sp = $('#sp');
   let lastY = 0;
   const onScroll = () => {
     const y = w.scrollY;
+    if (sp) sp.style.transform = `scaleX(${Math.min(1, y / Math.max(1, d.documentElement.scrollHeight - innerHeight))})`;
     if (mh) {
       mh.classList.toggle('is-solid', y > 30);
       mh.classList.toggle('is-hidden', y > 400 && y > lastY + 4 && !d.body.classList.contains('nav-open'));
@@ -102,26 +113,30 @@
   };
   if (h.classList.contains('intro-on')) addEventListener('masar:intro-done', heroIn, { once: true });
   else requestAnimationFrame(heroIn);
-  if (!hero) $$('.ph .split, .ch .split, .art-h .split').forEach((el) => requestAnimationFrame(() => el.classList.add('is-in')));
+  if (!hero) $$('.ph .split, .ch .split, .art-h .split, .ph .reveal, .ch .reveal, .art-h .reveal, .ph .reveal-img, .ch .reveal-img, .art-h .reveal-img').forEach((el) => requestAnimationFrame(() => el.classList.add('is-in')));
   watch();
 
-  /* ---------- courses: filter + search ---------- */
+  /* ---------- courses: filter + search (Arabic-aware: أ/إ/آ=ا، ة=ه، ى=ي) ---------- */
+  const norm = (t) => String(t || '').toLowerCase().replace(/[ً-ْـ]/g, '').replace(/[أإآ]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي').replace(/\s+/g, ' ').trim();
   const grid = $('#cgrid');
-  if (grid && $('.filters')) {
-    const chips = $$('.chip[data-filter]'), q = $('#courseSearch'), empty = $('#cEmpty');
+  if (grid && $('.fbar')) {
+    const chips = $$('.chip[data-filter]'), q = $('#courseSearch'), empty = $('#cEmpty'), cnt = $('#cCount');
+    const cards = $$('.cc', grid).map((c) => ({ c, cat: c.dataset.cat, q: norm(c.dataset.q) }));
     const params = new URLSearchParams(location.search);
     let cat = params.get('category') || '';
     if (params.get('q')) q.value = params.get('q');
     const apply = () => {
-      const term = q.value.trim().toLowerCase();
+      const words = norm(q.value).split(' ').filter(Boolean);
       let shown = 0;
-      $$('.cc', grid).forEach((c) => {
-        const ok = (!cat || c.dataset.cat === cat) && (!term || c.dataset.title.toLowerCase().includes(term));
+      cards.forEach(({ c, cat: cc, q: hay }) => {
+        const ok = (!cat || cc === cat) && words.every((wd) => hay.includes(wd));
         c.classList.toggle('is-hidden', !ok);
         if (ok) { shown++; c.classList.add('is-in'); }
       });
       chips.forEach((b) => b.classList.toggle('is-on', b.dataset.filter === cat));
       empty.hidden = shown > 0;
+      const n = shown === 1 ? 'كورس <b>واحد</b>' : shown === 2 ? '<b>كورسين</b>' : `<b>${shown}</b> ${shown < 11 ? 'كورسات' : 'كورس'}`;
+      cnt.innerHTML = shown ? `عم نعرضلك ${n}${cat ? ` في «${cat}»` : ''}${words.length ? ` عن «${q.value.trim().replace(/[<>&"]/g, '')}»` : ''}` : '';
     };
     chips.forEach((b) => b.addEventListener('click', () => {
       cat = b.dataset.filter;
@@ -130,18 +145,49 @@
       history.replaceState(null, '', u);
       apply();
     }));
+    $$('[data-try]').forEach((b) => b.addEventListener('click', () => { q.value = b.dataset.try; cat = ''; apply(); q.focus(); }));
     q.addEventListener('input', apply);
     apply();
   }
 
-  /* ---------- course rail ---------- */
-  $$('[data-rail]').forEach((rail) => {
-    const box = rail.parentElement;
-    const by = (dir) => { const card = $('.cc', rail); rail.scrollBy({ left: dir * ((card ? card.offsetWidth : 300) + 22), behavior: 'smooth' }); };
-    // RTL: "next" moves toward the left
-    $('[data-rail-next]', box) && $('[data-rail-next]', box).addEventListener('click', () => by(-1));
-    $('[data-rail-prev]', box) && $('[data-rail-prev]', box).addEventListener('click', () => by(1));
+  /* ---------- one-click start: enrol (account) or open a free guest seat, then go straight to the course ---------- */
+  const API = '__API__';
+  const guestId = () => {
+    let g = null;
+    try { g = localStorage.getItem('masar_guest_id'); } catch (e) { /* ignore */ }
+    if (!g) {
+      g = (w.crypto && crypto.randomUUID ? crypto.randomUUID() : 'g' + Date.now() + Math.random()).replace(/-/g, '').substring(0, 24);
+      try { localStorage.setItem('masar_guest_id', g); } catch (e) { /* ignore */ }
+    }
+    return g;
+  };
+  d.addEventListener('click', async (e) => {
+    const a = e.target.closest('[data-start]');
+    if (!a || e.metaKey || e.ctrlKey || e.shiftKey) return;
+    e.preventDefault();
+    if (a.classList.contains('is-busy')) return;
+    const id = +a.dataset.start, go = () => { location.href = `/course?id=${id}`; };
+    $$(`[data-start="${id}"]`).forEach((b) => { b.classList.add('is-busy'); b.innerHTML = '<span class="spin" aria-hidden="true"></span> عم نجهّزلك الكورس…'; });
+    const t = setTimeout(go, 6000);
+    try {
+      const tok = localStorage.getItem('auth_token');
+      if (tok) await fetch(`${API}/courses/${id}/enroll`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${tok}` } });
+      else await fetch(`${API}/grants/apply`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ guest_id: guestId(), course_id: id, full_name: 'ضيف مسار', goal: 'تعلم مجاني' }) });
+    } catch (err) { /* the course page offers its own start button as a fallback */ }
+    clearTimeout(t);
+    go();
   });
+  // phones: a sticky start bar once the main button scrolls away
+  const sbar = $('#sbar'), sbox = $('#startBox'), ctaEl = $('.cta');
+  if (sbar && sbox && 'IntersectionObserver' in w) {
+    const vis = new Map();
+    const so = new IntersectionObserver((ents) => {
+      ents.forEach((en) => vis.set(en.target, en.isIntersecting));
+      const past = sbox.getBoundingClientRect().bottom < 0;
+      sbar.classList.toggle('is-on', past && !vis.get(sbox) && !vis.get(ctaEl));
+    });
+    so.observe(sbox); ctaEl && so.observe(ctaEl);
+  }
 
   /* ---------- lite YouTube ---------- */
   d.addEventListener('click', (e) => {
@@ -181,26 +227,27 @@
       }));
     }
     if (!w.ScrollTrigger) return;
-    // hero: background drifts, golden path draws itself, content lifts away
+    // hero: framed photo drifts, floating badges move at their own pace, golden path draws itself
     if (hero) {
-      gsap.to('.hero-bg', { yPercent: 12, scale: 1.08, ease: 'none', scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true } });
-      gsap.to('.hero-in', { y: -80, opacity: .2, ease: 'none', scrollTrigger: { trigger: hero, start: '30% top', end: 'bottom top', scrub: true } });
+      gsap.to('.hero-frame img', { yPercent: -12, ease: 'none', scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true } });
+      $$('.hero-float').forEach((f, i) => gsap.to(f, { y: -60 - i * 40, ease: 'none', scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true } }));
+      gsap.to('.hero-in', { y: -60, opacity: .3, ease: 'none', scrollTrigger: { trigger: hero, start: '40% top', end: 'bottom top', scrub: true } });
       gsap.to('.hero-path path', { strokeDashoffset: 0, duration: 2.4, ease: 'power2.inOut', delay: h.classList.contains('intro-on') ? 4.8 : 0.6 });
     }
-    // journey: the path fills as you scroll and each station lights up
-    const jr = $('#jr');
-    if (jr) {
-      gsap.to('#jrGlow', { strokeDashoffset: 0, ease: 'none', scrollTrigger: { trigger: jr, start: 'top 65%', end: 'bottom 65%', scrub: .6 } });
-      $$('.st', jr).forEach((st) => {
-        w.ScrollTrigger.create({ trigger: st, start: 'top 60%', onEnter: () => st.classList.add('is-lit'), onLeaveBack: () => st.classList.remove('is-lit') });
-        const im = $('img', st);
-        gsap.fromTo(im, { scale: 1.18, yPercent: -4 }, { scale: 1.02, yPercent: 4, ease: 'none', scrollTrigger: { trigger: st, start: 'top bottom', end: 'bottom top', scrub: true } });
-      });
-    }
-    $$('.cta-bg, .ph-bg img, .art-bg img').forEach((el) => {
+    // topic ribbons slide in opposite directions with the scroll
+    $$('[data-mq]').forEach((r) => {
+      const dir = +r.dataset.mq;
+      gsap.fromTo(r, { xPercent: dir > 0 ? -30 : 0 }, { xPercent: dir > 0 ? 0 : -30, ease: 'none', scrollTrigger: { trigger: r.parentElement, start: 'top bottom', end: 'bottom top', scrub: .5 } });
+    });
+    // dark sections open up from a rounded card to full width as they arrive
+    $$('.dk-x').forEach((el) => {
+      gsap.fromTo(el, { clipPath: 'inset(0% 4% 0% 4% round 48px)' }, { clipPath: 'inset(0% 0% 0% 0% round 0px)', ease: 'none', scrollTrigger: { trigger: el, start: 'top bottom', end: 'top 25%', scrub: true } });
+    });
+    // enrolment steps: the dotted line fills in
+    if ($('#stepsOn')) gsap.to('#stepsOn', { strokeDashoffset: 0, ease: 'none', scrollTrigger: { trigger: '.steps', start: 'top 80%', end: 'bottom 60%', scrub: .6 } });
+    $$('.cta-bg, .ph-fig img, .art-cover img').forEach((el) => {
       gsap.fromTo(el, { yPercent: -6 }, { yPercent: 6, ease: 'none', scrollTrigger: { trigger: el.closest('section, header'), start: 'top bottom', end: 'bottom top', scrub: true } });
     });
-    $$('.cat img').forEach((el) => gsap.fromTo(el, { yPercent: -5 }, { yPercent: 5, ease: 'none', scrollTrigger: { trigger: el.parentElement, start: 'top bottom', end: 'bottom top', scrub: true } }));
   };
   motion();
   // without GSAP (reduced motion) light the journey stations via IntersectionObserver

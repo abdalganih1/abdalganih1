@@ -19,6 +19,8 @@ OUT = os.path.join(ROOT, 'src/assets/gen')
 MODEL = '@cf/black-forest-labs/flux-1-schnell'
 STYLE = ('cinematic soft lighting, deep midnight blue palette with teal glow and warm golden accents, '
          'high detail, sharp focus, editorial photography, no text, no letters, no watermark, no logo')
+LIGHT = ('bright airy morning light, soft pastel sky blue and warm peach tones, clean and optimistic, '
+         'high detail, sharp focus, editorial photography, no text, no letters, no watermark, no logo')
 
 IMAGES = {
     # pages and sections
@@ -35,6 +37,9 @@ IMAGES = {
     'cta': 'silhouettes of young people walking together on a glowing path toward a sunrise',
     'experiences': 'a 3D holographic electronic circuit simulator floating above a desk, futuristic lab',
     'certificate': 'an elegant blank certificate with a golden seal on a dark desk next to a laptop',
+    # light theme (value = (prompt, style))
+    'hero-day': ('a young Arab student with a backpack standing on a green hill in the early morning looking at a winding golden path that leads to a bright modern city, wide landscape, lots of open sky', LIGHT),
+    'study-day': ('a smiling young Arab student studying on a laptop at a bright wooden desk by a big sunny window with plants, cozy and focused', LIGHT),
     # blog covers (slug -> prompt)
     'post-welcome-to-masar': 'a bright modern online learning platform on a laptop, students learning together, welcoming atmosphere',
     'post-001-التفكير-خارج-الصندوق': 'a glowing lightbulb rising out of an open cardboard box, creative thinking',
@@ -61,7 +66,8 @@ def gen(name, prompt):
     if os.path.exists(path):
         return name, 'skip'
     url = f"https://api.cloudflare.com/client/v4/accounts/{os.environ['CF_ACCOUNT_ID']}/ai/run/{MODEL}"
-    body = json.dumps({'prompt': f'{prompt}, {STYLE}', 'steps': 8}).encode()
+    prompt, style = prompt if isinstance(prompt, tuple) else (prompt, STYLE)
+    body = json.dumps({'prompt': f'{prompt}, {style}', 'steps': 8}).encode()
     for attempt in range(3):
         try:
             req = urllib.request.Request(url, data=body, headers={
