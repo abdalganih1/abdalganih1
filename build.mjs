@@ -385,6 +385,7 @@ function renderBody(p) {
   // pair consecutive generated figures side by side
   b = b.replace(/(<figure class="pic"[\s\S]*?<\/figure>)\s*(<figure class="pic"[\s\S]*?<\/figure>)/g, '<div class="pair">$1$2</div>');
   b = b.replace(/<p>\s*(&nbsp;)?\s*<\/p>/g, '');
+  b = b.replace(/<table\b/g, '<div class="tbl" tabindex="0" role="region" aria-label="جدول"><table').replace(/<\/table>/g, '</table></div>');
   const toc = [];
   b = b.replace(/<h2([^>]*)>([\s\S]*?)<\/h2>/g, (m, attrs, inner) => {
     const txt = inner.replace(/<[^>]+>/g, '').trim();
