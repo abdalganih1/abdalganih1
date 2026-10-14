@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة الشهادات | لوحة التحكم</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="admin.css?v=4">
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <span class="logo-icon">📚</span>
+            <span class="logo-text">لوحة التحكم</span>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="index.html" class="nav-item">
+                <span class="nav-icon">📊</span>
+                <span>الرئيسية</span>
+            </a>
+            <a href="users.html" class="nav-item">
+                <span class="nav-icon">👥</span>
+                <span>المستخدمون</span>
+            </a>
+            <a href="courses.html" class="nav-item">
+                <span class="nav-icon">📚</span>
+                <span>الكورسات</span>
+            </a>
+            <a href="payments.html" class="nav-item">
+                <span class="nav-icon">💰</span>
+                <span>المدفوعات</span>
+            </a>
+            <a href="certificates.html" class="nav-item active">
+                <span class="nav-icon">🎓</span>
+                <span>الشهادات</span>
+            </a>
+            <a href="settings.html" class="nav-item">
+                <span class="nav-icon">⚙️</span>
+                <span>الإعدادات</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="../index.html" class="nav-item">
+                <span class="nav-icon">🌐</span>
+                <span>عرض الموقع</span>
+            </a>
+            <button class="nav-item logout-btn" onclick="logout()">
+                <span class="nav-icon">🚪</span>
+                <span>تسجيل الخروج</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <button class="menu-toggle" id="menuToggle">☰</button>
+            <h1 class="page-title">إدارة الشهادات</h1>
+            <div class="header-actions">
+                <span class="admin-name" id="adminName">مرحباً، المدير</span>
+            </div>
+        </header>
+
+        <div class="dashboard">
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #ede9fe; color: #7c3aed;">🎓</div>
+                    <div class="stat-info">
+                        <h3 id="templatesCount">-</h3>
+                        <p>قوالب الشهادات</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #dcfce7; color: #16a34a;">📜</div>
+                    <div class="stat-info">
+                        <h3 id="issuedCount">-</h3>
+                        <p>شهادات صادرة</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="cert-tabs">
+                <button class="cert-tab active" onclick="switchTab('templates')">📋 قوالب الشهادات</button>
+                <button class="cert-tab" onclick="switchTab('issued')">📜 الشهادات الصادرة</button>
+            </div>
+
+            <!-- Templates Tab -->
+            <div id="templatesTab" class="cert-tab-content active">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>إنشاء / تعديل قالب شهادة</h2>
+                    </div>
+                    <div class="card-body">
+                        <form id="templateForm" onsubmit="saveTemplate(event)">
+                            <div class="cert-form-grid">
+                                <!-- Left: Form Fields -->
+                                <div class="cert-form-fields">
+                                    <div class="cert-form-group">
+                                        <label for="courseSelect">📚 اختر الكورس <span class="required">*</span></label>
+                                        <select id="courseSelect" required onchange="loadExistingTemplate()">
+                                            <option value="">-- اختر كورس --</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="cert-form-group">
+                                        <label>🎨 نمط القالب</label>
+                                        <div class="template-styles">
+                                            <label class="style-option">
+                                                <input type="radio" name="templateStyle" value="classic" checked
+                                                    onchange="updatePreview()">
+                                                <div class="style-card">
+                                                    <div class="style-preview classic-mini"></div>
+                                                    <span>كلاسيكي</span>
+                                                </div>
+                                            </label>
+                                            <label class="style-option">
+                                                <input type="radio" name="templateStyle" value="modern"
+                                                    onchange="updatePreview()">
+                                                <div class="style-card">
+                                                    <div class="style-preview modern-mini"></div>
+                                                    <span>حديث</span>
+                                                </div>
+                                            </label>
+                                            <label class="style-option">
+                                                <input type="radio" name="templateStyle" value="elegant"
+                                                    onchange="updatePreview()">
+                                                <div class="style-card">
+                                                    <div class="style-preview elegant-mini"></div>
+                                                    <span>أنيق</span>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="cert-form-group">
+                                        <label for="certTitle">📝 عنوان الشهادة</label>
+                                        <input type="text" id="certTitle" value="شهادة إتمام" placeholder="شهادة إتمام"
+                                            oninput="updatePreview()">
+                                    </div>
+
+                                    <div class="cert-form-group">
+                                        <label for="certSubtitle">📌 العنوان الفرعي</label>
+                                        <input type="text" id="certSubtitle"
+                                            placeholder="مثال: تقديراً لإتمام الدورة بنجاح" oninput="updatePreview()">
+                                    </div>
+
+                                    <div class="cert-form-group">
+                                        <label for="certBody">📄 نص الشهادة</label>
+                                        <textarea id="certBody" rows="3"
+                                            placeholder="يُشهد بأن {student_name} قد أتم بنجاح دورة {course_name}"
+                                            oninput="updatePreview()"></textarea>
+                                        <div class="cert-hint">
+                                            💡 استخدم <code>{student_name}</code> لاسم الطالب و
+                                            <code>{course_name}</code> لاسم الكورس
+                                        </div>
+                                    </div>
+
+                                    <div class="cert-form-row">
+                                        <div class="cert-form-group">
+                                            <label for="sigName">✍️ اسم الموقّع</label>
+                                            <input type="text" id="sigName" placeholder="مثال: د. أحمد محمد"
+                                                oninput="updatePreview()">
+                                        </div>
+                                        <div class="cert-form-group">
+                                            <label for="sigTitle">🏷️ المسمى الوظيفي</label>
+                                            <input type="text" id="sigTitle" placeholder="مثال: مدير المنصة"
+                                                oninput="updatePreview()">
+                                        </div>
+                                    </div>
+
+                                    <div class="cert-form-group">
+                                        <label for="accentColor">🎨 لون التمييز</label>
+                                        <div class="color-picker-row">
+                                            <input type="color" id="accentColor" value="#6366f1"
+                                                onchange="updatePreview()">
+                                            <span id="colorValue">#6366f1</span>
+                                            <div class="color-presets">
+                                                <button type="button" class="color-preset" style="background: #6366f1"
+                                                    onclick="setColor('#6366f1')"></button>
+                                                <button type="button" class="color-preset" style="background: #059669"
+                                                    onclick="setColor('#059669')"></button>
+                                                <button type="button" class="color-preset" style="background: #d97706"
+                                                    onclick="setColor('#d97706')"></button>
+                                                <button type="button" class="color-preset" style="background: #dc2626"
+                                                    onclick="setColor('#dc2626')"></button>
+                                                <button type="button" class="color-preset" style="background: #7c3aed"
+                                                    onclick="setColor('#7c3aed')"></button>
+                                                <button type="button" class="color-preset" style="background: #0891b2"
+                                                    onclick="setColor('#0891b2')"></button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="cert-form-actions">
+                                        <button type="submit" class="btn-primary cert-save-btn">💾 حفظ القالب</button>
+                                    </div>
+                                </div>
+
+                                <!-- Right: Live Preview -->
+                                <div class="cert-preview-wrapper">
+                                    <h3 class="preview-title">👁️ معاينة الشهادة</h3>
+                                    <div class="cert-preview-container" id="certPreview">
+                                        <!-- Preview will be rendered here -->
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Existing Templates List -->
+                <div class="card" style="margin-top: 30px;">
+                    <div class="card-header">
+                        <h2>القوالب المحفوظة</h2>
+                    </div>
+                    <div class="card-body" id="templatesList">
+                        <div class="loading">جاري التحميل...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Issued Tab -->
+            <div id="issuedTab" class="cert-tab-content">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>الشهادات الصادرة</h2>
+                    </div>
+                    <div class="card-body" id="issuedList">
+                        <div class="loading">جاري التحميل...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/config.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="admin.js"></script>
+    <script>
+        // ===== Certificate Admin Logic =====
+        let allCourses = [];
+        let existingTemplates = [];
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadCourses();
+            await loadTemplates();
+            await loadIssuedCertificates();
+            updatePreview();
+        });
+
+        // Tab switching
+        function switchTab(tab) {
+            document.querySelectorAll('.cert-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.cert-tab-content').forEach(t => t.classList.remove('active'));
+
+            if (tab === 'templates') {
+                document.querySelector('.cert-tab:first-child').classList.add('active');
+                document.getElementById('templatesTab').classList.add('active');
+            } else {
+                document.querySelector('.cert-tab:last-child').classList.add('active');
+                document.getElementById('issuedTab').classList.add('active');
+            }
+        }
+
+        // Load courses for dropdown
+        async function loadCourses() {
+            try {
+                const data = await api.getCourses();
+                allCourses = data.results || [];
+                const select = document.getElementById('courseSelect');
+                allCourses.forEach(c => {
+                    const opt = document.createElement('option');
+                    opt.value = c.id;
+                    opt.textContent = c.title;
+                    select.appendChild(opt);
+                });
+            } catch (e) {
+                console.error('Failed to load courses:', e);
+            }
+        }
+
+        // Load existing template for selected course
+        async function loadExistingTemplate() {
+            const courseId = document.getElementById('courseSelect').value;
+            if (!courseId) return;
+
+            try {
+                const data = await api.getCertTemplate(courseId);
+                if (data.template) {
+                    const t = data.template;
+                    document.getElementById('certTitle').value = t.title || 'شهادة إتمام';
+                    document.getElementById('certSubtitle').value = t.subtitle || '';
+                    document.getElementById('certBody').value = t.body_text || '';
+                    document.getElementById('sigName').value = t.signature_name || '';
+                    document.getElementById('sigTitle').value = t.signature_title || '';
+                    document.getElementById('accentColor').value = t.accent_color || '#6366f1';
+                    document.getElementById('colorValue').textContent = t.accent_color || '#6366f1';
+
+                    // Set style radio
+                    const styleRadio = document.querySelector(`input[name="templateStyle"][value="${t.template_style || 'classic'}"]`);
+                    if (styleRadio) styleRadio.checked = true;
+                } else {
+                    // Reset form
+                    document.getElementById('certTitle').value = 'شهادة إتمام';
+                    document.getElementById('certSubtitle').value = '';
+                    document.getElementById('certBody').value = '';
+                    document.getElementById('sigName').value = '';
+                    document.getElementById('sigTitle').value = '';
+                    document.getElementById('accentColor').value = '#6366f1';
+                    document.getElementById('colorValue').textContent = '#6366f1';
+                    document.querySelector('input[name="templateStyle"][value="classic"]').checked = true;
+                }
+                updatePreview();
+            } catch (e) {
+                console.error('Failed to load template:', e);
+            }
+        }
+
+        // Load all templates
+        async function loadTemplates() {
+            try {
+                const data = await api.getCertTemplates();
+                existingTemplates = data.results || [];
+                document.getElementById('templatesCount').textContent = existingTemplates.length;
+                renderTemplatesList(existingTemplates);
+            } catch (e) {
+                document.getElementById('templatesList').innerHTML = '<p style="text-align:center; color:#888;">لا توجد قوالب بعد</p>';
+            }
+        }
+
+        function renderTemplatesList(templates) {
+            const container = document.getElementById('templatesList');
+            if (templates.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color:#888; padding: 30px;">لا توجد قوالب محفوظة. أنشئ قالب شهادة من النموذج أعلاه.</p>';
+                return;
+            }
+
+            container.innerHTML = `
+                <div class="templates-grid">
+                    ${templates.map(t => `
+                        <div class="template-card">
+                            <div class="template-card-header" style="background: ${t.accent_color || '#6366f1'}">
+                                <span class="template-style-badge">${getStyleName(t.template_style)}</span>
+                                <span class="template-issued-badge">${t.issued_count || 0} شهادة</span>
+                            </div>
+                            <div class="template-card-body">
+                                <h4>${t.course_title}</h4>
+                                <p class="template-cert-title">${t.title || 'شهادة إتمام'}</p>
+                                <div class="template-card-actions">
+                                    <button class="btn-sm btn-edit" onclick="editTemplate(${t.course_id})">✏️ تعديل</button>
+                                    <button class="btn-sm btn-delete" onclick="deleteTemplate(${t.id}, '${t.course_title.replace(/'/g, "\\'")}')">🗑️ حذف</button>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function getStyleName(style) {
+            switch (style) {
+                case 'classic': return '🏛️ كلاسيكي';
+                case 'modern': return '💎 حديث';
+                case 'elegant': return '✨ أنيق';
+                default: return '🏛️ كلاسيكي';
+            }
+        }
+
+        function editTemplate(courseId) {
+            document.getElementById('courseSelect').value = courseId;
+            loadExistingTemplate();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        async function deleteTemplate(id, name) {
+            if (!confirm(`هل أنت متأكد من حذف قالب "${name}"؟`)) return;
+            try {
+                await api.deleteCertTemplate(id);
+                await loadTemplates();
+                alert('تم حذف القالب بنجاح');
+            } catch (e) {
+                alert('خطأ في حذف القالب: ' + e.message);
+            }
+        }
+
+        // Save template
+        async function saveTemplate(e) {
+            e.preventDefault();
+            const courseId = document.getElementById('courseSelect').value;
+            if (!courseId) {
+                alert('يرجى اختيار كورس');
+                return;
+            }
+
+            const data = {
+                course_id: parseInt(courseId),
+                template_style: document.querySelector('input[name="templateStyle"]:checked').value,
+                title: document.getElementById('certTitle').value,
+                subtitle: document.getElementById('certSubtitle').value,
+                body_text: document.getElementById('certBody').value,
+                signature_name: document.getElementById('sigName').value,
+                signature_title: document.getElementById('sigTitle').value,
+                accent_color: document.getElementById('accentColor').value,
+            };
+
+            try {
+                await api.saveCertTemplate(data);
+                alert('تم حفظ القالب بنجاح! ✅');
+                await loadTemplates();
+            } catch (e) {
+                alert('خطأ في حفظ القالب: ' + e.message);
+            }
+        }
+
+        // Load issued certificates
+        async function loadIssuedCertificates() {
+            try {
+                const data = await api.getIssuedCertificates();
+                const certs = data.results || [];
+                document.getElementById('issuedCount').textContent = certs.length;
+                renderIssuedList(certs);
+            } catch (e) {
+                document.getElementById('issuedList').innerHTML = '<p style="text-align:center; color:#888;">لا توجد شهادات صادرة بعد</p>';
+            }
+        }
+
+        function renderIssuedList(certs) {
+            const container = document.getElementById('issuedList');
+            if (certs.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color:#888; padding: 30px;">لا توجد شهادات صادرة بعد. ستصدر الشهادات تلقائياً عند إكمال الطلاب للكورسات.</p>';
+                return;
+            }
+
+            container.innerHTML = `
+                <div class="issued-table-wrapper">
+                    <table class="issued-table">
+                        <thead>
+                            <tr>
+                                <th>الطالب</th>
+                                <th>الكورس</th>
+                                <th>رقم الشهادة</th>
+                                <th>تاريخ الإصدار</th>
+                                <th>رابط</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${certs.map(cert => `
+                                <tr>
+                                    <td>
+                                        <div class="issued-student">
+                                            <strong>${cert.student_name}</strong>
+                                            <small>${cert.student_email}</small>
+                                        </div>
+                                    </td>
+                                    <td>${cert.course_title}</td>
+                                    <td><code class="cert-number">${cert.certificate_number}</code></td>
+                                    <td>${new Date(cert.created_at + 'Z').toLocaleDateString('ar')}</td>
+                                    <td>
+                                        <a href="../certificate.html?id=${cert.certificate_number}" target="_blank" class="btn-sm btn-view">👁️ عرض</a>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        }
+
+        // Color picker
+        function setColor(color) {
+            document.getElementById('accentColor').value = color;
+            document.getElementById('colorValue').textContent = color;
+            updatePreview();
+        }
+
+        document.getElementById('accentColor').addEventListener('input', function () {
+            document.getElementById('colorValue').textContent = this.value;
+        });
+
+        // ===== Live Preview =====
+        function updatePreview() {
+            const style = document.querySelector('input[name="templateStyle"]:checked')?.value || 'classic';
+            const title = document.getElementById('certTitle').value || 'شهادة إتمام';
+            const subtitle = document.getElementById('certSubtitle').value || 'تقديراً لإتمام الدورة بنجاح';
+            const body = document.getElementById('certBody').value || 'يُشهد بأن {student_name} قد أتم بنجاح دورة {course_name}';
+            const sigName = document.getElementById('sigName').value || 'المدير';
+            const sigTitle = document.getElementById('sigTitle').value || 'مدير المنصة';
+            const color = document.getElementById('accentColor').value || '#6366f1';
+
+            const courseSelect = document.getElementById('courseSelect');
+            const courseName = courseSelect.options[courseSelect.selectedIndex]?.text || 'اسم الكورس';
+
+            const displayBody = body
+                .replace(/{student_name}/g, 'اسم الطالب')
+                .replace(/{course_name}/g, courseName !== '-- اختر كورس --' ? courseName : 'اسم الكورس');
+
+            const preview = document.getElementById('certPreview');
+            preview.innerHTML = renderCertificate(style, title, subtitle, displayBody, sigName, sigTitle, color, 'اسم الطالب', 'CERT-DEMO-XXXX', new Date().toLocaleDateString('ar'));
+        }
+
+        function renderCertificate(style, title, subtitle, body, sigName, sigTitle, color, studentName, certNumber, date) {
+            if (style === 'modern') {
+                return `
+                    <div class="cert-modern" style="--cert-color: ${color}">
+                        <div class="cert-modern-accent"></div>
+                        <div class="cert-modern-content">
+                            <div class="cert-modern-badge">🎓</div>
+                            <h1 class="cert-modern-title">${title}</h1>
+                            <p class="cert-modern-subtitle">${subtitle}</p>
+                            <div class="cert-modern-divider"></div>
+                            <p class="cert-modern-name">${studentName}</p>
+                            <p class="cert-modern-body">${body}</p>
+                            <div class="cert-modern-footer">
+                                <div class="cert-modern-sig">
+                                    <div class="cert-modern-sig-line"></div>
+                                    <strong>${sigName}</strong>
+                                    <span>${sigTitle}</span>
+                                </div>
+                                <div class="cert-modern-meta">
+                                    <span>📅 ${date}</span>
+                                    <span>🔑 ${certNumber}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if (style === 'elegant') {
+                return `
+                    <div class="cert-elegant" style="--cert-color: ${color}">
+                        <div class="cert-elegant-border">
+                            <div class="cert-elegant-inner">
+                                <div class="cert-elegant-ornament">✦ ✦ ✦</div>
+                                <h1 class="cert-elegant-title">${title}</h1>
+                                <p class="cert-elegant-subtitle">${subtitle}</p>
+                                <div class="cert-elegant-line"></div>
+                                <p class="cert-elegant-name">${studentName}</p>
+                                <p class="cert-elegant-body">${body}</p>
+                                <div class="cert-elegant-line"></div>
+                                <div class="cert-elegant-footer">
+                                    <div class="cert-elegant-sig">
+                                        <strong>${sigName}</strong>
+                                        <span>${sigTitle}</span>
+                                    </div>
+                                    <div class="cert-elegant-date">
+                                        <strong>${date}</strong>
+                                        <span>${certNumber}</span>
+                                    </div>
+                                </div>
+                                <div class="cert-elegant-ornament">✦ ✦ ✦</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                // Classic
+                return `
+                    <div class="cert-classic" style="--cert-color: ${color}">
+                        <div class="cert-classic-header">
+                            <div class="cert-classic-icon">🎓</div>
+                            <h1 class="cert-classic-title">${title}</h1>
+                            <p class="cert-classic-subtitle">${subtitle}</p>
+                        </div>
+                        <div class="cert-classic-body">
+                            <p class="cert-classic-name">${studentName}</p>
+                            <p class="cert-classic-text">${body}</p>
+                        </div>
+                        <div class="cert-classic-footer">
+                            <div class="cert-classic-sig">
+                                <div class="cert-classic-sig-line"></div>
+                                <strong>${sigName}</strong>
+                                <span>${sigTitle}</span>
+                            </div>
+                            <div class="cert-classic-info">
+                                <span>📅 ${date}</span>
+                                <span>🔑 ${certNumber}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+    </script>
+</body>
+
+</html>

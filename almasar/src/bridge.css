@@ -1,0 +1,18 @@
+
+/* ===== منصة مسار · theme bridge (new palette + fonts for the app pages) ===== */
+:root {
+  --primary: #14a9b8; --primary-dark: #0b8593; --primary-light: #2fd3d9;
+  --accent: #f7b955; --dark: #0a1128; --dark-light: #0f1a38;
+  --gradient: linear-gradient(120deg, #14a9b8 0%, #2fd3d9 55%, #f7b955 130%);
+  --gradient-accent: linear-gradient(135deg, #f7b955 0%, #f19a3e 100%);
+}
+body, button, input, select, textarea { font-family: 'IBM Plex Sans Arabic', 'Cairo', system-ui, sans-serif; }
+h1, h2, h3, .logo-text, .section-title, .page-title { font-family: 'Alexandria', 'IBM Plex Sans Arabic', sans-serif; }
+.navbar { background: rgba(6, 10, 24, .92) !important; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255,255,255,.08); }
+.navbar .logo-text, .navbar .nav-links a, .navbar .user-greeting { color: #eef2fb !important; }
+.navbar .nav-links a:hover, .navbar .nav-links a.active { color: #2fd3d9 !important; }
+.navbar .logo-icon { font-size: 0; width: 38px; height: 38px; border-radius: 12px; background: url(/favicon.svg) center/cover no-repeat; display: inline-block; }
+.navbar .btn-outline { color: #eef2fb; border-color: rgba(255,255,255,.25); }
+.navbar .mobile-menu-btn { color: #eef2fb; }
+.btn-primary { background: var(--gradient); color: #04121a; border: 0; }
+.footer { background: #060a18; }

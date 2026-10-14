@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مقال | منصة مسار</title>
+    <meta name="description" content="مقال من مدونة منصة مسار التعليمية">
+    <link rel="canonical" href="https://almasar.org/post.html">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+    .article-wrap{max-width:760px;margin:0 auto;padding:30px 20px 80px}
+    .article-cover{width:100%;max-height:320px;object-fit:cover;border-radius:16px;margin-bottom:24px}
+    .article-title{font-size:1.9rem;font-weight:800;line-height:1.5;color:#1a1a2e;margin-bottom:12px}
+    .article-meta{display:flex;gap:16px;font-size:.85rem;color:#888;margin-bottom:28px;flex-wrap:wrap}
+    .article-content{font-size:1.02rem;line-height:2.1;color:#333}
+    .article-content h2,.article-content h3{color:#4f46e5;margin:26px 0 12px}
+    .article-content p{margin-bottom:14px}
+    .article-content ul,.article-content ol{padding-right:22px;margin-bottom:14px}
+    .article-content li{margin-bottom:8px}
+    .article-content img{max-width:100%;border-radius:12px}
+    .article-content code{background:#f0f0f5;padding:2px 8px;border-radius:6px;font-size:.9em}
+    .back-link{display:inline-block;margin-bottom:20px;color:#6366f1;text-decoration:none;font-weight:600}
+    @media(max-width:600px){.article-title{font-size:1.35rem}}
+    </style>
+</head>
+<body>
+    <nav class="navbar"><div class="container">
+        <a href="index.html" class="logo"><span class="logo-icon">📚</span><span class="logo-text">منصة مسار</span></a>
+        <ul class="nav-links">
+            <li><a href="index.html">الرئيسية</a></li>
+            <li><a href="courses.html">الكورسات</a></li>
+            <li><a href="experiences.html">التجارب الذكية</a></li>
+            <li><a href="blog.html" class="active">المدونة</a></li>
+            <li><a href="summaries.html">الملخصات</a></li>
+            <li><a href="about.html">من نحن</a></li>
+        </ul>
+        <div class="nav-buttons"></div>
+    </div></nav>
+
+    <div class="article-wrap" id="articleWrap"><p style="text-align:center;color:#999;padding:60px 0">جاري التحميل...</p></div>
+
+    <script src="js/config.js"></script><script src="js/api.js"></script><script src="js/app.js?v=20261008"></script>
+    <script>
+    (async function(){
+        const slug = new URLSearchParams(location.search).get('slug');
+        const wrap = document.getElementById('articleWrap');
+        if(!slug){wrap.innerHTML='<p>لم يتم تحديد المقال</p>';return}
+        try{
+            const res = await fetch(CONFIG.API_BASE_URL + '/blog/' + encodeURIComponent(slug));
+            if(!res.ok){wrap.innerHTML='<p style="text-align:center;padding:80px 0">المقال غير موجود 😔</p>';return}
+            const p = await res.json();
+            document.title = (p.title || 'مقال') + ' | منصة مسار';
+            // Canonical + description خاص بكل مقال
+            if (slug) {
+                let can = document.querySelector('link[rel="canonical"]');
+                if (!can) { can = document.createElement('link'); can.setAttribute('rel','canonical'); document.head.appendChild(can); }
+                can.setAttribute('href', 'https://almasar.org/post?slug=' + encodeURIComponent(slug));
+                let md = document.querySelector('meta[name="description"]');
+                if (!md) { md = document.createElement('meta'); md.setAttribute('name','description'); document.head.appendChild(md); }
+                md.setAttribute('content', (p.excerpt || p.title).slice(0, 155));
+                if (p.featured_image) {
+                    let oi = document.querySelector('meta[property="og:image"]') || (() => { const m = document.createElement('meta'); m.setAttribute('property','og:image'); document.head.appendChild(m); return m; })();
+                    oi.setAttribute('content', p.featured_image);
+                }
+            }
+            // SEO dynamic meta + JSON-LD
+            const meta = document.createElement('meta'); meta.name='description'; meta.content=(p.excerpt||p.title).substring(0,150); document.head.appendChild(meta);
+            const og = [['og:title',p.title],['og:description',p.excerpt||''],['og:type','article'],['og:url',location.href]];
+            og.forEach(([k,v])=>{const m=document.createElement('meta');m.setAttribute('property',k);m.content=v;document.head.appendChild(m)});
+            const ld = document.createElement('script'); ld.type='application/ld+json';
+            ld.textContent = JSON.stringify({'@context':'https://schema.org','@type':'Article',
+                headline:p.title, description:p.excerpt||'', datePublished:p.created_at, author:{'@type':'Person',name:p.author_name||'مسار'},
+                publisher:{'@type':'Organization',name:'منصة مسار'}});
+            document.head.appendChild(ld);
+
+            const cover = p.cover_url ? `<img class="article-cover" src="${p.cover_url}" alt="">` : '';
+            const d = p.created_at ? new Date(p.created_at).toLocaleDateString('ar',{year:'numeric',month:'long',day:'numeric'}) : '';
+            wrap.innerHTML = `
+                <a href="blog.html" class="back-link">→ رجوع للمدونة</a>
+                ${cover}
+                <h1 class="article-title">${p.title}</h1>
+                <div class="article-meta"><span>✍️ ${p.author_name||'مسار'}</span><span>📅 ${d}</span><span>👁 ${p.views} مشاهدة</span></div>
+                <div class="article-content">${p.content_html}</div>`;
+        }catch(e){
+            wrap.innerHTML='<p style="text-align:center;padding:80px 0">تعذر تحميل المقال</p>';
+        }
+    })();
+    </script>
+<p class="footer-license" style="text-align:center;font-size:.78rem;color:#94a3b8;padding:14px 10px 4px;margin:0">📱 <a href="tel:+971525202899" style="color:inherit;text-decoration:none">+971 52 520 2899</a> · 🏛️ منصة مسار — مرخصة ومسجلة في دولة الإمارات العربية المتحدة</p>
+</body>
+</html>

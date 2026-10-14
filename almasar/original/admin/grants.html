@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>طلبات المنح | منصة مسار</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Cairo',sans-serif;background:#f5f6fa;color:#1a1a2e;padding:24px}
+.wrap{max-width:1000px;margin:0 auto}
+h1{font-size:1.3rem;margin-bottom:6px}
+.sub{color:#888;font-size:.85rem;margin-bottom:20px}
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-bottom:22px}
+.stat{background:#fff;border-radius:14px;padding:16px;text-align:center;border:1px solid #eee}
+.stat .num{font-size:1.5rem;font-weight:800;color:#4f46e5}
+.stat .lbl{font-size:.75rem;color:#888}
+.req{background:#fff;border-radius:14px;padding:16px 18px;margin-bottom:10px;border:1px solid #eee}
+.req-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+.req-name{font-weight:800}
+.req-course{background:#eef2ff;color:#4f46e5;padding:3px 12px;border-radius:20px;font-size:.75rem;font-weight:700}
+.badge-ok{background:#ecfdf5;color:#059669;padding:3px 12px;border-radius:20px;font-size:.72rem;font-weight:700}
+.req-details{font-size:.82rem;color:#555;line-height:1.9}
+.req-details b{color:#333}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>🎓 طلبات المنح والكوبونات</h1>
+<p class="sub">كل طلبات المنحة — التقديم الفوري يعني التسجيل تلقائي</p>
+<div class="stats" id="stats"></div>
+<div id="list">جاري التحميل...</div>
+</div>
+<script src="../js/config.js"></script>
+<script>
+(async function(){
+  try{
+    const res = await fetch(CONFIG.API_BASE_URL + '/grants/requests');
+    const data = await res.json();
+    const list = document.getElementById('list');
+    const reqs = data.results || [];
+    // stats
+    const grants = reqs.filter(r => !r.phone.startsWith('coupon:'));
+    const coupons = reqs.filter(r => r.phone.startsWith('coupon:'));
+    document.getElementById('stats').innerHTML = `
+      <div class="stat"><div class="num">${reqs.length}</div><div class="lbl">إجمالي الطلبات</div></div>
+      <div class="stat"><div class="num">${grants.length}</div><div class="lbl">طلبات منحة</div></div>
+      <div class="stat"><div class="num">${coupons.length}</div><div class="lbl">كوبونات مفعّلة</div></div>`;
+    if(!reqs.length){list.innerHTML='<p style="text-align:center;color:#999;padding:50px 0">لا طلبات بعد</p>';return}
+    list.innerHTML = reqs.map(r=>`
+      <div class="req">
+        <div class="req-top">
+          <span class="req-name">👤 ${r.full_name}</span>
+          <span class="req-course">${r.course_title || 'كورس #'+r.course_id}</span>
+          <span class="badge-ok">${r.phone.startsWith('coupon:') ? 'كوبون: '+r.phone.replace('coupon:','') : 'منحة ✓'}</span>
+        </div>
+        <div class="req-details">
+          ${r.phone && !r.phone.startsWith('coupon:') ? `<span>📱 <b>${r.phone}</b></span> · ` : ''}
+          ${r.city ? `📍 ${r.city} · ` : ''}${r.education ? `🎓 ${r.education} · ` : ''}
+          ${r.goal ? `<br>🎯 ${r.goal}` : ''}${r.needs ? `<br>💬 ${r.needs}` : ''}
+          <br>🕐 ${new Date(r.created_at).toLocaleString('ar')}
+        </div>
+      </div>`).join('');
+  }catch(e){document.getElementById('list').innerHTML='<p>تعذر التحميل: '+e.message+'</p>'}
+})();
+</script>
+</body>
+</html>

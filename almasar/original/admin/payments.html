@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مراجعة المدفوعات | لوحة التحكم</title>
+    <link rel="stylesheet" href="admin.css">
+    <style>
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 25px 20px;
+            text-align: center;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-card.success {
+            background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+            border-color: #86efac;
+        }
+
+        .stat-card.warning {
+            background: linear-gradient(135deg, #fffbeb, #fef3c7);
+            border-color: #fcd34d;
+        }
+
+        .stat-card.danger {
+            background: linear-gradient(135deg, #fef2f2, #fee2e2);
+            border-color: #fca5a5;
+        }
+
+        .stat-card.info {
+            background: linear-gradient(135deg, #eff6ff, #dbeafe);
+            border-color: #93c5fd;
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #1e1e2e;
+            line-height: 1;
+        }
+
+        .stat-unit {
+            color: #9ca3af;
+            font-size: 0.85rem;
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: #6b7280;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        /* Filter Tabs */
+        .filter-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .filter-tab {
+            padding: 10px 22px;
+            border-radius: 25px;
+            border: 2px solid #e5e7eb;
+            background: white;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #6b7280;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-tab:hover {
+            border-color: #6366f1;
+            color: #6366f1;
+        }
+
+        .filter-tab.active {
+            background: #6366f1;
+            color: white;
+            border-color: #6366f1;
+        }
+
+        .filter-tab .count {
+            background: rgba(0, 0, 0, 0.1);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+        }
+
+        .filter-tab.active .count {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Payment Cards Grid */
+        .payments-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 25px;
+        }
+
+        /* Payment Card */
+        .payment-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+            border: 1px solid #f3f4f6;
+            transition: all 0.3s;
+        }
+
+        .payment-card:hover {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .payment-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 20px;
+            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .payment-id {
+            font-weight: 700;
+            color: #6366f1;
+            font-size: 0.9rem;
+        }
+
+        .status-badge {
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background: #fef3c7;
+            color: #b45309;
+        }
+
+        .status-confirmed {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .status-rejected {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .payment-card-body {
+            padding: 20px;
+        }
+
+        /* Student Info Row */
+        .student-info {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 16px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .student-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .student-details h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1e1e2e;
+            margin-bottom: 2px;
+        }
+
+        .student-details p {
+            font-size: 0.82rem;
+            color: #9ca3af;
+        }
+
+        /* Course Info */
+        .course-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+            padding: 12px;
+            background: #f9fafb;
+            border-radius: 10px;
+        }
+
+        .course-thumb {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .course-details h5 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #1e1e2e;
+            margin-bottom: 4px;
+        }
+
+        .course-details .price {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #6366f1;
+        }
+
+        /* Payment Details Row */
+        .payment-meta {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+
+        .meta-chip {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.82rem;
+            color: #6b7280;
+        }
+
+        .meta-chip .icon {
+            font-size: 1rem;
+        }
+
+        .meta-chip strong {
+            color: #1e1e2e;
+        }
+
+        /* Receipt Image */
+        .receipt-section {
+            margin-bottom: 16px;
+        }
+
+        .receipt-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .receipt-image-wrapper {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid #e5e7eb;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .receipt-image-wrapper:hover {
+            border-color: #6366f1;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.2);
+        }
+
+        .receipt-image {
+            width: 100%;
+            max-height: 250px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .receipt-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.2s;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .receipt-image-wrapper:hover .receipt-overlay {
+            opacity: 1;
+        }
+
+        .no-receipt {
+            padding: 25px;
+            text-align: center;
+            background: #fef3c7;
+            border-radius: 10px;
+            color: #b45309;
+            font-size: 0.9rem;
+        }
+
+        /* Action Buttons */
+        .payment-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-confirm {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-family: inherit;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+        }
+
+        .btn-confirm:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+        }
+
+        .btn-reject {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-family: inherit;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+        }
+
+        .btn-reject:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+        }
+
+        .btn-confirmed-done {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-family: inherit;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: default;
+            background: #dcfce7;
+            color: #15803d;
+            text-align: center;
+        }
+
+        .btn-rejected-done {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-family: inherit;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: default;
+            background: #fee2e2;
+            color: #dc2626;
+            text-align: center;
+        }
+
+        /* Receipt Modal (Lightbox) */
+        .receipt-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+        }
+
+        .receipt-modal.active {
+            display: flex;
+        }
+
+        .receipt-modal img {
+            max-width: 90%;
+            max-height: 90vh;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .receipt-modal-close {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            color: white;
+            font-size: 2rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .receipt-modal-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #9ca3af;
+        }
+
+        .empty-state .icon {
+            font-size: 4rem;
+            margin-bottom: 15px;
+        }
+
+        .empty-state h3 {
+            font-size: 1.3rem;
+            color: #1e1e2e;
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            font-size: 0.95rem;
+        }
+
+        .loading-state {
+            text-align: center;
+            padding: 60px;
+            color: #9ca3af;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .payments-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .payment-meta {
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <span class="logo-icon">📚</span>
+            <span class="logo-text">لوحة التحكم</span>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="index.html" class="nav-item">
+                <span class="nav-icon">📊</span>
+                <span>الرئيسية</span>
+            </a>
+            <a href="users.html" class="nav-item">
+                <span class="nav-icon">👥</span>
+                <span>المستخدمون</span>
+            </a>
+            <a href="courses.html" class="nav-item">
+                <span class="nav-icon">📚</span>
+                <span>الكورسات</span>
+            </a>
+            <a href="payments.html" class="nav-item active">
+                <span class="nav-icon">💰</span>
+                <span>المدفوعات</span>
+            </a>
+            <a href="certificates.html" class="nav-item">
+                <span class="nav-icon">🎓</span>
+                <span>الشهادات</span>
+            </a>
+            <a href="settings.html" class="nav-item">
+                <span class="nav-icon">⚙️</span>
+                <span>الإعدادات</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="../index.html" class="nav-item">
+                <span class="nav-icon">🌐</span>
+                <span>عرض الموقع</span>
+            </a>
+            <button class="nav-item logout-btn" onclick="logout()">
+                <span class="nav-icon">🚪</span>
+                <span>تسجيل الخروج</span>
+            </button>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="header">
+            <button class="menu-toggle" id="menuToggle">☰</button>
+            <h1>مراجعة المدفوعات</h1>
+            <div class="header-actions"></div>
+        </header>
+
+        <div class="dashboard">
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card success">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-value" id="confirmedCount">0</div>
+                    <div class="stat-label">مؤكدة</div>
+                </div>
+                <div class="stat-card warning">
+                    <div class="stat-icon">⏳</div>
+                    <div class="stat-value" id="pendingCount">0</div>
+                    <div class="stat-label">بانتظار المراجعة</div>
+                </div>
+                <div class="stat-card danger">
+                    <div class="stat-icon">❌</div>
+                    <div class="stat-value" id="rejectedCount">0</div>
+                    <div class="stat-label">مرفوضة</div>
+                </div>
+                <div class="stat-card info">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-value" id="totalCount">0</div>
+                    <div class="stat-label">إجمالي العمليات</div>
+                </div>
+            </div>
+
+            <!-- Filter Tabs -->
+            <div class="filter-tabs" id="filterTabs">
+                <button class="filter-tab active" data-status="" onclick="filterPayments('')">
+                    الكل <span class="count" id="countAll">0</span>
+                </button>
+                <button class="filter-tab" data-status="pending" onclick="filterPayments('pending')">
+                    ⏳ بانتظار المراجعة <span class="count" id="countPending">0</span>
+                </button>
+                <button class="filter-tab" data-status="confirmed" onclick="filterPayments('confirmed')">
+                    ✅ مؤكدة <span class="count" id="countConfirmed">0</span>
+                </button>
+                <button class="filter-tab" data-status="rejected" onclick="filterPayments('rejected')">
+                    ❌ مرفوضة <span class="count" id="countRejected">0</span>
+                </button>
+            </div>
+
+            <!-- Payments Grid -->
+            <div class="payments-grid" id="paymentsGrid">
+                <div class="loading-state">⏳ جاري تحميل المدفوعات...</div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Receipt Lightbox Modal -->
+    <div class="receipt-modal" id="receiptModal" onclick="closeReceiptModal()">
+        <button class="receipt-modal-close" onclick="closeReceiptModal()">&times;</button>
+        <img id="receiptModalImg" src="" alt="الإيصال">
+    </div>
+
+    <script src="../js/config.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="admin.js"></script>
+    <script>
+        let allPayments = [];
+        let currentFilter = '';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadAllPayments();
+        });
+
+        async function loadAllPayments() {
+            const grid = document.getElementById('paymentsGrid');
+            grid.innerHTML = '<div class="loading-state">⏳ جاري تحميل المدفوعات...</div>';
+
+            try {
+                const data = await api.getAllPayments();
+                allPayments = data.results || [];
+                updateStats();
+                renderPayments(allPayments);
+            } catch (error) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon">⚠️</div>
+                        <h3>خطأ في تحميل المدفوعات</h3>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        function updateStats() {
+            const confirmed = allPayments.filter(p => p.status === 'confirmed').length;
+            const pending = allPayments.filter(p => p.status === 'pending').length;
+            const rejected = allPayments.filter(p => p.status === 'rejected').length;
+
+            document.getElementById('confirmedCount').textContent = confirmed;
+            document.getElementById('pendingCount').textContent = pending;
+            document.getElementById('rejectedCount').textContent = rejected;
+            document.getElementById('totalCount').textContent = allPayments.length;
+
+            document.getElementById('countAll').textContent = allPayments.length;
+            document.getElementById('countPending').textContent = pending;
+            document.getElementById('countConfirmed').textContent = confirmed;
+            document.getElementById('countRejected').textContent = rejected;
+        }
+
+        function filterPayments(status) {
+            currentFilter = status;
+
+            // Update active tab
+            document.querySelectorAll('.filter-tab').forEach(tab => {
+                tab.classList.toggle('active', tab.dataset.status === status);
+            });
+
+            const filtered = status
+                ? allPayments.filter(p => p.status === status)
+                : allPayments;
+            renderPayments(filtered);
+        }
+
+        function renderPayments(payments) {
+            const grid = document.getElementById('paymentsGrid');
+
+            if (payments.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon">📭</div>
+                        <h3>لا توجد مدفوعات</h3>
+                        <p>لم يتم العثور على أي عمليات دفع${currentFilter ? ' بهذا الفلتر' : ''}</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = payments.map(p => {
+                const methodLabels = {
+                    'sham_cash': 'شام كاش',
+                    'mtn_cash': 'MTN Cash',
+                    'syriatel_cash': 'Syriatel Cash',
+                    'bank': 'حوالة بنكية',
+                    'cash': 'نقدي'
+                };
+
+                const statusLabels = {
+                    'pending': { text: 'بانتظار المراجعة', class: 'status-pending' },
+                    'confirmed': { text: 'مؤكد', class: 'status-confirmed' },
+                    'rejected': { text: 'مرفوض', class: 'status-rejected' }
+                };
+
+                const statusInfo = statusLabels[p.status] || { text: p.status, class: '' };
+                const initial = (p.student_name || '?').charAt(0);
+                const date = p.created_at ? new Date(p.created_at + 'Z').toLocaleDateString('ar') : '-';
+
+                // Receipt section
+                let receiptHTML = '';
+                if (p.receipt_image_url) {
+                    receiptHTML = `
+                        <div class="receipt-section">
+                            <div class="receipt-label">🧾 صورة الإيصال</div>
+                            <div class="receipt-image-wrapper" onclick="openReceiptModal('${p.receipt_image_url}')">
+                                <img src="${p.receipt_image_url}" class="receipt-image" alt="إيصال الدفع" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22150%22><text x=%2250%%22 y=%2250%%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22%239ca3af%22 font-size=%2214%22>خطأ في تحميل الصورة</text></svg>'">
+                                <div class="receipt-overlay">🔍 عرض الإيصال بالحجم الكامل</div>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    receiptHTML = `
+                        <div class="receipt-section">
+                            <div class="receipt-label">🧾 صورة الإيصال</div>
+                            <div class="no-receipt">⚠️ لم يتم رفع إيصال بعد</div>
+                        </div>
+                    `;
+                }
+
+                // Action buttons
+                let actionsHTML = '';
+                if (p.status === 'pending') {
+                    actionsHTML = `
+                        <div class="payment-actions">
+                            <button class="btn-confirm" onclick="confirmPayment(${p.id}, 'confirmed')">
+                                ✅ تأكيد الدفع
+                            </button>
+                            <button class="btn-reject" onclick="confirmPayment(${p.id}, 'rejected')">
+                                ❌ رفض
+                            </button>
+                        </div>
+                    `;
+                } else if (p.status === 'confirmed') {
+                    actionsHTML = `
+                        <div class="payment-actions">
+                            <div class="btn-confirmed-done">✅ تم التأكيد</div>
+                        </div>
+                    `;
+                } else if (p.status === 'rejected') {
+                    actionsHTML = `
+                        <div class="payment-actions">
+                            <div class="btn-rejected-done">❌ تم الرفض</div>
+                        </div>
+                    `;
+                }
+
+                return `
+                    <div class="payment-card">
+                        <div class="payment-card-header">
+                            <span class="payment-id">#${String(p.id).padStart(3, '0')}</span>
+                            <span class="status-badge ${statusInfo.class}">${statusInfo.text}</span>
+                        </div>
+                        <div class="payment-card-body">
+                            <!-- Student -->
+                            <div class="student-info">
+                                <div class="student-avatar">${initial}</div>
+                                <div class="student-details">
+                                    <h4>${p.student_name || 'غير معروف'}</h4>
+                                    <p>${p.student_email || ''}</p>
+                                </div>
+                            </div>
+
+                            <!-- Course -->
+                            <div class="course-info">
+                                ${p.course_thumbnail
+                        ? `<img src="${p.course_thumbnail}" class="course-thumb" alt="">`
+                        : '<div class="course-thumb" style="background:#f3f4f6;display:flex;align-items:center;justify-content:center;font-size:1.5rem">📚</div>'
+                    }
+                                <div class="course-details">
+                                    <h5>${p.course_title || 'كورس غير معروف'}</h5>
+                                    <span class="price">${p.amount ? Number(p.amount).toLocaleString() + ' ل.س' : '-'}</span>
+                                </div>
+                            </div>
+
+                            <!-- Payment Meta -->
+                            <div class="payment-meta">
+                                <div class="meta-chip">
+                                    <span class="icon">💳</span>
+                                    <strong>${methodLabels[p.method] || p.method || '-'}</strong>
+                                </div>
+                                <div class="meta-chip">
+                                    <span class="icon">📅</span>
+                                    ${date}
+                                </div>
+                            </div>
+
+                            ${receiptHTML}
+                            ${actionsHTML}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        async function confirmPayment(paymentId, status) {
+            const actionText = status === 'confirmed' ? 'تأكيد' : 'رفض';
+            if (!confirm(`هل أنت متأكد من ${actionText} هذه العملية؟`)) return;
+
+            try {
+                await api.confirmPayment(paymentId, status);
+                alert(`تم ${actionText} العملية بنجاح!`);
+                loadAllPayments(); // Reload
+            } catch (error) {
+                alert('حدث خطأ: ' + error.message);
+            }
+        }
+
+        function openReceiptModal(url) {
+            event.stopPropagation();
+            document.getElementById('receiptModalImg').src = url;
+            document.getElementById('receiptModal').classList.add('active');
+        }
+
+        function closeReceiptModal() {
+            document.getElementById('receiptModal').classList.remove('active');
+        }
+
+        // Close modal on Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeReceiptModal();
+        });
+    </script>
+</body>
+
+</html>

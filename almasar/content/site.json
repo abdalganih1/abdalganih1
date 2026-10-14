@@ -1,0 +1,16 @@
+{
+  "name": "منصة مسار",
+  "short": "مسار",
+  "url": "https://almasar.org",
+  "tagline": "كيف تحدد وتكتشف وتبدع في مسار حياتك",
+  "description": "منصة مسار: منصة تعليمية عربية لإعداد جيل ريادي واعٍ وقادر ومؤثر. مسارات مجانية في البرمجة والأردوينو ومهارات الحاسوب وريادة المستقبل، مع شهادات إتمام وتطبيق أندرويد يعمل بدون إنترنت وتجارب تعلم بالذكاء الاصطناعي.",
+  "email": "info@almasar.org",
+  "phone": "+971525202899",
+  "phoneDisplay": "+971 52 520 2899",
+  "founder": "المهندس عبد الغني الحمدي",
+  "founded": "2026",
+  "country": "AE",
+  "ga": "",
+  "apk": "https://masar-apk-dl.abdalganih2.workers.dev/apk/universal",
+  "api": "https://masar-lms-api.abdalganih2.workers.dev/api/v1"
+}

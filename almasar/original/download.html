@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="https://almasar.org/download.html">
+<title>حمّل تطبيق منصة مسار | Masar LMS</title>
+<meta name="description" content="حمّل تطبيق منصة مسار التعليمية لأندرويد — تعلم البرمجة والريادة والحاسوب بالعربي">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Cairo',sans-serif;background:linear-gradient(160deg,#f0fbfc 0%,#e6f7f9 100%);min-height:100vh;color:#0f2a30}
+.wrap{max-width:520px;margin:0 auto;padding:32px 20px;text-align:center}
+.icon{width:110px;height:110px;border-radius:28px;background:linear-gradient(145deg,#18b8c4,#0e9aaf);display:flex;align-items:center;justify-content:center;margin:0 auto 22px;box-shadow:0 18px 50px rgba(24,184,196,.35);font-size:3.2rem}
+h1{font-size:1.55rem;font-weight:900;margin-bottom:8px}
+.sub{color:#4a6d73;font-size:.95rem;line-height:1.8;margin-bottom:26px}
+.dl-card{background:#fff;border-radius:22px;padding:26px 22px;box-shadow:0 12px 40px rgba(15,42,48,.08);margin-bottom:18px}
+.dl-main{display:block;background:linear-gradient(135deg,#18b8c4,#0e9aaf);color:#fff;text-decoration:none;font-weight:800;font-size:1.05rem;padding:16px;border-radius:16px;transition:transform .15s}
+.dl-main:active{transform:scale(.97)}
+.dl-meta{font-size:.78rem;color:#6b8d93;margin-top:12px;line-height:1.8}
+.dl-meta b{color:#0f2a30}
+.badge{display:inline-block;background:#e6f7f9;color:#0e9aaf;border-radius:20px;padding:3px 14px;font-size:.72rem;font-weight:700;margin:0 3px}
+.feats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:22px 0;text-align:right}
+.feat{background:#fff;border-radius:14px;padding:12px 14px;font-size:.8rem;font-weight:700;box-shadow:0 4px 14px rgba(15,42,48,.05)}
+.feat span{display:block;font-weight:400;font-size:.72rem;color:#6b8d93;margin-top:3px}
+.alts{margin-top:18px;font-size:.8rem;color:#6b8d93}
+.alts a{color:#0e9aaf;font-weight:700;text-decoration:none;margin:0 6px}
+.ios-note{background:#fff7ed;border:1.5px solid #fdba74;color:#9a3412;border-radius:14px;padding:12px;font-size:.78rem;margin-top:18px;display:none}
+#abiDetect{font-size:.72rem;color:#0e9aaf;background:#e6f7f9;border-radius:20px;padding:4px 14px;display:inline-block;margin-top:10px;font-weight:700}
+</style>
+</head>
+<body>
+<div class="wrap">
+    <div class="icon">🎓</div>
+    <h1>تطبيق منصة مسار</h1>
+    <p class="sub">كل الكورسات العربية بجيبك — تعلّم البرمجة والريادة ومهارات الحاسوب أونلاين أو بدون نت</p>
+
+    <div class="dl-card">
+        <a id="dlBtn" href="https://masar-apk-dl.abdalganih2.workers.dev/apk/universal" class="dl-main">⬇️ حمّل التطبيق الآن</a>
+        <div id="abiDetect">جاري تحديد نسخة جهازك…</div>
+        <div class="dl-meta" id="dlMeta">
+            <span class="badge">مجاني 100%</span>
+            <span class="badge" id="sizeBadge">أندرويد</span>
+            <span class="badge" id="verBadge">v1.1.0</span>
+            <br>النسخة الصحيحة لمعالج جهازك بتتحدد تلقائياً
+        </div>
+    </div>
+
+    <div class="feats">
+        <div class="feat">📥 تحميل الدروس offline<span>شاهد بدون إنترنت</span></div>
+        <div class="feat">🤖 مساعد ذكي<span>اسأل عن أي درس</span></div>
+        <div class="feat">🎓 منح مجانية<span>ادخل أي كورس فوراً</span></div>
+        <div class="feat">📜 شهادات<span>تتبع تقدمك</span></div>
+    </div>
+
+    <div class="ios-note" id="iosNote">📱 التطبيق متوفر لأندرويد حالياً — لمستخدمي iPhone: استخدم <a href="/" style="color:#9a3412;font-weight:800">نسخة الويب</a> الكاملة من المتصفح</div>
+
+    <p class="alts">
+        نسخ يدوية:
+        <a href="https://masar-apk-dl.abdalganih2.workers.dev/apk/arm64-v8a">أجهزة حديثة (64bit)</a> ·
+        <a href="https://masar-apk-dl.abdalganih2.workers.dev/apk/armeabi-v7a">أجهزة قديمة (32bit)</a> ·
+        <a href="https://masar-apk-dl.abdalganih2.workers.dev/apk/universal">شامل لكل الأجهزة</a>
+    </p>
+</div>
+
+<script src="js/config.js"></script>
+<script>
+(async function(){
+    const ua = navigator.userAgent;
+    const isIOS = /iPhone|iPad|iPod/i.test(ua);
+    if (isIOS) {
+        document.getElementById('iosNote').style.display = 'block';
+        document.getElementById('dlBtn').style.display = 'none';
+        return;
+    }
+    // iOS-adjacent Android detection + ABI via API
+    try {
+        const res = await fetch(CONFIG.API_BASE_URL + '/app/latest');
+        const data = await res.json();
+        document.getElementById('abiDetect').textContent = '✓ النسخة الشاملة — تركب على كل أجهزة أندرويد';
+        document.getElementById('dlBtn').href = data.url || 'https://masar-apk-dl.abdalganih2.workers.dev/apk';
+        if (data.size_hint_mb) document.getElementById('sizeBadge').textContent = '≈' + data.size_hint_mb + 'MB';
+        if (data.version) document.getElementById('verBadge').textContent = 'v' + data.version;
+    } catch (e) {
+        document.getElementById('abiDetect').textContent = '✓ النسخة الشاملة لكل الأجهزة';
+        document.getElementById('dlBtn').href = 'https://masar-apk-dl.abdalganih2.workers.dev/apk';
+    }
+})();
+</script>
+<p class="footer-license" style="text-align:center;font-size:.78rem;color:#94a3b8;padding:14px 10px 4px;margin:0">📱 <a href="tel:+971525202899" style="color:inherit;text-decoration:none">+971 52 520 2899</a> · 🏛️ منصة مسار — مرخصة ومسجلة في دولة الإمارات العربية المتحدة</p>
+</body>
+</html>

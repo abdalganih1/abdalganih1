@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المدونة | منصة مسار التعليمية</title>
+    <meta name="description" content="مقالات تعليمية ونصائح في البرمجة والتصميم واللغات من منصة مسار">
+    <link rel="canonical" href="https://almasar.org/blog.html">
+    <meta property="og:title" content="المدونة | منصة مسار التعليمية">
+    <meta property="og:description" content="مقالات تعليمية ونصائح من منصة مسار">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://almasar.org/blog.html">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+    .blog-hero{background:linear-gradient(135deg,#6366f1,#8b5cf6);padding:60px 20px;text-align:center;color:#fff;margin-bottom:40px}
+    .blog-hero h1{font-size:2.2rem;font-weight:800;margin-bottom:10px}
+    .blog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px;max-width:1200px;margin:0 auto;padding:0 20px 60px}
+    .post-card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.06);transition:.25s;display:flex;flex-direction:column;text-decoration:none;color:inherit;border:1px solid #eee}
+    .post-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(99,102,241,.15)}
+    .post-cover{height:170px;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:3rem;color:#fff}
+    .post-cover img{width:100%;height:100%;object-fit:cover}
+    .post-body{padding:18px;flex:1;display:flex;flex-direction:column;gap:8px}
+    .post-body h3{font-size:1.05rem;font-weight:700;line-height:1.6}
+    .post-excerpt{font-size:.85rem;color:#666;line-height:1.7;flex:1}
+    .post-meta{display:flex;justify-content:space-between;font-size:.75rem;color:#999;border-top:1px solid #f0f0f0;padding-top:10px}
+    .empty{max-width:500px;margin:80px auto;text-align:center;color:#999;padding:0 20px}
+    @media(max-width:600px){.blog-hero h1{font-size:1.5rem}.blog-grid{grid-template-columns:1fr}}
+    </style>
+</head>
+<body>
+    <nav class="navbar"><div class="container">
+        <a href="index.html" class="logo"><span class="logo-icon">📚</span><span class="logo-text">منصة مسار</span></a>
+        <ul class="nav-links">
+            <li><a href="index.html">الرئيسية</a></li>
+            <li><a href="courses.html">الكورسات</a></li>
+            <li><a href="experiences.html">التجارب الذكية</a></li>
+            <li><a href="blog.html" class="active">المدونة</a></li>
+            <li><a href="summaries.html">الملخصات</a></li>
+            <li><a href="about.html">من نحن</a></li>
+        </ul>
+        <div class="nav-buttons" id="authButtons"></div>
+    </div></nav>
+
+    <section class="blog-hero"><h1>📝 مدونة منصة مسار</h1><p>مقالات ونصائح لتطوير مهاراتك</p></section>
+    <div class="blog-grid" id="postsGrid"><p style="text-align:center;color:#999;grid-column:1/-1">جاري التحميل...</p></div>
+
+    <script src="js/config.js"></script><script src="js/api.js"></script><script src="js/app.js?v=20261008"></script>
+    <script>
+    (async function(){
+        try{
+            const res = await fetch(CONFIG.API_BASE_URL + '/blog?limit=50');
+            const data = await res.json();
+            const grid = document.getElementById('postsGrid');
+            if(!data.results || !data.results.length){
+                grid.innerHTML = '<div class="empty">📭 لا توجد مقالات بعد — قريباً مقالات جديدة!</div>';
+                return;
+            }
+            const covers=['https://pub-f2c0b43b09ea4983a05bdb7998fafdf3.r2.dev/covers/programming.png','https://pub-f2c0b43b09ea4983a05bdb7998fafdf3.r2.dev/covers/design.png','https://pub-f2c0b43b09ea4983a05bdb7998fafdf3.r2.dev/covers/languages.png'];
+            grid.innerHTML = data.results.map((p,i)=>{
+                const cover = p.cover_url || covers[i%covers.length];
+                const d = p.created_at ? new Date(p.created_at).toLocaleDateString('ar',{year:'numeric',month:'long',day:'numeric'}) : '';
+                return `<a href="post.html?slug=${encodeURIComponent(p.slug)}" class="post-card">
+                    <div class="post-cover">${cover?`<img src="${cover}" alt="" loading="lazy" onerror="this.remove()">`:''}</div>
+                    <div class="post-body">
+                        <h3>${p.title}</h3>
+                        <p class="post-excerpt">${(p.excerpt||'').substring(0,140)}</p>
+                        <div class="post-meta"><span>✍️ ${p.author_name||'مسار'}</span><span>👁 ${p.views} · ${d}</span></div>
+                    </div></a>`;
+            }).join('');
+        }catch(e){
+            document.getElementById('postsGrid').innerHTML='<div class="empty">تعذر تحميل المقالات</div>';
+        }
+    })();
+    </script>
+<p class="footer-license" style="text-align:center;font-size:.78rem;color:#94a3b8;padding:14px 10px 4px;margin:0">📱 <a href="tel:+971525202899" style="color:inherit;text-decoration:none">+971 52 520 2899</a> · 🏛️ منصة مسار — مرخصة ومسجلة في دولة الإمارات العربية المتحدة</p>
+</body>
+</html>

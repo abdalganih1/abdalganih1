@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>كورساتي | لوحة المعلم</title>
+    <link rel="stylesheet" href="../admin/admin.css">
+</head>
+
+<body>
+    <aside class="sidebar" id="sidebar">
+        <!-- Sidebar content loaded dynamically -->
+    </aside>
+
+    <main class="main-content">
+        <header class="header">
+            <button class="menu-toggle" id="menuToggle">☰</button>
+            <h1 class="page-title">كورساتي</h1>
+            <div class="header-actions">
+                <button class="btn-primary" onclick="openAddCourseModal()">+ إضافة كورس جديد</button>
+                <span class="admin-name" id="teacherName">مرحباً، أستاذ</span>
+            </div>
+        </header>
+
+        <div class="dashboard">
+            <div class="grid-container" id="myCoursesGrid">
+                <!-- Courses loaded dynamically -->
+                <div class="loading">جاري التحميل...</div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal for generating quiz with AI -->
+    <div class="modal" id="generateQuizModal">
+        <div class="modal-content"
+            style="max-width: 820px; border-radius: 16px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); background: #f8fafc; padding: 0; overflow: hidden; border: 1px solid #e2e8f0;">
+            <div class="modal-header"
+                style="background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%); color: white; padding: 20px 24px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 0;">
+                <h2 style="margin: 0; font-size: 1.3rem; font-weight: bold; color: white;">🧠 توليد اختبار بالذكاء الاصطناعي</h2>
+                <button class="btn-close" onclick="closeGenerateQuizModal()"
+                    style="color: #fca5a5; opacity: 1; transition: all 0.2s;">&times;</button>
+            </div>
+
+            <div style="padding: 24px; max-height: 80vh; overflow-y: auto;">
+                <form id="generateQuizForm">
+                    <input type="hidden" id="gqCourseId">
+
+                    <!-- Step 1: Settings -->
+                    <div class="form-section" id="gqStep1">
+                        <div class="section-title"
+                            style="font-size: 1.05rem; font-weight: bold; color: #374151; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+                            📚 إعدادات الاختبار</div>
+
+                        <div class="form-group" style="margin-bottom: 18px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #4b5563;">اختر
+                                الدرس <span style="color: #ef4444;">*</span></label>
+                            <select id="gqLessonId" required
+                                style="width: 100%; padding: 12px; border: 2px solid #e5e7eb; border-radius: 10px; background: white; font-weight: 600; color: #374151; cursor: pointer; transition: all 0.2s;">
+                                <option value="">-- جارٍ تحميل الدروس... --</option>
+                            </select>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px;">
+                            <div class="form-group">
+                                <label
+                                    style="display: block; margin-bottom: 8px; font-weight: 600; color: #4b5563;">عدد
+                                    الأسئلة</label>
+                                <input type="number" id="gqNumQuestions" min="1" max="20" value="5"
+                                    style="width: 100%; padding: 12px; border: 2px solid #e5e7eb; border-radius: 10px;">
+                            </div>
+                            <div class="form-group">
+                                <label
+                                    style="display: block; margin-bottom: 8px; font-weight: 600; color: #4b5563;">مستوى
+                                    الصعوبة</label>
+                                <select id="gqDifficulty"
+                                    style="width: 100%; padding: 12px; border: 2px solid #e5e7eb; border-radius: 10px; background: white; font-weight: 600; color: #374151; cursor: pointer;">
+                                    <option value="easy">سهل</option>
+                                    <option value="medium" selected>متوسط</option>
+                                    <option value="hard">صعب</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Custom Prompt Field -->
+                        <div class="form-group" style="margin-bottom: 18px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #4b5563;">
+                                ✍️ تعليمات مخصصة للذكاء الاصطناعي
+                                <span style="font-weight: 400; color: #9ca3af; font-size: 0.85rem;">(اختياري)</span>
+                            </label>
+                            <textarea id="gqCustomPrompt" rows="4" placeholder="مثال: ركز على مواضيع الدوال والمصفوفات، اجعل الأسئلة عملية مع أمثلة كود، أضف أسئلة صعبة عن التعامل مع الأخطاء..."
+                                style="width: 100%; padding: 12px; border: 2px solid #e5e7eb; border-radius: 10px; resize: vertical; font-family: inherit; font-size: 0.95rem; line-height: 1.6; transition: all 0.2s;"></textarea>
+                            <div style="margin-top: 6px; display: flex; flex-wrap: wrap; gap: 6px;">
+                                <button type="button" onclick="setPromptHint('ركّز على المفاهيم الأساسية والتعريفات المهمة')"
+                                    style="padding: 4px 10px; font-size: 0.8rem; background: #eef2ff; color: #4338ca; border: 1px solid #c7d2fe; border-radius: 20px; cursor: pointer; transition: all 0.2s;">مفاهيم أساسية</button>
+                                <button type="button" onclick="setPromptHint('أضف أسئلة عملية مع أمثلة كود واطلب من الطالب تحليل النتائج')"
+                                    style="padding: 4px 10px; font-size: 0.8rem; background: #fef3c7; color: #92400e; border: 1px solid #fde68a; border-radius: 20px; cursor: pointer; transition: all 0.2s;">أسئلة عملية</button>
+                                <button type="button" onclick="setPromptHint('اجعل الأسئلة صعبة وتتطلب تفكيراً عميقاً وربط المفاهيم ببعضها')"
+                                    style="padding: 4px 10px; font-size: 0.8rem; background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; border-radius: 20px; cursor: pointer; transition: all 0.2s;">تفكير عميق</button>
+                                <button type="button" onclick="setPromptHint('أسئلة عن التعامل مع الأخطاء الشائعة وأفضل الممارسات')"
+                                    style="padding: 4px 10px; font-size: 0.8rem; background: #dcfce7; color: #166534; border: 1px solid #86efac; border-radius: 20px; cursor: pointer; transition: all 0.2s;">أخطاء شائعة</button>
+                            </div>
+                        </div>
+
+                        <div
+                            style="background: #eef2ff; border: 1px solid #c7d2fe; border-radius: 10px; padding: 12px 14px; color: #4338ca; font-size: 0.9rem; line-height: 1.6;">
+                            💡 سيتم توليد أسئلة اختيار من متعدد (4 خيارات لكل سؤال) باللغة العربية.
+                            يمكنك إضافة تعليمات مخصصة لتوجيه الذكاء الاصطناعي حسب احتياجك.
+                        </div>
+                    </div>
+
+                    <!-- Preview Area (hidden initially) -->
+                    <div id="gqPreview" style="display: none; margin-top: 20px;">
+                        <div class="section-title"
+                            style="font-size: 1.05rem; font-weight: bold; color: #374151; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                            ✨ الأسئلة المُولّدة
+                            <span style="font-size: 0.8rem; font-weight: 400; color: #9ca3af;">(يمكنك تعديلها قبل الحفظ)</span>
+                        </div>
+                        <div id="gqPreviewList"
+                            style="background: white; border: 1px solid #e5e7eb; border-radius: 10px; padding: 12px; max-height: 400px; overflow-y: auto;">
+                        </div>
+                    </div>
+
+                    <div id="gqStatus" style="display: none; margin-top: 16px;"></div>
+
+                    <div
+                        style="margin-top: 24px; padding-top: 20px; border-top: 1px solid #e5e7eb; display: flex; flex-direction: column; gap: 12px;">
+                        <button type="submit" id="gqSubmitBtn"
+                            style="width: 100%; padding: 14px; font-size: 1.1rem; background: linear-gradient(135deg, #6366f1, #8b5cf6); border: none; border-radius: 10px; font-weight: bold; color: white; display: flex; justify-content: center; align-items: center; gap: 8px; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 6px -1px rgba(99, 102, 241, 0.4);">
+                            <span>✨</span> <span id="gqSubmitBtnText">توليد الاختبار</span>
+                        </button>
+                        <button type="button" onclick="closeGenerateQuizModal()"
+                            style="width: 100%; padding: 12px; font-size: 1rem; font-weight: 600; background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; border-radius: 10px; cursor: pointer;">
+                            إغلاق
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for adding lessons -->
+    <div class="modal" id="addLessonModal">
+        <div class="modal-content"
+            style="max-width: 600px; border-radius: 16px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); background: #f8fafc; padding: 0; overflow: hidden; border: 1px solid #e2e8f0;">
+            <div class="modal-header"
+                style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px 24px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 0;">
+                <h2 style="margin: 0; font-size: 1.3rem; font-weight: bold; color: white;">➕ إضافة درس جديد</h2>
+                <button class="btn-close" onclick="closeLessonModal()"
+                    style="color: #fca5a5; opacity: 1; transition: all 0.2s;">&times;</button>
+            </div>
+
+            <div style="padding: 24px;">
+                <form id="addLessonForm">
+                    <input type="hidden" id="courseIdField">
+
+                    <div class="form-section">
+                        <div class="section-title"
+                            style="font-size: 1.1rem; font-weight: bold; color: #374151; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+                            📋 معلومات الدرس الأساسية</div>
+
+                        <div class="form-group" style="margin-bottom: 20px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #4b5563;">عنوان
+                                الدرس <span style="color: #ef4444;">*</span></label>
+                            <input type="text" id="lessonTitle" required placeholder="مثال: مقدمة في البرمجة"
+                                style="width: 100%; padding: 12px; border: 2px solid #e5e7eb; border-radius: 10px; transition: all 0.2s;">
+                        </div>
+
+                        <div class="form-group" style="margin-bottom: 20px;">
+                            <label style="display: block; margin-bottom: 12px; font-weight: 600; color: #4b5563;">نوع
+                                المحتوى <span style="color: #ef4444;">*</span></label>
+                            <select id="lessonType"
+                                style="width: 100%; padding: 12px; border: 2px solid #e5e7eb; border-radius: 10px; background: white; font-weight: 600; color: #374151; cursor: pointer; transition: all 0.2s;">
+                                <option value="video">🎬 فيديو (YouTube/Vimeo)</option>
+                                <option value="video_upload">💽 فيديو (رفع ملف من الجهاز)</option>
+                                <option value="text">📝 محتوى نصي</option>
+                                <option value="pdf">📄 عرض ملف PDF</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-section"
+                        style="margin-top: 24px; padding-top: 24px; border-top: 1px solid #e5e7eb;">
+                        <div class="section-title"
+                            style="font-size: 1.1rem; font-weight: bold; color: #374151; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+                            🔗 تفاصيل المحتوى</div>
+
+                        <div class="form-group" id="urlGroup" style="margin-bottom: 20px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #4b5563;">رابط
+                                المحتوى / الفيديو</label>
+                            <input type="url" id="lessonUrl" placeholder="الصق الرابط هنا (https://...)"
+                                style="width: 100%; padding: 12px; border: 2px solid #e5e7eb; border-radius: 10px; transition: all 0.2s;"
+                                dir="ltr">
+                            <small style="display: block; margin-top: 6px; color: #6b7280; font-size: 0.85rem;">💡 يدعم
+                                روابط YouTube المباشرة أو روابط ملفات الفيديو</small>
+                        </div>
+
+                        <!-- Video Upload Group -->
+                        <div class="form-group" id="videoUploadGroup"
+                            style="display: none; margin-bottom: 20px; background: #f1f5f9; padding: 16px; border-radius: 12px; border: 1px dashed #cbd5e1;">
+                            <label style="display: block; margin-bottom: 12px; font-weight: 600; color: #4b5563;">📤 رفع
+                                ملف فيديو من جهازك</label>
+                            <input type="file" id="lessonVideoFile" accept="video/*"
+                                style="width: 100%; padding: 10px; background: white; border-radius: 8px; border: 1px solid #e2e8f0; cursor: pointer;">
+                            <div id="uploadProgressContainer" style="display: none; margin-top: 15px;">
+                                <div
+                                    style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.9rem; font-weight: 600; color: #4b5563;">
+                                    <span id="uploadStatusText">0%</span>
+                                </div>
+                                <div
+                                    style="background-color: #e2e8f0; border-radius: 9999px; overflow: hidden; height: 12px; box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);">
+                                    <div id="uploadProgressBar"
+                                        style="width: 0%; height: 100%; background: linear-gradient(90deg, #3b82f6, #8b5cf6); transition: width 0.3s ease; border-radius: 9999px;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="margin-bottom: 20px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #4b5563;">⏱️
+                                المدة التقديرية (بالثواني)</label>
+                            <input type="number" id="lessonDuration" value="0" min="0"
+                                style="width: 100%; padding: 12px; border: 2px solid #e5e7eb; border-radius: 10px; transition: all 0.2s;">
+                        </div>
+                    </div>
+
+                    <div
+                        style="margin-top: 24px; padding-top: 20px; border-top: 1px solid #e5e7eb; display: flex; flex-direction: column; gap: 12px;">
+                        <button type="submit" class="btn-primary"
+                            style="width: 100%; padding: 14px; font-size: 1.15rem; background: linear-gradient(135deg, #6366f1, #4f46e5); border: none; border-radius: 10px; font-weight: bold; color: white; display: flex; justify-content: center; align-items: center; gap: 8px; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 6px -1px rgba(99, 102, 241, 0.4);">
+                            <span>💾</span> حفظ الدرس
+                        </button>
+                        <button type="button" onclick="closeLessonModal()"
+                            style="width: 100%; padding: 12px; font-size: 1rem; font-weight: 600; background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; border-radius: 10px; cursor: pointer; transition: all 0.2s;">
+                            إلغاء الأمر
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for adding/editing courses -->
+    <div class="modal" id="courseModal">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <h2 id="courseModalTitle">إضافة كورس جديد</h2>
+                <button class="btn-close" onclick="closeCourseModal()">&times;</button>
+            </div>
+            <form id="courseForm">
+                <input type="hidden" id="editCourseId">
+                <div class="form-group">
+                    <label>عنوان الكورس</label>
+                    <input type="text" id="courseTitle" required>
+                </div>
+                <div class="form-group">
+                    <label>الوصف</label>
+                    <textarea id="courseDescription" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>اسم المدرّس</label>
+                    <input type="text" id="courseInstructor" placeholder="أدخل اسم المدرّس">
+                </div>
+                <div class="form-group">
+                    <label>صورة الكورس</label>
+                    <input type="file" id="courseThumbnailFile" accept="image/*" style="margin-bottom: 8px;">
+                    <input type="url" id="courseThumbnail"
+                        placeholder="أو الصق رابط الصورة هنا (مثال: https://pub-xxx.r2.dev/image.jpg)">
+                    <small style="color: #666; display: block; margin-top: 5px;">اختر ملف من جهازك أو الصق رابط صورة.
+                        إذا تركت الحقلين فارغين ستُستخدم صورة افتراضية.</small>
+                </div>
+                <div class="form-group">
+                    <label>🎬 الفيديو الترويجي (رابط YouTube أو MP4 مباشر)</label>
+                    <input type="url" id="coursePromoVideo"
+                        placeholder="مثال: https://www.youtube.com/watch?v=... أو https://...mp4">
+                    <small style="color: #666; display: block; margin-top: 5px;">الطالب يقدر يشاهده من صفحة الكورس قبل التسجيل</small>
+                </div>
+                <div class="form-group">
+                    <label>مدة الكورس</label>
+                    <input type="text" id="courseDuration" placeholder="مثال: 10 ساعات">
+                </div>
+                <div class="form-group">
+                    <label>المتطلبات المسبقة</label>
+                    <input type="text" id="courseRequirements" placeholder="مثال: معرفة أساسية بالبرمجة">
+                </div>
+                <div class="form-group">
+                    <label>محتوى إضافي</label>
+                    <input type="text" id="courseExtraContent" placeholder="أدخل محتوى إضافي للكورس">
+                </div>
+                <div class="form-group">
+                    <label>السعر (ل.س)</label>
+                    <input type="number" id="coursePrice" value="0">
+                </div>
+                <div class="form-group">
+                    <label>التصنيف</label>
+                    <select id="courseCategory">
+                        <option value="برمجة">برمجة</option>
+                        <option value="تصميم">تصميم</option>
+                        <option value="لغات">لغات</option>
+                        <option value="أكاديمي">أكاديمي</option>
+                    </select>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button type="submit" class="btn-primary" style="flex: 1">حفظ</button>
+                    <button type="button" class="btn-link" onclick="closeCourseModal()"
+                        style="flex: 1; background: var(--light); border-radius: 8px;">إلغاء</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/config.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="teacher.js?v=12"></script>
+    <style>
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .course-card {
+            background: var(--white, #fff);
+            border-radius: var(--radius, 12px);
+            overflow: hidden;
+            box-shadow: var(--shadow, 0 2px 8px rgba(0,0,0,0.08));
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .course-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(99, 102, 241, 0.15);
+            border-color: var(--primary, #6366f1);
+        }
+
+        .course-img-wrapper {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .course-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .course-card:hover .course-img {
+            transform: scale(1.05);
+        }
+
+        .course-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: var(--primary, #6366f1);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .course-badge.free {
+            background: var(--success, #10b981);
+        }
+
+        .course-badge.discount {
+            background: linear-gradient(135deg, #ef4444, #f97316);
+            top: auto;
+            bottom: 12px;
+            right: 12px;
+        }
+
+        .course-body {
+            padding: 20px;
+        }
+
+        .course-title {
+            font-weight: 700;
+            margin-bottom: 8px;
+            font-size: 1.15rem;
+            color: var(--dark, #1e293b);
+            line-height: 1.4;
+        }
+
+        .course-instructor {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--gray, #64748b);
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+        }
+
+        .course-instructor::before {
+            content: '\01F468\u200D\01F3EB';
+            font-size: 1rem;
+        }
+
+        .course-meta {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding-top: 12px;
+            border-top: 1px solid var(--gray-light, #e5e7eb);
+            margin-bottom: 15px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.85rem;
+            color: var(--gray, #64748b);
+        }
+
+        .meta-item .icon {
+            font-size: 1rem;
+        }
+
+        .course-price {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--primary, #6366f1);
+        }
+
+        .course-price.free {
+            color: var(--success, #10b981);
+        }
+
+        .price-original {
+            text-decoration: line-through;
+            color: var(--gray, #64748b);
+            font-size: 0.85rem;
+            margin-left: 8px;
+        }
+
+        .course-actions {
+            display: flex;
+            gap: 10px;
+            padding-top: 15px;
+            border-top: 1px solid var(--gray-light, #e5e7eb);
+        }
+
+        .btn-action {
+            flex: 1;
+            padding: 10px 16px;
+            text-align: center;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-edit {
+            background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+            color: var(--primary, #6366f1);
+        }
+
+        .btn-edit:hover {
+            background: linear-gradient(135deg, #c7d2fe 0%, #a5b4fc 100%);
+            transform: translateY(-2px);
+        }
+
+        .btn-delete {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            color: var(--danger, #ef4444);
+        }
+
+        .btn-delete:hover {
+            background: linear-gradient(135deg, #fecaca 0%, #fca5a5 100%);
+            transform: translateY(-2px);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--gray, #64748b);
+            grid-column: 1 / -1;
+        }
+
+        .empty-state .icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .empty-state h3 {
+            font-size: 1.3rem;
+            color: var(--dark, #1e293b);
+            margin-bottom: 10px;
+        }
+
+        .empty-state p {
+            margin-bottom: 20px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--gray, #64748b);
+            grid-column: 1 / -1;
+        }
+
+        .loading::before {
+            content: '\023F3';
+            display: block;
+            font-size: 2rem;
+            margin-bottom: 15px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.95); }
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            align-items: flex-start;
+            justify-content: center;
+            overflow-y: auto;
+            padding: 40px 20px;
+        }
+
+        .modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        .modal-content {
+            background: var(--white, #fff);
+            padding: 30px;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 520px;
+            max-height: none;
+            margin: auto;
+            position: relative;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--gray-light, #e5e7eb);
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.3rem;
+            color: var(--dark, #1e293b);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .modal-header h2::before {
+            content: '\01F4DA';
+            font-size: 1.4rem;
+        }
+
+        .btn-close {
+            background: var(--light, #f8fafc);
+            border: none;
+            width: 40px;
+            height: 40px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray, #64748b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            padding: 0;
+            border-radius: 50%;
+        }
+
+        .btn-close:hover {
+            background: #fee2e2;
+            color: var(--danger, #ef4444);
+            transform: rotate(90deg);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark, #1e293b);
+            font-size: 0.95rem;
+        }
+
+        .form-group label::after {
+            content: ' *';
+            color: var(--danger, #ef4444);
+            opacity: 0.7;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--gray-light, #e5e7eb);
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 1rem;
+            background-color: var(--white, #fff);
+            transition: all 0.2s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary, #6366f1);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #bbb;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</body>
+
+</html>

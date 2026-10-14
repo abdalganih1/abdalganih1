@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>التجارب الذكية | منصة مسار التعليمية</title>
+    <meta name="description" content="تجارب تفاعلية مدعومة بالذكاء الاصطناعي مرتبطة بكورسات منصة مسار — محاكي دوائر الأردوينو واختبار تحليل الشخصية. تعلّم بالممارسة الفورية.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="canonical" href="https://almasar.org/experiences.html">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">📚</span>
+                <span class="logo-text">منصة مسار</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="courses.html">الكورسات</a></li>
+                <li><a href="experiences.html" class="active">التجارب الذكية</a></li>
+                <li><a href="blog.html">المدونة</a></li>
+                <li><a href="summaries.html">الملخصات</a></li>
+                <li><a href="about.html">من نحن</a></li>
+            </ul>
+            <div class="nav-buttons">
+                <a href="login.html" class="btn btn-outline">تسجيل الدخول</a>
+                <a href="register.html" class="btn btn-primary">إنشاء حساب</a>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="القائمة">☰</button>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header ai-exp-header">
+        <div class="container">
+            <h1 class="page-title">🤖 التجارب الذكية</h1>
+            <p class="page-subtitle">تعرّف بنفسك من خلال تجارب تفاعلية بالذكاء الاصطناعي — طبّق ما تتعلمه بمحاكاة حية، بلا أدوات ولا تجهيزات</p>
+        </div>
+    </section>
+
+    <!-- Experiences Grid -->
+    <section class="ai-exp-section">
+        <div class="container">
+            <div class="ai-exp-grid" id="experiencesGrid"><!-- تُبنى من js/experiences.js --></div>
+
+            <div class="ai-exp-note">
+                <p>💡 التجارب الذكية أدوات مستقلة مبنية بالذكاء الاصطناعي ومربوطة بكورسات المنصة — كل تجربة تفتح في نافذة جديدة وتعمل مباشرة من المتصفح، وتتكامل مع محطة «هدف قريب 🎯» داخل المسار التعليمي.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <span class="logo-icon">📚</span>
+                        <span class="logo-text">منصة مسار</span>
+                    </a>
+                    <p>منصة تعليمية عربية متكاملة تهدف لنشر المعرفة وتطوير المهارات</p>
+                </div>
+                <div class="footer-links">
+                    <h4>روابط سريعة</h4>
+                    <ul>
+                        <li><a href="courses.html">الكورسات</a></li>
+                        <li><a href="experiences.html">التجارب الذكية</a></li>
+                        <li><a href="login.html">تسجيل الدخول</a></li>
+                        <li><a href="register.html">إنشاء حساب</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>تواصل معنا</h4>
+                    <ul>
+                        <li><a href="/cdn-cgi/l/email-protection#771e19111837161b1a1604160559180510">📧 <span class="__cf_email__" data-cfemail="137a7d757c53727f7e726072613d7c6174">[email&#160;protected]</span></a></li>
+                        <li><a href="tel:+971525202899">📱 +971 52 520 2899</a></li>
+                        <li><a href="about.html">من نحن</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>قانوني</h4>
+                    <ul>
+                        <li><a href="privacy.html">سياسة الخصوصية</a></li>
+                        <li><a href="terms.html">الشروط والأحكام</a></li>
+                    </ul>
+                </div>
+            </div>
+                            <p class="footer-license">🏛️ منصة مسار — مرخصة ومسجلة في دولة الإمارات العربية المتحدة</p>
+            <div class="footer-bottom">
+                <p>© 2026 منصة مسار. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="js/config.js"></script>
+    <script src="js/experiences.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/app.js?v=20261008"></script>
+    <script>
+        // بناء شبكة التجارب من السجل المركزي
+        (function () {
+            const grid = document.getElementById('experiencesGrid');
+            if (!grid) return;
+            grid.innerHTML = AI_EXPERIENCES.map(buildExperienceCard).join('');
+        })();
+    </script>
+
+    <style>
+        .ai-exp-header {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: #fff;
+            padding: 120px 0 60px;
+            text-align: center;
+        }
+        .ai-exp-section { padding: 60px 0; }
+        .ai-exp-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+        }
+        .ai-exp-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 28px 24px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            border: 1px solid var(--gray-200);
+            transition: var(--transition);
+        }
+        .ai-exp-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--primary-light);
+        }
+        .ai-exp-icon {
+            width: 64px; height: 64px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, #eef2ff, #e0e7ff);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2rem;
+        }
+        .ai-exp-tag {
+            display: inline-block;
+            background: #eef2ff;
+            color: var(--primary-dark);
+            font-size: .72rem;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+            width: fit-content;
+        }
+        .ai-exp-card h3 { font-size: 1.15rem; font-weight: 800; }
+        .ai-exp-card p { color: var(--gray-500); font-size: .9rem; line-height: 1.8; flex: 1; }
+        .ai-exp-cta {
+            color: var(--primary);
+            font-weight: 800;
+            font-size: .9rem;
+        }
+        .ai-exp-note {
+            margin-top: 40px;
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            border-radius: 16px;
+            padding: 18px 22px;
+            color: #92400e;
+            font-size: .88rem;
+            line-height: 1.9;
+        }
+    </style>
+</body>
+</html>

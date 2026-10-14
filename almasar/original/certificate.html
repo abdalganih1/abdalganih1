@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شهادة إتمام | منصة مسار</title>
+    <link rel="canonical" href="https://almasar.org/certificate.html">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 20px;
+            color: #1e293b;
+        }
+
+        /* Loading & Error */
+        .cert-loading,
+        .cert-error {
+            text-align: center;
+            color: white;
+            padding: 60px 20px;
+        }
+
+        .cert-loading h2,
+        .cert-error h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .cert-loading p,
+        .cert-error p {
+            color: #94a3b8;
+        }
+
+        .cert-error .error-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        /* Certificate Wrapper */
+        .cert-page-wrapper {
+            max-width: 850px;
+            width: 100%;
+        }
+
+        /* Actions Bar */
+        .cert-actions {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .cert-action-btn {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-print {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-print:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-share {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-share:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .btn-home {
+            background: rgba(255, 255, 255, 0.05);
+            color: #94a3b8;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-home:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        /* Certificate Container */
+        .cert-container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        /* ===== Classic Certificate ===== */
+        .cert-classic {
+            padding: 50px 40px;
+            text-align: center;
+            position: relative;
+            background: linear-gradient(145deg, #fefefe, #f8f9fa);
+        }
+
+        .cert-classic::before,
+        .cert-classic::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 8px;
+        }
+
+        .cert-classic::before {
+            top: 0;
+            background: var(--cert-color, #6366f1);
+        }
+
+        .cert-classic::after {
+            bottom: 0;
+            background: var(--cert-color, #6366f1);
+        }
+
+        .cert-classic .cert-icon {
+            font-size: 4rem;
+            margin-bottom: 15px;
+        }
+
+        .cert-classic .cert-main-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--cert-color, #6366f1);
+            margin-bottom: 8px;
+        }
+
+        .cert-classic .cert-subtitle {
+            font-size: 1.1rem;
+            color: #6b7280;
+            margin-bottom: 30px;
+        }
+
+        .cert-classic .cert-student-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #1e293b;
+            padding: 12px 30px;
+            border-bottom: 3px solid var(--cert-color, #6366f1);
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .cert-classic .cert-body-text {
+            font-size: 1.1rem;
+            color: #4b5563;
+            line-height: 1.8;
+            max-width: 600px;
+            margin: 0 auto 35px;
+        }
+
+        .cert-classic .cert-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding-top: 25px;
+            border-top: 2px solid #e5e7eb;
+        }
+
+        .cert-sig {
+            text-align: center;
+        }
+
+        .cert-sig-line {
+            width: 140px;
+            height: 2px;
+            background: #9ca3af;
+            margin: 0 auto 10px;
+        }
+
+        .cert-sig strong {
+            display: block;
+            font-size: 1rem;
+            color: #1e293b;
+        }
+
+        .cert-sig span {
+            font-size: 0.85rem;
+            color: #9ca3af;
+        }
+
+        .cert-meta {
+            text-align: left;
+        }
+
+        .cert-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            color: #9ca3af;
+            margin-bottom: 4px;
+        }
+
+        /* ===== Modern Certificate ===== */
+        .cert-modern {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cert-modern-accent {
+            height: 6px;
+            background: var(--cert-color, #6366f1);
+        }
+
+        .cert-modern-content {
+            padding: 50px 40px;
+            text-align: center;
+        }
+
+        .cert-modern .cert-icon {
+            font-size: 4rem;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.3));
+        }
+
+        .cert-modern .cert-main-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--cert-color, #6366f1);
+            margin-bottom: 8px;
+        }
+
+        .cert-modern .cert-subtitle {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            margin-bottom: 25px;
+        }
+
+        .cert-modern .cert-divider {
+            width: 100px;
+            height: 4px;
+            background: var(--cert-color, #6366f1);
+            margin: 0 auto 25px;
+            border-radius: 2px;
+        }
+
+        .cert-modern .cert-student-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .cert-modern .cert-body-text {
+            font-size: 1.05rem;
+            color: #cbd5e1;
+            line-height: 1.8;
+            max-width: 600px;
+            margin: 0 auto 35px;
+        }
+
+        .cert-modern .cert-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding-top: 25px;
+            border-top: 1px solid #334155;
+        }
+
+        .cert-modern .cert-sig strong {
+            color: white;
+        }
+
+        .cert-modern .cert-sig span {
+            color: #94a3b8;
+        }
+
+        .cert-modern .cert-sig-line {
+            background: #475569;
+        }
+
+        .cert-modern .cert-meta-item {
+            color: #64748b;
+        }
+
+        /* ===== Elegant Certificate ===== */
+        .cert-elegant {
+            background: linear-gradient(145deg, #fffbeb, #fef3c7);
+            padding: 12px;
+        }
+
+        .cert-elegant-border {
+            border: 3px solid var(--cert-color, #d97706);
+            border-radius: 12px;
+            padding: 8px;
+        }
+
+        .cert-elegant-inner {
+            border: 2px dashed var(--cert-color, #d97706);
+            border-radius: 8px;
+            padding: 50px 40px;
+            text-align: center;
+        }
+
+        .cert-elegant .cert-ornament {
+            color: var(--cert-color, #d97706);
+            font-size: 1.8rem;
+            letter-spacing: 15px;
+            margin: 10px 0;
+        }
+
+        .cert-elegant .cert-main-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--cert-color, #d97706);
+            margin-bottom: 8px;
+        }
+
+        .cert-elegant .cert-subtitle {
+            font-size: 1.1rem;
+            color: #92400e;
+            margin-bottom: 25px;
+        }
+
+        .cert-elegant .cert-line {
+            width: 70%;
+            height: 1px;
+            background: var(--cert-color, #d97706);
+            margin: 20px auto;
+            opacity: 0.4;
+        }
+
+        .cert-elegant .cert-student-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #78350f;
+            margin-bottom: 20px;
+        }
+
+        .cert-elegant .cert-body-text {
+            font-size: 1.05rem;
+            color: #92400e;
+            line-height: 1.8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .cert-elegant .cert-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: 25px;
+        }
+
+        .cert-elegant .cert-sig strong {
+            color: #78350f;
+        }
+
+        .cert-elegant .cert-sig span {
+            color: #92400e;
+        }
+
+        .cert-elegant .cert-sig-line {
+            background: var(--cert-color, #d97706);
+            opacity: 0.4;
+        }
+
+        .cert-elegant .cert-meta-item {
+            color: #92400e;
+        }
+
+        /* Verified Badge */
+        .cert-verified {
+            text-align: center;
+            padding: 20px;
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        .cert-verified .verified-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #1e293b;
+            color: white;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-family: inherit;
+            font-weight: 600;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .cert-actions,
+            .cert-verified,
+            .btn-home {
+                display: none !important;
+            }
+
+            .cert-container {
+                box-shadow: none;
+                border-radius: 0;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px 10px;
+            }
+
+            .cert-classic,
+            .cert-modern-content,
+            .cert-elegant-inner {
+                padding: 30px 20px;
+            }
+
+            .cert-classic .cert-main-title,
+            .cert-modern .cert-main-title,
+            .cert-elegant .cert-main-title {
+                font-size: 1.8rem;
+            }
+
+            .cert-classic .cert-student-name,
+            .cert-modern .cert-student-name,
+            .cert-elegant .cert-student-name {
+                font-size: 1.6rem;
+            }
+
+            .cert-classic .cert-footer,
+            .cert-modern .cert-footer,
+            .cert-elegant .cert-footer {
+                flex-direction: column;
+                gap: 20px;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="cert-page-wrapper">
+        <div id="certContent">
+            <div class="cert-loading">
+                <h2>⏳ جاري تحميل الشهادة...</h2>
+                <p>يرجى الانتظار</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <!-- Add QR Code library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const certId = urlParams.get('id');
+
+            if (!certId) {
+                showError('لم يتم تحديد رقم الشهادة');
+                return;
+            }
+
+            try {
+                const data = await api.verifyCertificate(certId);
+                if (data.error || !data.certificate) {
+                    showError('الشهادة غير موجودة أو غير صالحة');
+                    return;
+                }
+                renderCertificate(data.certificate);
+            } catch (e) {
+                showError('حدث خطأ في تحميل الشهادة: ' + e.message);
+            }
+        });
+
+        function showError(msg) {
+            document.getElementById('certContent').innerHTML = `
+                <div class="cert-error">
+                    <div class="error-icon">❌</div>
+                    <h2>شهادة غير موجودة</h2>
+                    <p>${msg}</p>
+                    <br>
+                    <a href="index.html" class="cert-action-btn btn-home" style="display: inline-flex; text-decoration: none;">🏠 العودة للرئيسية</a>
+                </div>
+            `;
+        }
+
+        function renderCertificate(cert) {
+            const style = cert.template_style || 'classic';
+            const title = cert.cert_title || 'شهادة إتمام';
+            const subtitle = cert.subtitle || 'تقديراً لإتمام الدورة بنجاح';
+            const bodyTemplate = cert.body_text || 'يُشهد بأن {student_name} قد أتم بنجاح دورة {course_name}';
+            const sigName = cert.signature_name || 'الإدارة';
+            const sigTitle = cert.signature_title || 'مدير المنصة';
+            const color = cert.accent_color || '#6366f1';
+            const studentName = cert.student_name;
+            const courseName = cert.course_title;
+            const certNumber = cert.certificate_number;
+            const date = new Date(cert.created_at + 'Z').toLocaleDateString('ar', { year: 'numeric', month: 'long', day: 'numeric' });
+
+            const bodyText = bodyTemplate
+                .replace(/{student_name}/g, studentName)
+                .replace(/{course_name}/g, courseName);
+
+            document.title = `${title} - ${studentName} | منصة مسار`;
+
+            let certHTML = '';
+
+            if (style === 'modern') {
+                certHTML = `
+                    <div class="cert-container">
+                        <div class="cert-modern" style="--cert-color: ${color}">
+                            <div class="cert-modern-accent"></div>
+                            <div class="cert-modern-content">
+                                <div class="cert-icon">🎓</div>
+                                <h1 class="cert-main-title">${title}</h1>
+                                <p class="cert-subtitle">${subtitle}</p>
+                                <div class="cert-divider"></div>
+                                <h2 class="cert-student-name">${studentName}</h2>
+                                <p class="cert-body-text">${bodyText}</p>
+                                <div class="cert-footer">
+                                    <div class="cert-sig">
+                                        <div class="cert-sig-line"></div>
+                                        <strong>${sigName}</strong>
+                                        <span>${sigTitle}</span>
+                                    </div>
+                                    <div class="cert-meta">
+                                        <div class="cert-meta-item">📅 ${date}</div>
+                                        <div class="cert-meta-item">🔑 ${certNumber}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if (style === 'elegant') {
+                certHTML = `
+                    <div class="cert-container">
+                        <div class="cert-elegant" style="--cert-color: ${color}">
+                            <div class="cert-elegant-border">
+                                <div class="cert-elegant-inner">
+                                    <div class="cert-ornament">✦ ✦ ✦</div>
+                                    <h1 class="cert-main-title">${title}</h1>
+                                    <p class="cert-subtitle">${subtitle}</p>
+                                    <div class="cert-line"></div>
+                                    <h2 class="cert-student-name">${studentName}</h2>
+                                    <p class="cert-body-text">${bodyText}</p>
+                                    <div class="cert-line"></div>
+                                    <div class="cert-footer">
+                                        <div class="cert-sig">
+                                            <div class="cert-sig-line"></div>
+                                            <strong>${sigName}</strong>
+                                            <span>${sigTitle}</span>
+                                        </div>
+                                        <div class="cert-meta">
+                                            <div class="cert-meta-item">📅 ${date}</div>
+                                            <div class="cert-meta-item">🔑 ${certNumber}</div>
+                                        </div>
+                                    </div>
+                                    <div class="cert-ornament">✦ ✦ ✦</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                // Classic
+                certHTML = `
+                    <div class="cert-container">
+                        <div class="cert-classic" style="--cert-color: ${color}">
+                            <div class="cert-icon">🎓</div>
+                            <h1 class="cert-main-title">${title}</h1>
+                            <p class="cert-subtitle">${subtitle}</p>
+                            <h2 class="cert-student-name">${studentName}</h2>
+                            <p class="cert-body-text">${bodyText}</p>
+                            <div class="cert-footer">
+                                <div class="cert-sig">
+                                    <div class="cert-sig-line"></div>
+                                    <strong>${sigName}</strong>
+                                    <span>${sigTitle}</span>
+                                </div>
+                                <div class="cert-meta">
+                                    <div class="cert-meta-item">📅 ${date}</div>
+                                    <div class="cert-meta-item">🔑 ${certNumber}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            document.getElementById('certContent').innerHTML = `
+            <div class="cert-actions">
+                <button class="cert-action-btn btn-print" onclick="window.print()">🖨️ طباعة</button>
+                <button class="cert-action-btn btn-share" onclick="shareCert()">🔗 نسخ الرابط</button>
+                <a href="index.html" class="cert-action-btn btn-home" style="text-decoration: none;">🏠 الرئيسية</a>
+            </div>
+                ${certHTML}
+            <div class="cert-verified">
+                <div class="verified-badge">✅ شهادة موثقة</div>
+                <p>تم التحقق من صحة هذه الشهادة • رقم التوثيق: ${certNumber}</p>
+                <div id="qrcode" style="display: flex; justify-content: center; margin-top: 15px;"></div>
+            </div>
+            `;
+
+            // Generate QR Code
+            setTimeout(() => {
+                const qrContainer = document.getElementById('qrcode');
+                if (qrContainer) {
+                    new QRCode(qrContainer, {
+                        text: window.location.href, // Link to this exact certificate
+                        width: 100,
+                        height: 100,
+                        colorDark: "#1e293b",
+                        colorLight: "#ffffff",
+                        correctLevel: QRCode.CorrectLevel.H
+                    });
+                }
+            }, 100);
+        }
+
+        function shareCert() {
+            const url = window.location.href;
+            navigator.clipboard.writeText(url).then(() => {
+                showToast('✅ تم نسخ رابط الشهادة!');
+            }).catch(() => {
+                // Fallback
+                const input = document.createElement('input');
+                input.value = url;
+                document.body.appendChild(input);
+                input.select();
+                document.execCommand('copy');
+                document.body.removeChild(input);
+                showToast('✅ تم نسخ رابط الشهادة!');
+            });
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+    </script>
+<p class="footer-license" style="text-align:center;font-size:.78rem;color:#94a3b8;padding:14px 10px 4px;margin:0">📱 <a href="tel:+971525202899" style="color:inherit;text-decoration:none">+971 52 520 2899</a> · 🏛️ منصة مسار — مرخصة ومسجلة في دولة الإمارات العربية المتحدة</p>
+</body>
+
+</html>

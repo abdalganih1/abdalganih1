@@ -1,0 +1,2 @@
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','__GA_ID__');
+document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a');if(!a)return;var h=a.getAttribute('href')||'';if(/\/register/.test(h))gtag('event','sign_up_click');else if(/apk|\/download/.test(h))gtag('event','app_download_click');else if(/^mailto:|^tel:/.test(h))gtag('event','contact_click',{method:h.split(':')[0]});else if(/\/course\?id=/.test(h))gtag('event','start_course_click');});

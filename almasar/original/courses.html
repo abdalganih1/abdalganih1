@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="https://almasar.org/courses.html">
+    <title>جميع الكورسات | منصة مسار التعليمية</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">📚</span>
+                <span class="logo-text">منصة مسار</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="courses.html" class="active">الكورسات</a></li>
+                <li><a href="experiences.html">التجارب الذكية</a></li>
+                <li><a href="blog.html">المدونة</a></li>
+                <li><a href="summaries.html">الملخصات</a></li>
+                <li><a href="about.html">من نحن</a></li>
+            </ul>
+            <div class="nav-buttons">
+                <a href="login.html" class="btn btn-outline">تسجيل الدخول</a>
+                <a href="register.html" class="btn btn-primary">إنشاء حساب</a>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">جميع الكورسات</h1>
+            <p class="page-subtitle">اختر الكورس الذي يناسبك وابدأ التعلم اليوم</p>
+        </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="filters-section">
+        <div class="container">
+            <div class="filters">
+                <a href="courses.html" class="filter-btn active">الكل</a>
+                <a href="courses.html?category=برمجة" class="filter-btn">برمجة</a>
+                <a href="courses.html?category=تصميم" class="filter-btn">تصميم</a>
+                <a href="courses.html?category=لغات" class="filter-btn">لغات</a>
+                <a href="courses.html?category=أكاديمي" class="filter-btn">أكاديمي</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Courses Grid -->
+    <section class="courses-section">
+        <div class="container">
+            <div class="courses-grid" id="coursesGrid">
+                <div class="loading-spinner">
+                    <div class="spinner"></div>
+                    <p>جاري تحميل الكورسات...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p style="font-size:.8rem;margin:0 0 4px"><a href="tel:+971525202899" style="color:inherit">📱 +971 52 520 2899</a></p>
+                <p class="footer-license">🏛️ منصة مسار — مرخصة ومسجلة في دولة الإمارات العربية المتحدة</p>
+                <p>© 2026 منصة مسار. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/app.js?v=20261008"></script>
+    <script>
+        // Update active filter based on URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const category = urlParams.get('category');
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.classList.remove('active');
+            if (category && btn.href.includes(`category=${category}`)) {
+                btn.classList.add('active');
+            } else if (!category && btn.href === window.location.href.split('?')[0]) {
+                btn.classList.add('active');
+            }
+        });
+    </script>
+
+    <style>
+        .page-header {
+            background: var(--gradient);
+            color: var(--white);
+            padding: 120px 0 60px;
+            text-align: center;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .page-subtitle {
+            opacity: 0.9;
+        }
+
+        .filters-section {
+            background: var(--white);
+            padding: 20px 0;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .filters {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            border-radius: 25px;
+            background: var(--gray-100);
+            color: var(--gray-600);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .courses-section {
+            padding: 60px 0;
+        }
+
+        .no-courses {
+            text-align: center;
+            padding: 60px;
+            color: var(--gray-500);
+            grid-column: 1 / -1;
+        }
+    </style>
+</body>
+
+</html>

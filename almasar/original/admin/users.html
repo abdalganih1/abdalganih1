@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة المستخدمين | لوحة التحكم</title>
+    <link rel="stylesheet" href="admin.css">
+    <style>
+        /* ===== Users Toolbar ===== */
+        .users-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 20px;
+            background: white;
+            padding: 18px 22px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 220px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 11px 42px 11px 14px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            background: #f9fafb;
+        }
+
+        .search-box input:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+            background: white;
+        }
+
+        .search-box::before {
+            content: '🔍';
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1rem;
+            pointer-events: none;
+        }
+
+        .filter-select,
+        .sort-select {
+            padding: 11px 14px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            background: #f9fafb;
+            cursor: pointer;
+            transition: all 0.2s;
+            min-width: 140px;
+        }
+
+        .filter-select:focus,
+        .sort-select:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .sort-order-btn {
+            padding: 10px 14px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            background: #f9fafb;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sort-order-btn:hover {
+            border-color: var(--primary);
+            background: #f0f0ff;
+        }
+
+        .sort-order-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* ===== Stats Cards ===== */
+        .users-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 14px;
+            margin-bottom: 22px;
+        }
+
+        .user-stat-card {
+            background: white;
+            padding: 18px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s;
+        }
+
+        .user-stat-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .user-stat-card .stat-number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+
+        .user-stat-card .stat-label {
+            color: var(--gray);
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .stat-total .stat-number {
+            color: var(--primary);
+        }
+
+        .stat-admins .stat-number {
+            color: #8b5cf6;
+        }
+
+        .stat-teachers .stat-number {
+            color: var(--success);
+        }
+
+        .stat-students .stat-number {
+            color: #3b82f6;
+        }
+
+        /* ===== Users Table ===== */
+        .users-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+
+        .users-table th,
+        .users-table td {
+            padding: 14px 18px;
+            text-align: right;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .users-table th {
+            background: #fafbfc;
+            color: var(--gray);
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .users-table tr:hover {
+            background: #f9fafb;
+        }
+
+        .users-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #e5e7eb;
+        }
+
+        .user-name-block {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-name-block .name {
+            font-weight: 700;
+            color: var(--dark);
+            font-size: 0.95rem;
+        }
+
+        .user-name-block .bio {
+            color: var(--gray);
+            font-size: 0.78rem;
+            max-width: 200px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .role-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            display: inline-block;
+        }
+
+        .role-admin {
+            background: linear-gradient(135deg, #ede9fe, #e0e7ff);
+            color: #6366f1;
+        }
+
+        .role-teacher {
+            background: linear-gradient(135deg, #dcfce7, #d1fae5);
+            color: #059669;
+        }
+
+        .role-student {
+            background: linear-gradient(135deg, #e0f2fe, #dbeafe);
+            color: #2563eb;
+        }
+
+        .status-badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: #dcfce7;
+            color: #16a34a;
+        }
+
+        .status-inactive {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .btn-action {
+            padding: 7px 14px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 0 3px;
+            font-family: inherit;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .btn-edit {
+            background: #e0e7ff;
+            color: var(--primary);
+        }
+
+        .btn-edit:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-delete {
+            background: #fee2e2;
+            color: var(--danger);
+        }
+
+        .btn-delete:hover {
+            background: var(--danger);
+            color: white;
+        }
+
+        /* ===== Empty State ===== */
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            color: var(--gray);
+        }
+
+        .empty-state .empty-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .empty-state p {
+            font-size: 1rem;
+        }
+
+        /* ===== Modal ===== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(3px);
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 520px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px) scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .modal-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin-bottom: 25px;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: #374151;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 11px 14px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .form-actions button {
+            flex: 1;
+            padding: 12px;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-save {
+            background: var(--primary);
+            color: white;
+            border: none;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-save:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-cancel {
+            background: var(--light);
+            color: var(--dark);
+            border: 2px solid #e5e7eb;
+        }
+
+        .btn-cancel:hover {
+            background: #e5e7eb;
+        }
+
+        .results-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+            color: var(--gray);
+            font-size: 0.88rem;
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 768px) {
+            .users-toolbar {
+                flex-direction: column;
+            }
+
+            .search-box {
+                min-width: 100%;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .users-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <span class="logo-icon">📚</span>
+            <span class="logo-text">لوحة التحكم</span>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="index.html" class="nav-item">
+                <span class="nav-icon">📊</span>
+                <span>الرئيسية</span>
+            </a>
+            <a href="users.html" class="nav-item active">
+                <span class="nav-icon">👥</span>
+                <span>المستخدمون</span>
+            </a>
+            <a href="courses.html" class="nav-item">
+                <span class="nav-icon">📚</span>
+                <span>الكورسات</span>
+            </a>
+            <a href="payments.html" class="nav-item">
+                <span class="nav-icon">💰</span>
+                <span>المدفوعات</span>
+            </a>
+            <a href="certificates.html" class="nav-item">
+                <span class="nav-icon">🎓</span>
+                <span>الشهادات</span>
+            </a>
+            <a href="settings.html" class="nav-item">
+                <span class="nav-icon">⚙️</span>
+                <span>الإعدادات</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="../index.html" class="nav-item">
+                <span class="nav-icon">🌐</span>
+                <span>عرض الموقع</span>
+            </a>
+            <button class="nav-item logout-btn" onclick="logout()">
+                <span class="nav-icon">🚪</span>
+                <span>تسجيل الخروج</span>
+            </button>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="header">
+            <button class="menu-toggle" id="menuToggle">☰</button>
+            <h1>إدارة المستخدمين</h1>
+            <div class="header-actions">
+                <button class="btn-primary" onclick="openAddUserModal()">+ إضافة مستخدم</button>
+            </div>
+        </header>
+
+        <div class="dashboard">
+            <!-- Stats -->
+            <div class="users-stats" id="usersStats">
+                <div class="user-stat-card stat-total">
+                    <div class="stat-number" id="statTotal">-</div>
+                    <div class="stat-label">إجمالي المستخدمين</div>
+                </div>
+                <div class="user-stat-card stat-admins">
+                    <div class="stat-number" id="statAdmins">-</div>
+                    <div class="stat-label">المدراء</div>
+                </div>
+                <div class="user-stat-card stat-teachers">
+                    <div class="stat-number" id="statTeachers">-</div>
+                    <div class="stat-label">المعلمون</div>
+                </div>
+                <div class="user-stat-card stat-students">
+                    <div class="stat-number" id="statStudents">-</div>
+                    <div class="stat-label">الطلاب</div>
+                </div>
+            </div>
+
+            <!-- Toolbar -->
+            <div class="users-toolbar">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="ابحث بالاسم أو البريد الإلكتروني..."
+                        oninput="debouncedSearch()">
+                </div>
+                <select class="filter-select" id="roleFilter" onchange="loadUsers()">
+                    <option value="">كل الأدوار</option>
+                    <option value="admin">المدراء</option>
+                    <option value="teacher">المعلمون</option>
+                    <option value="student">الطلاب</option>
+                </select>
+                <select class="sort-select" id="sortSelect" onchange="loadUsers()">
+                    <option value="created_at">تاريخ التسجيل</option>
+                    <option value="name">الاسم</option>
+                    <option value="email">البريد الإلكتروني</option>
+                    <option value="role">الدور</option>
+                </select>
+                <button class="sort-order-btn" id="sortOrderBtn" onclick="toggleSortOrder()" title="ترتيب تنازلي">
+                    ⬇️
+                </button>
+            </div>
+
+            <!-- Results info -->
+            <div class="results-info">
+                <span id="resultsCount">جاري التحميل...</span>
+            </div>
+
+            <!-- Table -->
+            <table class="users-table">
+                <thead>
+                    <tr>
+                        <th>المستخدم</th>
+                        <th>البريد الإلكتروني</th>
+                        <th>الدور</th>
+                        <th>الحالة</th>
+                        <th>تاريخ التسجيل</th>
+                        <th>الإجراءات</th>
+                    </tr>
+                </thead>
+                <tbody id="usersTableBody">
+                    <tr>
+                        <td colspan="6" class="loading">جاري التحميل...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- User Modal -->
+    <div class="modal" id="userModal">
+        <div class="modal-content">
+            <h2 class="modal-title" id="userModalTitle">👤 إضافة مستخدم جديد</h2>
+            <form id="userForm">
+                <div class="form-group">
+                    <label>الاسم الكامل</label>
+                    <input type="text" name="name" required placeholder="أدخل اسم المستخدم">
+                </div>
+                <div class="form-group">
+                    <label>البريد الإلكتروني</label>
+                    <input type="email" name="email" required placeholder="example@email.com">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>رقم الهاتف</label>
+                        <input type="tel" name="phone" placeholder="0501234567">
+                    </div>
+                    <div class="form-group">
+                        <label>كلمة المرور</label>
+                        <input type="password" name="password" placeholder="اتركها فارغة لعدم التغيير">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>الدور</label>
+                        <select name="role">
+                            <option value="student">طالب</option>
+                            <option value="teacher">معلم</option>
+                            <option value="admin">مدير</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>الحالة</label>
+                        <select name="status">
+                            <option value="active">نشط</option>
+                            <option value="inactive">غير نشط</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>نبذة مختصرة (اختياري)</label>
+                    <textarea name="bio" rows="3" placeholder="نبذة عن المستخدم..."></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-save">💾 حفظ</button>
+                    <button type="button" class="btn-cancel" onclick="closeUserModal()">إلغاء</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/config.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="admin.js"></script>
+    <script>
+        // ===== State =====
+        let users = [];
+        let currentSortOrder = 'DESC';
+        let searchTimeout = null;
+
+        // ===== Init =====
+        document.addEventListener('DOMContentLoaded', () => {
+            loadUsers();
+        });
+
+        // ===== Debounced Search =====
+        function debouncedSearch() {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => loadUsers(), 350);
+        }
+
+        // ===== Toggle Sort Order =====
+        function toggleSortOrder() {
+            currentSortOrder = currentSortOrder === 'DESC' ? 'ASC' : 'DESC';
+            const btn = document.getElementById('sortOrderBtn');
+            btn.textContent = currentSortOrder === 'DESC' ? '⬇️' : '⬆️';
+            btn.title = currentSortOrder === 'DESC' ? 'ترتيب تنازلي' : 'ترتيب تصاعدي';
+            loadUsers();
+        }
+
+        // ===== Load Users =====
+        async function loadUsers() {
+            const tbody = document.getElementById('usersTableBody');
+            tbody.innerHTML = '<tr><td colspan="6" class="loading">جاري التحميل...</td></tr>';
+
+            const params = {
+                search: document.getElementById('searchInput').value.trim(),
+                role: document.getElementById('roleFilter').value,
+                sort: document.getElementById('sortSelect').value,
+                order: currentSortOrder
+            };
+
+            try {
+                const data = await api.getUsers(params);
+                users = data.results || [];
+
+                // Update stats
+                if (data.counts) {
+                    document.getElementById('statTotal').textContent = data.counts.total || 0;
+                    document.getElementById('statAdmins').textContent = data.counts.admins || 0;
+                    document.getElementById('statTeachers').textContent = data.counts.teachers || 0;
+                    document.getElementById('statStudents').textContent = data.counts.students || 0;
+                }
+
+                // Update results count
+                document.getElementById('resultsCount').textContent =
+                    `عرض ${users.length} مستخدم${params.search ? ` (بحث: "${params.search}")` : ''}`;
+
+                renderUsers();
+            } catch (error) {
+                console.error('Error loading users:', error);
+                tbody.innerHTML = `
+                    <tr><td colspan="6">
+                        <div class="empty-state">
+                            <div class="empty-icon">⚠️</div>
+                            <p>خطأ في تحميل المستخدمين: ${error.message}</p>
+                        </div>
+                    </td></tr>`;
+            }
+        }
+
+        // ===== Render Users Table =====
+        function renderUsers() {
+            const tbody = document.getElementById('usersTableBody');
+            const roleLabels = { admin: 'مدير', teacher: 'معلم', student: 'طالب' };
+            const statusLabels = { active: 'نشط', inactive: 'غير نشط' };
+
+            if (users.length === 0) {
+                tbody.innerHTML = `
+                    <tr><td colspan="6">
+                        <div class="empty-state">
+                            <div class="empty-icon">👥</div>
+                            <p>لا يوجد مستخدمون مطابقون</p>
+                        </div>
+                    </td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = users.map(user => {
+                const roleBadge = `<span class="role-badge role-${user.role}">${roleLabels[user.role] || user.role}</span>`;
+                const statusClass = user.status === 'active' ? 'status-active' : 'status-inactive';
+                const statusText = statusLabels[user.status] || 'نشط';
+                const bioText = user.bio ? user.bio : '';
+                const dateStr = user.created_at ? new Date(user.created_at).toLocaleDateString('ar-SA') : '-';
+
+                return `
+                    <tr>
+                        <td>
+                            <div class="user-info">
+                                <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=random&color=fff&size=84" 
+                                     class="user-avatar" alt="${user.name}">
+                                <div class="user-name-block">
+                                    <span class="name">${user.name}</span>
+                                    ${bioText ? `<span class="bio">${bioText}</span>` : ''}
+                                </div>
+                            </div>
+                        </td>
+                        <td style="direction:ltr;text-align:right;">${user.email}</td>
+                        <td>${roleBadge}</td>
+                        <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+                        <td>${dateStr}</td>
+                        <td>
+                            <button class="btn-action btn-edit" onclick="editUser(${user.id})">✏️ تعديل</button>
+                            <button class="btn-action btn-delete" onclick="deleteUser(${user.id}, '${user.name.replace(/'/g, "\\'")}')">🗑️ حذف</button>
+                        </td>
+                    </tr>`;
+            }).join('');
+        }
+
+        // ===== Open Add Modal =====
+        function openAddUserModal() {
+            document.getElementById('userModalTitle').textContent = '👤 إضافة مستخدم جديد';
+            document.getElementById('userForm').reset();
+            delete document.getElementById('userForm').dataset.userId;
+            document.getElementById('userModal').classList.add('active');
+        }
+
+        // ===== Close Modal =====
+        function closeUserModal() {
+            document.getElementById('userModal').classList.remove('active');
+        }
+
+        // ===== Edit User =====
+        function editUser(id) {
+            const user = users.find(u => u.id === id);
+            if (!user) return;
+
+            document.getElementById('userModalTitle').textContent = '✏️ تعديل المستخدم';
+            const form = document.getElementById('userForm');
+            form.querySelector('[name="name"]').value = user.name || '';
+            form.querySelector('[name="email"]').value = user.email || '';
+            form.querySelector('[name="phone"]').value = user.phone || '';
+            form.querySelector('[name="password"]').value = '';
+            form.querySelector('[name="role"]').value = user.role || 'student';
+            form.querySelector('[name="status"]').value = user.status || 'active';
+            form.querySelector('[name="bio"]').value = user.bio || '';
+            form.dataset.userId = id;
+            document.getElementById('userModal').classList.add('active');
+        }
+
+        // ===== Delete User =====
+        async function deleteUser(id, name) {
+            if (!confirm(`هل أنت متأكد من حذف المستخدم "${name}"?\nلا يمكن التراجع عن هذا الإجراء.`)) return;
+
+            try {
+                await api.deleteUser(id);
+                alert('✅ تم حذف المستخدم بنجاح!');
+                loadUsers();
+            } catch (error) {
+                alert('❌ فشل الحذف: ' + (error.message || 'خطأ غير معروف'));
+            }
+        }
+
+        // ===== Form Submit =====
+        document.getElementById('userForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const form = e.target;
+            const userId = form.dataset.userId;
+
+            const formData = {
+                name: form.name.value,
+                email: form.email.value,
+                phone: form.phone.value,
+                role: form.role.value,
+                status: form.status.value,
+                bio: form.bio.value
+            };
+
+            if (form.password.value) {
+                formData.password = form.password.value;
+            }
+
+            try {
+                if (userId) {
+                    await api.updateUser(userId, formData);
+                    alert('✅ تم تحديث المستخدم بنجاح!');
+                } else {
+                    if (!form.password.value) {
+                        alert('⚠️ كلمة المرور مطلوبة للمستخدم الجديد');
+                        return;
+                    }
+                    formData.password = form.password.value;
+                    await api.createUser(formData);
+                    alert('✅ تم إضافة المستخدم بنجاح!');
+                }
+                closeUserModal();
+                loadUsers();
+            } catch (error) {
+                alert('❌ فشل: ' + (error.message || 'خطأ غير معروف'));
+            }
+        });
+
+        // Close modal on background click
+        document.getElementById('userModal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) closeUserModal();
+        });
+    </script>
+</body>
+
+</html>

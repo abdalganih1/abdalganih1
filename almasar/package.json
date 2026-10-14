@@ -1,0 +1,14 @@
+{
+  "name": "almasar-site",
+  "scripts": {
+    "build": "node build.mjs",
+    "fetch": "sh scripts/fetch_data.sh"
+  },
+  "dependencies": {
+    "gsap": "3.13.0",
+    "lenis": "1.3.11",
+    "marked": "14.1.4"
+  },
+  "private": true,
+  "type": "module"
+}

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ملخص كورس - برمجة متقدمة في بايثون</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Cairo',sans-serif;background:linear-gradient(135deg,#f5f7fa 0%,#e4e9f0 100%);color:#1a1a2e;line-height:1.9;min-height:100vh}
+.page{max-width:800px;margin:30px auto;background:white;border-radius:24px;box-shadow:0 25px 80px rgba(0,0,0,0.12);overflow:hidden}
+
+.header{position:relative;padding:50px 40px;text-align:center;overflow:hidden;background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%)}
+.header::before{content:'';position:absolute;top:-50%;right:-20%;width:400px;height:400px;background:rgba(255,255,255,0.06);border-radius:50%}
+.header::after{content:'';position:absolute;bottom:-40%;left:-15%;width:300px;height:300px;background:rgba(255,255,255,0.04);border-radius:50%}
+.header .icon{font-size:4rem;margin-bottom:12px;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.15))}
+.header h1{font-size:2rem;font-weight:900;margin-bottom:10px;color:white;text-shadow:0 2px 4px rgba(0,0,0,0.1)}
+.header .subtitle{font-size:1.05rem;opacity:0.95;max-width:520px;margin:0 auto;line-height:1.7}
+.badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.22);backdrop-filter:blur(8px);padding:8px 22px;border-radius:25px;font-size:0.9rem;font-weight:700;margin-top:18px;border:1px solid rgba(255,255,255,0.2);color:white}
+
+.content{padding:40px}
+.section{margin-bottom:40px}
+.section-header{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+.section-icon{width:44px;height:44px;background:linear-gradient(135deg,#f093fb,#f5576c);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;box-shadow:0 4px 12px rgba(240,147,251,0.3);flex-shrink:0}
+.section-title{font-size:1.3rem;font-weight:800;color:#1a1a2e}
+
+.description{background:linear-gradient(135deg,#fff5f7,#ffeef2);border-radius:16px;padding:24px;border-right:5px solid #f5576c;font-size:1.02rem;color:#374151;line-height:2;box-shadow:0 2px 8px rgba(245,87,108,0.08)}
+
+.topics{list-style:none;padding:0;counter-reset:topic}
+.topics li{counter-increment:topic;background:white;border:1.5px solid #e5e7eb;border-radius:16px;padding:20px 22px;margin-bottom:14px;display:flex;align-items:flex-start;gap:16px;transition:all 0.3s cubic-bezier(0.4,0,0.2,1);position:relative}
+.topics li:hover{border-color:#f5576c;box-shadow:0 8px 24px rgba(245,87,108,0.12);transform:translateY(-3px)}
+.topics li .num{width:42px;height:42px;background:linear-gradient(135deg,#f093fb,#f5576c);color:white;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;flex-shrink:0;box-shadow:0 4px 10px rgba(245,87,108,0.25)}
+.topics li .text{flex:1;padding-top:2px}
+.topics li .text strong{display:block;color:#1a1a2e;font-size:1rem;margin-bottom:4px}
+.topics li .text span{color:#6b7280;font-size:0.9rem;line-height:1.6}
+
+.outcomes{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}
+.outcome-item{display:flex;align-items:center;gap:10px;background:#fff5f7;border:1px solid #fecdd3;border-radius:12px;padding:14px 16px;font-size:0.92rem;color:#9f1239;font-weight:600}
+.outcome-item::before{content:'✓';width:24px;height:24px;background:#f5576c;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;flex-shrink:0}
+
+.info-cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:20px}
+.info-card{background:linear-gradient(135deg,#fff5f7,#ffeef2);border:1px solid #fecdd3;border-radius:14px;padding:18px;text-align:center}
+.info-card .label{font-size:0.8rem;color:#e11d48;font-weight:600;margin-bottom:6px}
+.info-card .value{font-size:1.1rem;font-weight:800;color:#be123c}
+
+.footer{background:linear-gradient(135deg,#f8f9fa,#f1f3f5);padding:24px 40px;text-align:center;color:#9ca3af;font-size:0.88rem;border-top:1px solid #e5e7eb;display:flex;align-items:center;justify-content:center;gap:8px}
+.footer span{color:#f5576c;font-weight:700}
+
+@media print{body{background:white}.page{box-shadow:none;margin:0;border-radius:0}}
+@media(max-width:600px){.header{padding:30px 20px}.content{padding:20px}.header h1{font-size:1.5rem}.outcomes,.info-cards{grid-template-columns:1fr}.topics li{padding:16px}}
+</style>
+</head>
+<body>
+<div class="page">
+<div class="header">
+<div class="icon">🚀</div>
+<h1>برمجة متقدمة في بايثون</h1>
+<p class="subtitle">ينقل الطالب من مرحلة كتابة الأكواد البسيطة إلى بناء أنظمة برمجية منظمة</p>
+<span class="badge">📘 ملخص شامل للكورس</span>
+</div>
+<div class="content">
+
+<div class="section">
+<div class="section-header">
+<div class="section-icon">📖</div>
+<div class="section-title">نبذة عن الكورس</div>
+</div>
+<div class="description">
+هذا الكورس يهدف إلى رفع مستوى الطالب البرمجي من المبتدئ إلى المتقدم، من خلال تعلم مفاهيم البرمجة الكائنية التوجه (OOP) وبناء أنظمة برمجية حقيقية منظمة وقابلة للتطوير.
+</div>
+<div class="info-cards">
+<div class="info-card"><div class="label">المستوى</div><div class="value">متقدم</div></div>
+<div class="info-card"><div class="label">المدة</div><div class="value">12 ساعة</div></div>
+<div class="info-card"><div class="label">المشاريع</div><div class="value">5 مشاريع</div></div>
+<div class="info-card"><div class="label">الدروس</div><div class="value">18 درس</div></div>
+</div>
+</div>
+
+<div class="section">
+<div class="section-header">
+<div class="section-icon">🎯</div>
+<div class="section-title">المحاور الرئيسية</div>
+</div>
+<ul class="topics">
+<li><span class="num">1</span><div class="text"><strong>الدوال المتقدمة (Functions)</strong><span>التعمق في الدوال وكيفية تنظيم الكود وإعادة استخدامه بكفاءة</span></div></li>
+<li><span class="num">2</span><div class="text"><strong>البرمجة الكائنية (OOP)</strong><span>بناء الفئات (Classes) والكائنات (Objects) وتصميم برمجيات مرنة</span></div></li>
+<li><span class="num">3</span><div class="text"><strong>الوراثة والتعددية</strong><span>مفاهيم Inheritance و Polymorphism لتصميم برمجيات متقدمة</span></div></li>
+<li><span class="num">4</span><div class="text"><strong>إدارة الأخطاء والاستثناءات</strong><span>معالجة Exceptions لضمان استقرار وموثوقية البرامج</span></div></li>
+</ul>
+</div>
+
+<div class="section">
+<div class="section-header">
+<div class="section-icon">🏆</div>
+<div class="section-title">ماذا ستتعلم</div>
+</div>
+<div class="outcomes">
+<div class="outcome-item">تصميم برمجيات كائنية التوجه</div>
+<div class="outcome-item">بناء أنظمة قابلة للتطوير</div>
+<div class="outcome-item">إدارة الأخطاء احترافياً</div>
+<div class="outcome-item">تطبيق أنماط التصميم البرمجي</div>
+</div>
+</div>
+
+</div>
+<div class="footer">📘 ملخص كورس <span>برمجة متقدمة في بايثون</span> — منصة تعليم بايثون</div>
+</div>
+</body>
+</html>

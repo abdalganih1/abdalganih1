@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة المعلم | منصة التعلم</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../admin/admin.css?v=3"> <!-- Reusing Admin CSS for consistency -->
+    <style>
+        .role-teacher-badge {
+            background: #dcfce7;
+            color: #10b981;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <aside class="sidebar" id="sidebar">
+        <!-- Sidebar content loaded dynamically -->
+    </aside>
+
+    <main class="main-content">
+        <header class="header">
+            <button class="menu-toggle" id="menuToggle">☰</button>
+            <h1 class="page-title">لوحة القيادة</h1>
+            <div class="header-actions">
+                <span class="role-teacher-badge">حساب معلم</span>
+                <span class="admin-name" id="teacherName">مرحباً، أستاذ</span>
+            </div>
+        </header>
+
+        <div class="dashboard">
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon blue">📚</div>
+                    <div class="stat-info">
+                        <h3 id="myCoursesCount">-</h3>
+                        <p>كورساتي</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon green">👥</div>
+                    <div class="stat-info">
+                        <h3 id="myStudentsCount">-</h3>
+                        <p>إجمالي الطلاب</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon purple">⭐</div>
+                    <div class="stat-info">
+                        <h3 id="rating">-</h3>
+                        <p>التقييم العام</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="card">
+                <div class="card-header">
+                    <h2>أحدث المسجلين في دوراتك</h2>
+                </div>
+                <div class="card-body" id="recentEnrollments">
+                    <div class="loading">جاري التحميل...</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/config.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="teacher.js?v=12"></script>
+</body>
+
+</html>
