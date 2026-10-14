@@ -16,3 +16,9 @@ h1, h2, h3, .logo-text, .section-title, .page-title { font-family: 'Alexandria',
 .navbar .mobile-menu-btn { color: #eef2fb; }
 .btn-primary { background: var(--gradient); color: #04121a; border: 0; }
 .footer { background: #060a18; }
+@media (max-width: 640px) {
+  .course-page, .course-page * { box-sizing: border-box; }
+  .course-page .course-body { grid-template-columns: minmax(0, 1fr) !important; }
+  .course-page .course-body > * { min-width: 0; }
+  .course-page #syncHint, .course-page #grantWidget, .course-page .course-content-section, .course-page .guest-note, .course-page .ai-course-banner, .course-page .lessons-list { max-width: 100%; margin-left: 0; margin-right: 0; }
+}

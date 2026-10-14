@@ -639,11 +639,19 @@ page({ file: '404.html', path: '/404', title: 'الصفحة غير موجودة 
 {
   const f = path.join(DIST, 'course.html');
   let h = fs.readFileSync(f, 'utf8');
-  h = h.replace('</head>', `<link rel="stylesheet" href="${H['masar.css']}" media="print" onload="this.media='all'">
-<script>(function(){var id=new URLSearchParams(location.search).get('id');if(!id)return;var l=document.createElement('link');l.rel='canonical';l.href='${URL_}/courses/'+id+'/';document.head.appendChild(l);})();</script>
+  h = h.replace('</head>', `<script>(function(){var id=new URLSearchParams(location.search).get('id');if(!id)return;var l=document.createElement('link');l.rel='canonical';l.href='${URL_}/courses/'+id+'/';document.head.appendChild(l);})();</script>
 <meta name="robots" content="noindex, follow">
 </head>`);
   fs.writeFileSync(f, h);
+  // app.js: canonical → the prerendered course page; course description is markdown → light formatting
+  const aj = path.join(DIST, 'js/app.js');
+  let a = fs.readFileSync(aj, 'utf8');
+  const can = "'https://almasar.org/course?id=' + encodeURIComponent(course.id)";
+  const desc = '<p class="course-description">${course.description}</p>';
+  if (!a.includes(can) || !a.includes(desc)) throw new Error('app.js patch anchors not found');
+  a = a.replace(can, "'https://almasar.org/courses/' + encodeURIComponent(course.id) + '/'")
+    .replace(desc, `<p class="course-description">\${(course.description || '').replace(/\\*\\*(.+?)\\*\\*/g, '<strong>$1</strong>').replace(/\\n+/g, '<br>')}</p>`);
+  fs.writeFileSync(aj, a);
   for (const g of ['certificate.html']) {
     const p2 = path.join(DIST, g);
     fs.writeFileSync(p2, fs.readFileSync(p2, 'utf8').replace('</head>', '<meta name="robots" content="noindex, follow">\n</head>'));
