@@ -478,3 +478,29 @@ html.js:not(.rm) [data-clip]{clip-path:inset(100% 0 0 0)}
 .stat>span{font-size:clamp(17px,1.6vw,22px);margin-top:16px}
 @media (max-width:600px){.stats{grid-template-columns:1fr}.stat{border-inline-start:0!important}.stat:nth-child(n+2){border-top:1px solid var(--line)}.stat b{font-size:clamp(72px,22vw,110px)}}
 .reveal-img img.portrait,.page-head .bgimg img.portrait{object-position:50% 20%}
+
+/* ---------- FAQ ---------- */
+.wrap.narrow{max-width:880px}
+.faq{display:grid;gap:12px}
+.faq details{border:1px solid var(--line,rgba(255,255,255,.1));border-radius:18px;background:rgba(255,255,255,.025);transition:border-color .3s,background .3s}
+.faq details[open]{border-color:rgba(45,212,191,.35);background:rgba(45,212,191,.04)}
+.faq summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:22px 26px;font:600 clamp(17px,1.5vw,20px)/1.5 var(--f-disp);color:var(--ink)}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary i{flex:none;width:30px;height:30px;border-radius:50%;border:1px solid rgba(255,255,255,.18);position:relative;transition:transform .35s,border-color .3s}
+.faq summary i::before,.faq summary i::after{content:"";position:absolute;inset:50% 8px auto;height:2px;margin-top:-1px;background:var(--teal,#2dd4bf);border-radius:2px}
+.faq summary i::after{transform:rotate(90deg);transition:transform .35s}
+.faq details[open] summary i{transform:rotate(180deg);border-color:var(--teal,#2dd4bf)}
+.faq details[open] summary i::after{transform:rotate(0)}
+.faq details p{margin:0;padding:0 26px 24px;color:var(--ink2);line-height:1.95;font-size:16.5px}
+@media (max-width:760px){.faq summary{padding:18px}.faq details p{padding:0 18px 20px}}
+
+/* ---------- overflow guards (no sideways scroll on phones) ---------- */
+html,body{overflow-x:clip;max-width:100%}
+.prose{overflow-wrap:anywhere;min-width:0}
+.prose img,.prose video,.prose iframe,.prose svg{max-width:100%;height:auto}
+.prose iframe{aspect-ratio:16/9;width:100%}
+.prose table{display:block;max-width:100%;overflow-x:auto}
+.prose pre{max-width:100%;overflow-x:auto;white-space:pre}
+.prose figure,.prose .wp-block-image,.prose .wp-block-gallery,.prose .wp-block-columns,.prose .wp-block-embed{max-width:100%;min-width:0}
+.prose .pair{min-width:0}
+.prose .pair>*{min-width:0}

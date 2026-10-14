@@ -4,12 +4,15 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 
 const ROOT = path.dirname(new URL(import.meta.url).pathname);
-const DIST = path.join(ROOT, 'dist');
+const DIST = process.env.OUT ? path.resolve(process.env.OUT) : path.join(ROOT, 'dist');
 const SITE = 'https://abdalgani.com';
 const read = (p) => fs.readFileSync(path.join(ROOT, p), 'utf8');
 const posts = JSON.parse(read('content/posts.json'));
 const themes = JSON.parse(read('content/themes.json'));
 const imgPlan = JSON.parse(read('content/images.json')).posts;
+const BUILD_DATE = new Date().toISOString().slice(0, 10);
+const SITECFG = JSON.parse(read('content/site.json'));
+const GA_ID = (process.env.GA_ID || SITECFG.ga || '').trim();
 
 const esc = (s = '') => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const fmtDate = (d) => new Date(d + 'T00:00:00Z').toLocaleDateString('ar-SY-u-nu-latn', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
@@ -40,7 +43,16 @@ function emit(src, name) {
   fs.writeFileSync(path.join(DIST, out), buf);
   return (hashed[name] = out);
 }
-emit('src/styles.css', 'styles.css');
+// fonts are self-hosted (arabic + latin subsets) and inlined at the top of the stylesheet
+fs.mkdirSync(path.join(DIST, 'assets/h'), { recursive: true });
+fs.writeFileSync(path.join(ROOT, '.styles.build.css'), read('src/fonts.css') + read('src/styles.css'));
+emit('.styles.build.css', 'styles.css');
+fs.rmSync(path.join(ROOT, '.styles.build.css'));
+if (GA_ID) {
+  fs.writeFileSync(path.join(ROOT, '.ga.build.js'), read('src/ga.js').replace('__GA_ID__', GA_ID));
+  emit('.ga.build.js', 'ga.js');
+  fs.rmSync(path.join(ROOT, '.ga.build.js'));
+}
 emit('src/boot.js', 'boot.js');
 emit('src/intro.js', 'intro.js');
 emit('src/app.js', 'app.js');
@@ -77,9 +89,45 @@ const ic = {
   up: I('<path d="M12 19V5M5 12l7-7 7 7"/>'),
 };
 
+/* ---------- SEO / GEO data ---------- */
+const PERSON = {
+  '@type': 'Person', '@id': SITE + '/#person', name: 'عبد الغني الحمدي', alternateName: ['Abdalgani Alhamdi', 'المهندس عبد الغني'],
+  url: SITE + '/about/', image: SITE + '/assets/brand/abdalgani.webp', email: 'mailto:' + EMAIL, telephone: '+963951413649',
+  jobTitle: 'مستشار بالمشاريع التقنية ومدرّب روبوتيك',
+  description: 'مهندس ومستشار هندسي متخصّص في مشاريع التخرّج التقنية، مدرّب أردوينو وروبوتيك، وقائد فريق تكنو إنجاز.',
+  alumniOf: [{ '@type': 'CollegeOrUniversity', name: 'جامعة البعث' }, { '@type': 'CollegeOrUniversity', name: 'جامعة حلب' }],
+  knowsAbout: ['Arduino', 'ESP32', 'NodeMCU', 'الروبوتات', 'الأنظمة المدمجة', 'إنترنت الأشياء', 'الطاقة الشمسية', 'الرؤية الحاسوبية', 'Flutter', 'Laravel', 'هندسة التحكم والأتمتة', 'مشاريع التخرج'],
+  worksFor: { '@id': SITE + '/#org' }, sameAs: [IG],
+  address: { '@type': 'PostalAddress', addressCountry: 'SY' },
+};
+const ORG = {
+  '@type': 'ProfessionalService', '@id': SITE + '/#org', name: 'تكنو إنجاز', alternateName: 'Techno Enjaz', url: SITE + '/techno/',
+  logo: SITE + '/assets/brand/logo.png', image: SITE + '/assets/gen/page-techno.webp', email: EMAIL, telephone: '+963951413649',
+  founder: { '@id': SITE + '/#person' }, areaServed: ['SY', 'Worldwide'], address: { '@type': 'PostalAddress', addressCountry: 'SY' },
+  sameAs: [IG_TE], knowsLanguage: ['ar', 'en'],
+  serviceType: ['استشارات مشاريع التخرج', 'تصميم وتنفيذ الروبوتات والأنظمة المدمجة', 'تطوير المواقع والتطبيقات', 'التدريب التقني', 'الهوية البصرية والعروض التقديمية'],
+};
+const WEBSITE = { '@type': 'WebSite', '@id': SITE + '/#website', url: SITE + '/', name: 'المهندس عبد الغني الحمدي', inLanguage: 'ar', publisher: { '@id': SITE + '/#person' } };
+const crumbs = (items) => ({ '@type': 'BreadcrumbList', itemListElement: [['/', 'الرئيسية'], ...items].map(([u, n], i) => ({ '@type': 'ListItem', position: i + 1, name: n, item: SITE + encodeURI(u) })) });
+
+const FAQ = [
+  ['من هو المهندس عبد الغني الحمدي؟', 'مهندس ومستشار هندسي سوري متخصّص في مشاريع التخرّج التقنية، خرّيج هندسة التحكّم الآلي والحواسيب من جامعة البعث مع شهادة الباسل للمرتبة الأولى، ومتابع للدراسات العليا في هندسة التحكّم والأتمتة بجامعة حلب. ساهم في إنجاز أكثر من 500 مشروع تقني، ودرّب أكثر من 20,000 متدرّب، ويقود فريق «تكنو إنجاز».'],
+  ['ما أنواع المشاريع التي تساعدون فيها؟', 'الروبوتات والأذرع الروبوتية، الأنظمة المدمجة وإنترنت الأشياء باستخدام Arduino وESP32 وNodeMCU، منظومات الطاقة الشمسية، الرؤية الحاسوبية والذكاء الاصطناعي، وتطبيقات الويب والموبايل باستخدام Flutter وLaravel.'],
+  ['هل تساعدون طلاب الجامعات في مشاريع التخرّج؟', 'نعم، مشاريع التخرّج هي التخصّص الأساسي: من اختيار الفكرة وتصميم المخطط الصندوقي، إلى التنفيذ والبرمجة والاختبار، ثم التوثيق والتحضير للمناقشة.'],
+  ['كيف أطلب استشارة؟', 'عبّئ نموذج «طلب استشارة» في الموقع فيُرسل طلبك مباشرة عبر واتساب، أو تواصل على الرقم ‎+963 951 413 649 أو على البريد info@abdalgani.com.'],
+  ['هل تعملون عن بُعد ومع عملاء خارج سوريا؟', 'نعم، الفريق في سوريا ويعمل عن بُعد مع طلاب وعملاء من مختلف المناطق، وتتم المتابعة عبر واتساب والاجتماعات الإلكترونية.'],
+  ['هل تقدّمون دورات تدريبية؟', 'نعم، أكثر من 30 دورة تدريبية في برمجة الأردوينو، الروبوتات المتنقّلة، التحكّم الصناعي، وإدارة المشاريع، إضافة إلى معسكر برمجي صيفي لطلاب الجامعات.'],
+  ['ما هي «تكنو إنجاز»؟', '«تكنو إنجاز» فريق تقني يقوده المهندس عبد الغني، يقدّم تطوير المواقع والمتاجر الإلكترونية، الهوية البصرية، العروض التقديمية، المعسكر البرمجي، وإرشاد مشاريع التخرّج.'],
+  ['هل يمكنكم تصميم موقع لشركتي أو مشروعي؟', 'نعم، عبر «تكنو إنجاز»، ويمكن أن يصلك نموذج تجريبي للتصميم خلال 24 ساعة من طلبك.'],
+  ['ما المتحكّمات والقطع المستخدمة في مشاريع الهاردوير؟', 'Arduino Uno وشريحة ATmega328P وESP32-CAM وNodeMCU، مع وحدات مثل البلوتوث HC-05 ومشغّل الصوت DFPlayer وحساسات الغاز MQ وحساسات اللهب والأشعة تحت الحمراء IR.'],
+  ['أين أجد أمثلة على المشاريع المنفّذة؟', `في صفحة «المشاريع» ${posts.length} مشروعاً موثّقاً بالتفصيل، منها روبوت تنظيف الألواح الشمسية، نظارة تساعد المكفوفين، كراج ذكي، وذراع روبوتية.`],
+];
+const faqHtml = (list) => `<div class="faq">${list.map(([q, a], i) => `<details data-rv${i === 0 ? ' open' : ''}><summary><span>${esc(q)}</span><i aria-hidden="true"></i></summary><p>${esc(a)}</p></details>`).join('')}</div>`;
+const faqLd = (list) => ({ '@type': 'FAQPage', mainEntity: list.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) });
+
 /* ---------- layout ---------- */
 const NAV = [['/', 'الرئيسية'], ['/prjects/', 'المشاريع'], ['/about/', 'عني'], ['/techno/', 'تكنو إنجاز'], ['/contact/', 'استشارة']];
-function layout({ title, desc, url, image, body, current, jsonld, loader = false, type = 'website' }) {
+function layout({ title, desc, url, image, body, current, jsonld, loader = false, type = 'website', noindex = false }) {
   const full = title.includes('عبد الغني') ? title : `${title} — المهندس عبد الغني الحمدي`;
   const og = SITE + (image || '/assets/gen/page-hero.webp');
   const nav = NAV.map(([h, t]) => `<a href="${h}"${current === h ? ' aria-current="page"' : ''}>${t}</a>`).join('');
@@ -95,33 +143,37 @@ function layout({ title, desc, url, image, body, current, jsonld, loader = false
 <meta name="theme-color" content="#050a13">
 <meta property="og:type" content="${type}"><meta property="og:locale" content="ar_AR"><meta property="og:site_name" content="المهندس عبد الغني الحمدي">
 <meta property="og:title" content="${esc(full)}"><meta property="og:description" content="${esc(desc)}">
-<meta property="og:url" content="${SITE}${encodeURI(url)}"><meta property="og:image" content="${og}">
-<meta name="twitter:card" content="summary_large_image">
+<meta property="og:url" content="${SITE}${encodeURI(url)}"><meta property="og:image" content="${og}"><meta property="og:image:alt" content="${esc(full)}">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${esc(full)}"><meta name="twitter:description" content="${esc(desc)}"><meta name="twitter:image" content="${og}">
+<meta name="robots" content="${noindex ? 'noindex' : 'index,follow,max-image-preview:large,max-snippet:-1'}">
+<meta name="author" content="عبد الغني الحمدي">
+<link rel="alternate" type="text/plain" title="llms.txt" href="/llms.txt">
 <link rel="icon" href="/assets/brand/favicon.png" type="image/png"><link rel="apple-touch-icon" href="/assets/brand/logo.png">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@500;600;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="preload" href="/assets/fonts/IBMPlexSansArabic-400-arabic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/ElMessiri-600-arabic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="${hashed['styles.css']}">
 <script src="${hashed['boot.js']}"></script>
-${jsonld ? `<script type="application/ld+json">${JSON.stringify(jsonld)}</script>` : ''}
+${GA_ID ? `<script src="${hashed['ga.js']}" async></script>` : ''}
+${jsonld ? `<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@graph': [].concat(jsonld) })}</script>` : ''}
 </head>
 <body>
 <a class="sr" href="#main">تخطَّ إلى المحتوى</a>
 ${loader ? `<div class="intro" aria-hidden="true">
-<div class="in-nebula"><img src="/assets/intro/nebula.webp" alt=""></div>
+<div class="in-nebula"><img data-src="/assets/intro/nebula.webp" alt=""></div>
 <div class="in-sky"></div>
 <canvas class="in-cv"></canvas>
-<div class="in-earth"><img src="/assets/intro/earth.webp" alt=""></div>
-<div class="in-clouds"><img src="/assets/intro/clouds.webp" alt=""></div>
+<div class="in-earth"><img data-src="/assets/intro/earth.webp" alt=""></div>
+<div class="in-clouds"><img data-src="/assets/intro/clouds.webp" alt=""></div>
 <div class="in-cam">
 <div class="in-stage">
 <div class="in-pad"></div>
 <div class="in-rocket">
 <div class="in-flame"><i class="c"></i><i class="l"></i><i class="r"></i></div>
-<img class="in-body" src="/assets/brand/te-body.webp" alt="">
+<img class="in-body" data-src="/assets/brand/te-body.webp" alt="">
 <div class="in-disc">
 <div class="in-disc-glow"></div><div class="in-disc-wave"></div><div class="in-shock"></div>
-<div class="in-coder"><img src="/assets/intro/coder.webp" alt=""><i class="scan"></i></div>
-<img class="in-disc-art" src="/assets/brand/te-disc.webp" alt="">
+<div class="in-coder"><img data-src="/assets/intro/coder.webp" alt=""><i class="scan"></i></div>
+<img class="in-disc-art" data-src="/assets/brand/te-disc.webp" alt="">
 <svg class="in-ring" viewBox="0 0 120 120"><circle class="track" cx="60" cy="60" r="56" pathLength="100"/><circle class="charge" cx="60" cy="60" r="56" pathLength="100"/></svg>
 <span class="in-press">اضغط</span>
 </div>
@@ -166,7 +218,7 @@ function footer() {
 <div><h4>— عن الموقع</h4><p>مستشار بالمشاريع التقنية: مشاريع تخرّج، روبوتات، أنظمة مدمجة، طاقة شمسية، وتطبيقات ويب وموبايل.</p>
 <div class="socials"><a href="${IG}" target="_blank" rel="noopener" aria-label="إنستغرام">${ic.ig}</a><a href="https://wa.me/${WA_DISPLAY}" target="_blank" rel="noopener" aria-label="واتساب">${ic.wa}</a><a href="mailto:${EMAIL}" aria-label="البريد">${ic.mail}</a></div></div>
 <div><h4>الأقسام</h4><ul>${Object.entries(CAT).filter(([k]) => k !== 'uncategorized').map(([k, c]) => `<li><a href="/category/${k}/">${c.name}</a></li>`).join('')}</ul></div>
-<div><h4>الموقع</h4><ul><li><a href="/prjects/">المشاريع</a></li><li><a href="/about/">عني</a></li><li><a href="/techno/">تكنو إنجاز</a></li><li><a href="/contact/">طلب استشارة</a></li></ul></div>
+<div><h4>الموقع</h4><ul><li><a href="/prjects/">المشاريع</a></li><li><a href="/about/">عني</a></li><li><a href="/techno/">تكنو إنجاز</a></li><li><a href="/contact/">طلب استشارة</a></li><li><a href="/faq/">أسئلة شائعة</a></li></ul></div>
 <div><h4>تواصل</h4><ul><li><a href="https://wa.me/${WA_DISPLAY}" target="_blank" rel="noopener" dir="ltr">+963 951 413 649</a></li><li><a href="mailto:${EMAIL}">${EMAIL}</a></li><li><a href="${IG_TE}" target="_blank" rel="noopener">تكنو إنجاز على إنستغرام</a></li></ul></div>
 </div>
 <div class="fine"><span>© ${new Date().getFullYear()} المهندس عبد الغني الحمدي. جميع الحقوق محفوظة. · <a href="/?intro" style="color:var(--teal)">شاهد انترو الإطلاق 🚀</a></span><span class="mono">ABDALGANI.COM</span></div>
@@ -176,6 +228,8 @@ function footer() {
 /* ---------- helpers ---------- */
 const coverOf = (p) => imgPlan[p.slug].feature_real || imgPlan[p.slug].cover;
 const small = (src) => src.replace(/\.webp$/, '-sm.webp');
+const hasSmall = (src) => /\.webp$/.test(src) && fs.existsSync(path.join(ROOT, 'src', small(src)));
+const srcset = (src, sizes) => hasSmall(src) ? ` srcset="${small(src)} 512w, ${src} 1024w" sizes="${sizes}"` : '';
 const catLinks = (p) => p.cats.map((c) => `<a class="tag" href="/category/${c}/">${CAT[c].name}</a>`).join(' ');
 
 function card(p, i = 0) {
@@ -250,7 +304,7 @@ ${marquee(0)}
 <div class="wrap"><div class="sec-head"><div><div class="kicker">أحدث الأعمال</div><h2 class="big" data-split>مشاريع حقيقية، نتائج ملموسة</h2></div>
 <a class="btn ghost" href="/prjects/" data-rv>كل المشاريع (${posts.length}) <span class="arw">←</span></a></div></div>
 <div class="rail">
-${featured.map((p, i) => `<a class="scard" href="${p.path}" data-cursor="اكتشف"><div class="im"><img src="${coverOf(p)}" alt="${esc(p.title)}" loading="lazy" decoding="async"></div>
+${featured.map((p, i) => `<a class="scard" href="${p.path}" data-cursor="اكتشف"><div class="im"><img src="${coverOf(p)}"${srcset(coverOf(p), '(max-width: 760px) 92vw, 60vw')} alt="${esc(p.title)}" loading="lazy" decoding="async"></div>
 <div class="tx"><span class="idx">${String(i + 1).padStart(2, '0')}</span><div class="meta"><span>${p.date}</span><span>${CAT[p.cats[0]].name}</span></div><h3>${esc(p.title)}</h3><p>${esc(p.excerpt)}</p><span class="more">اقرأ القصة كاملة <span class="arw">←</span></span></div></a>`).join('\n')}
 <a class="scard end" href="/prjects/"><div><h3>شوف كل المشاريع</h3><p>${posts.length} مشروع بين الهاردوير والبرمجة</p><span class="btn ghost" style="border-color:#02131a;color:#02131a">الأرشيف الكامل ←</span></div></a>
 </div>
@@ -283,12 +337,17 @@ ${marquee(1)}
 <div class="sec-head"><div><div class="kicker">شهادات</div><h2 class="big" data-split>ماذا يقول من عمل معه</h2></div><p data-rv>أعضاء من فريق تكنو إنجاز ومتدرّبون سابقون.</p></div>
 ${quotes(TESTIMONIALS)}
 </div></section>
+<section class="blk" id="faq"><div class="wrap">
+<div class="sec-head"><div><div class="kicker">أسئلة شائعة</div><h2 class="big" data-split>كل شي بدك تعرفه قبل ما تبلّش</h2></div>
+<p data-rv>أجوبة مختصرة عن الخدمات، مشاريع التخرّج، الدورات وطريقة التواصل. <a href="/faq/">كل الأسئلة ←</a></p></div>
+${faqHtml(FAQ.slice(0, 6))}
+</div></section>
 ${ctaBlock()}`;
   write('/', layout({
     title: 'المهندس عبد الغني الحمدي — مستشار بالمشاريع التقنية', current: '/', url: '/', loader: true,
     desc: 'المهندس عبد الغني الحمدي، مستشار بالمشاريع التقنية: مشاريع تخرّج، روبوتات، أنظمة مدمجة، طاقة شمسية، وتطبيقات ويب وموبايل.',
     body,
-    jsonld: { '@context': 'https://schema.org', '@type': 'Person', name: 'عبد الغني الحمدي', jobTitle: 'مستشار بالمشاريع التقنية', url: SITE, email: EMAIL, sameAs: [IG] },
+    jsonld: [WEBSITE, PERSON, ORG, { '@type': 'WebPage', '@id': SITE + '/#webpage', url: SITE + '/', name: 'المهندس عبد الغني الحمدي', isPartOf: { '@id': SITE + '/#website' }, about: { '@id': SITE + '/#person' }, inLanguage: 'ar' }, faqLd(FAQ.slice(0, 6))],
   }));
 }
 
@@ -298,7 +357,7 @@ function archive({ url, title, sub, list, current, crumb }) {
   const filters = list === posts ? `<div class="filters" role="group" aria-label="تصفية المشاريع" data-rv><button class="tag on" data-f="all" aria-pressed="true">الكل (${list.length})</button>${cats.map((c) => `<button class="tag" data-f="${c}" aria-pressed="false">${CAT[c].name} (${list.filter((p) => p.cats.includes(c)).length})</button>`).join('')}</div>` : '';
   const body = `${pageHead({ crumb, title, sub, img: '/assets/gen/page-projects.webp' })}
 <section class="blk" style="padding-top:20px"><div class="wrap">${filters}<div class="grid">${list.map(card).join('\n')}</div></div></section>${ctaBlock()}`;
-  write(url, layout({ title: crumb, desc: sub, url, body, current }));
+  write(url, layout({ title: crumb, desc: sub, url, body, current, jsonld: [{ '@type': 'CollectionPage', name: crumb, url: SITE + encodeURI(url), isPartOf: { '@id': SITE + '/#website' }, hasPart: list.map((p) => ({ '@type': 'TechArticle', headline: p.title, url: SITE + encodeURI(p.path) })) }, WEBSITE, crumbs([[url, crumb]])] }));
 }
 archive({ url: '/prjects/', crumb: 'المشاريع', title: 'الأرشيف الكامل', sub: `${posts.length} مشروعاً بين التنفيذ والتوثيق: روبوتات، أنظمة مدمجة، طاقة شمسية، وتطبيقات.`, list: posts, current: '/prjects/' });
 for (const [k, c] of Object.entries(CAT)) {
@@ -318,7 +377,7 @@ function renderBody(p) {
     const s = plan[i];
     if (!s) return '';
     const cap = ctxOf(+i) || p.title;
-    return `<figure class="pic" data-rv><div class="im"><img src="${s.src}" alt="${esc(cap)}" loading="lazy" decoding="async" width="1024" height="768" data-parallax="8"></div><figcaption><span>${esc(cap)}</span>${s.real ? '' : '<span class="ai">صورة توضيحية</span>'}</figcaption></figure>`;
+    return `<figure class="pic" data-rv><div class="im"><img src="${s.src}"${srcset(s.src, '(max-width: 760px) 92vw, 720px')} alt="${esc(cap)}" loading="lazy" decoding="async" width="1024" height="768" data-parallax="8"></div><figcaption><span>${esc(cap)}</span>${s.real ? '' : '<span class="ai">صورة توضيحية</span>'}</figcaption></figure>`;
   });
   // unwrap old WordPress figures that now hold our figure (or nothing)
   b = b.replace(/<figure class="wp-block-image[^"]*"[^>]*>\s*([\s\S]*?)\s*<\/figure>(?!\s*<\/div>)/g, (m, inner) => inner.includes('<figure') ? inner.replace(/<figcaption class="wp-element-caption">[\s\S]*?<\/figcaption>/, '') : (inner.trim() ? m : ''));
@@ -341,7 +400,7 @@ posts.forEach((p, i) => {
   const prev = posts[i + 1], next = posts[i - 1];
   const related = posts.filter((q) => q !== p && q.cats.some((c) => p.cats.includes(c))).slice(0, 3);
   const cover = coverOf(p);
-  const body = `<section class="art-hero"><div class="bgimg"><img src="${cover}" alt="${esc(p.title)}" fetchpriority="high"></div><div class="wrap">
+  const body = `<section class="art-hero"><div class="bgimg"><img src="${cover}"${srcset(cover, '100vw')} alt="${esc(p.title)}" fetchpriority="high"></div><div class="wrap">
 <div class="crumb"><a href="/">الرئيسية</a><span>/</span><a href="/prjects/">المشاريع</a><span>/</span><span>${CAT[p.cats[0]].name}</span></div>
 <h1>${esc(p.title)}</h1>
 <div class="meta"><span>${fmtDate(p.date)}</span><span>المهندس عبد الغني</span><span>${p.minutes} دقائق قراءة</span></div>
@@ -359,7 +418,10 @@ ${related.length ? `<div class="sec-head" style="margin-top:100px"><div><div cla
 </div></section>${ctaBlock('بدك تنفّذ مشروع متل هاد؟', 'منساعدك بالفكرة والتصميم والتنفيذ والتوثيق، خطوة بخطوة.')}`;
   write(p.path, layout({
     title: p.title, desc: p.excerpt, url: p.path, image: cover, body, current: '/prjects/', type: 'article',
-    jsonld: { '@context': 'https://schema.org', '@type': 'Article', headline: p.title, datePublished: p.date, image: SITE + cover, author: { '@type': 'Person', name: 'عبد الغني الحمدي' }, mainEntityOfPage: SITE + p.url },
+    jsonld: [{ '@type': 'TechArticle', headline: p.title, description: p.excerpt, datePublished: p.date, dateModified: BUILD_DATE, image: [SITE + cover], inLanguage: 'ar',
+      author: { '@id': SITE + '/#person' }, publisher: { '@id': SITE + '/#person' }, mainEntityOfPage: SITE + encodeURI(p.path), articleSection: CAT[p.cats[0]].name,
+      keywords: (p.tags || []).join('، '), wordCount: p.minutes * 200, isPartOf: { '@id': SITE + '/#website' } },
+      PERSON, WEBSITE, crumbs([['/prjects/', 'المشاريع'], [p.path, p.title]])],
   }));
 });
 
@@ -449,25 +511,115 @@ write('/contact/', layout({
 </div></section>`,
 }));
 
+/* ---------- faq ---------- */
+write('/faq/', layout({
+  title: 'أسئلة شائعة', url: '/faq/', current: '/faq/',
+  desc: 'أسئلة شائعة عن خدمات المهندس عبد الغني الحمدي وتكنو إنجاز: مشاريع التخرّج، الروبوتات، الأنظمة المدمجة، الدورات، تصميم المواقع وطريقة طلب الاستشارة.',
+  body: `${pageHead({ crumb: 'أسئلة شائعة', title: 'أسئلة شائعة', sub: 'أجوبة مباشرة عن الخدمات ومشاريع التخرّج والدورات وطريقة التواصل.' })}
+<section class="blk"><div class="wrap narrow">${faqHtml(FAQ)}</div></section>${ctaBlock('ما لقيت جواب سؤالك؟', 'اسألنا مباشرة على واتساب ومنرد عليك بأقرب وقت.')}`,
+  jsonld: [faqLd(FAQ), WEBSITE, PERSON, crumbs([['/faq/', 'أسئلة شائعة']])],
+}));
+
 /* ---------- 404, sitemap, robots, headers ---------- */
 write('/404.html', layout({
-  title: 'الصفحة غير موجودة', url: '/404', desc: 'الصفحة غير موجودة.',
+  title: 'الصفحة غير موجودة', url: '/404', desc: 'الصفحة غير موجودة.', noindex: true,
   body: `<section class="nf"><div><b class="grad-t">404</b><h1 style="font:700 32px var(--f-disp)">هالصفحة مو موجودة</h1><p style="color:var(--ink2)">يمكن انحذفت أو تغيّر رابطها. جرّب ترجع للرئيسية أو تتصفح المشاريع.</p>
 <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:24px"><a class="btn pri" href="/">الرئيسية</a><a class="btn ghost" href="/prjects/">المشاريع</a></div></div></section>`,
 }));
 
-const urls = ['/', '/prjects/', '/about/', '/techno/', '/contact/', ...Object.keys(CAT).map((k) => `/category/${k}/`), ...posts.map((p) => p.path)];
-fs.writeFileSync(path.join(DIST, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map((u) => `  <url><loc>${SITE}${encodeURI(u)}</loc><priority>${u === '/' ? '1.0' : '0.7'}</priority></url>`).join('\n')}\n</urlset>\n`);
-fs.writeFileSync(path.join(DIST, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${SITE}/sitemap.xml\n`);
+const urls = ['/', '/prjects/', '/about/', '/techno/', '/contact/', '/faq/', ...Object.keys(CAT).map((k) => `/category/${k}/`), ...posts.map((p) => p.path)];
+const PIMG = { '/': '/assets/gen/page-hero.webp', '/about/': '/assets/brand/abdalgani.webp', '/techno/': '/assets/gen/page-techno.webp', '/contact/': '/assets/gen/page-contact.webp', '/prjects/': '/assets/gen/page-projects.webp' };
+const xmlEsc = (t) => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+fs.writeFileSync(path.join(DIST, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+${urls.map((u) => {
+  const post = posts.find((p) => p.path === u);
+  const img = post ? coverOf(post) : PIMG[u];
+  return `  <url><loc>${SITE}${encodeURI(u)}</loc><lastmod>${BUILD_DATE}</lastmod><changefreq>${post ? 'monthly' : 'weekly'}</changefreq><priority>${u === '/' ? '1.0' : post ? '0.8' : '0.7'}</priority>${img && fs.existsSync(path.join(DIST, img)) ? `<image:image><image:loc>${SITE}${encodeURI(img)}</image:loc>${post ? `<image:title>${xmlEsc(post.title)}</image:title>` : ''}</image:image>` : ''}</url>`;
+}).join('\n')}
+</urlset>
+`);
+const AI_BOTS = ['GPTBot', 'OAI-SearchBot', 'ChatGPT-User', 'ClaudeBot', 'Claude-SearchBot', 'Claude-User', 'anthropic-ai', 'PerplexityBot', 'Perplexity-User', 'Google-Extended', 'Applebot-Extended', 'Bingbot', 'CCBot', 'meta-externalagent', 'DuckAssistBot', 'cohere-ai', 'MistralAI-User'];
+fs.writeFileSync(path.join(DIST, 'robots.txt'), `# محركات البحث ومساعدات الذكاء الاصطناعي مرحّب بها
+User-agent: *
+Allow: /
+Disallow: /404.html
+
+${AI_BOTS.map((b) => `User-agent: ${b}`).join('\n')}
+Allow: /
+
+Sitemap: ${SITE}/sitemap.xml
+# LLM summary: ${SITE}/llms.txt
+`);
+const plain = (h) => h.replace(/<(script|style)[\s\S]*?<\/\1>/g, '').replace(/<\/(p|h[1-6]|li|tr|div|figure|blockquote)>/g, '\n').replace(/<br\s*\/?>/g, '\n').replace(/<h([23])[^>]*>/g, (m, n) => '\n' + '#'.repeat(+n + 1) + ' ').replace(/<li[^>]*>/g, '- ').replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#0?39;/g, "'").replace(/[ \t]+\n/g, '\n').replace(/\n{3,}/g, '\n\n').trim();
+const LLMS_HEAD = `# المهندس عبد الغني الحمدي (Abdalgani Alhamdi)
+
+> مهندس ومستشار هندسي سوري متخصّص في مشاريع التخرّج التقنية، مدرّب أردوينو وروبوتيك، وقائد فريق «تكنو إنجاز» (Techno Enjaz). ساهم في أكثر من 500 مشروع تقني ودرّب أكثر من 20,000 متدرّب عبر أكثر من 30 دورة. الموقع يوثّق ${posts.length} مشروعاً في الروبوتات، الأنظمة المدمجة وإنترنت الأشياء (Arduino, ESP32, NodeMCU)، الطاقة الشمسية، الرؤية الحاسوبية، وتطبيقات الويب والموبايل (Flutter, Laravel).
+
+- الخبرة: خرّيج هندسة التحكّم الآلي والحواسيب (جامعة البعث، شهادة الباسل للمرتبة الأولى)، دراسات عليا في هندسة التحكّم والأتمتة (جامعة حلب).
+- التواصل: واتساب +963 951 413 649، البريد ${EMAIL}، إنستغرام ${IG}
+- تكنو إنجاز: ${IG_TE}
+- اللغة: العربية (مع مصطلحات تقنية إنجليزية).
+`;
+fs.writeFileSync(path.join(DIST, 'llms.txt'), `${LLMS_HEAD}
+## الصفحات الرئيسية
+
+- [الرئيسية](${SITE}/): الخدمات، المشاريع المختارة، الإحصائيات، الأسئلة الشائعة.
+- [عن المهندس](${SITE}/about/): السيرة، التعليم، الجوائز، المسيرة المهنية.
+- [تكنو إنجاز](${SITE}/techno/): خدمات الفريق (مواقع ومتاجر، هوية بصرية، عروض تقديمية، معسكر برمجي، إرشاد مشاريع التخرج).
+- [تواصل واطلب استشارة](${SITE}/contact/): نموذج يرسل الطلب عبر واتساب.
+- [أسئلة شائعة](${SITE}/faq/)
+- [كل المشاريع](${SITE}/prjects/)
+
+## المشاريع الموثّقة
+
+${posts.map((p) => `- [${p.title}](${SITE}${encodeURI(p.path)}): ${p.excerpt}`).join('\n')}
+
+## أسئلة شائعة
+
+${FAQ.map(([q, a]) => `### ${q}\n${a}`).join('\n\n')}
+
+## Optional
+
+- [النص الكامل لكل المشاريع](${SITE}/llms-full.txt)
+`);
+fs.writeFileSync(path.join(DIST, 'llms-full.txt'), `${LLMS_HEAD}
+${posts.map((p) => `---
+
+# ${p.title}
+
+المصدر: ${SITE}${encodeURI(p.path)}
+التاريخ: ${p.date} · التصنيف: ${CAT[p.cats[0]].name}${(p.tags || []).length ? ' · الوسوم: ' + p.tags.join('، ') : ''}
+
+${plain(p.body)}
+`).join('\n')}
+---
+
+# أسئلة شائعة
+
+${FAQ.map(([q, a]) => `## ${q}\n${a}`).join('\n\n')}
+`);
+const GA_CSP = GA_ID ? { s: ' https://www.googletagmanager.com', c: ' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com', i: ' https://*.google-analytics.com https://www.googletagmanager.com' } : { s: '', c: '', i: '' };
 fs.writeFileSync(path.join(DIST, '_headers'), `/*
   X-Content-Type-Options: nosniff
   X-Frame-Options: SAMEORIGIN
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(), microphone=(), camera=()
-  Content-Security-Policy: default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self' https://static.cloudflareinsights.com; connect-src 'self' https://cloudflareinsights.com; frame-src https://www.youtube-nocookie.com https://www.youtube.com; base-uri 'self'; form-action 'self'
+  Content-Security-Policy: default-src 'self'; img-src 'self' data:${GA_CSP.i}; style-src 'self' 'unsafe-inline'; font-src 'self'; script-src 'self' https://static.cloudflareinsights.com${GA_CSP.s}; connect-src 'self' https://cloudflareinsights.com${GA_CSP.c}; frame-src https://www.youtube-nocookie.com https://www.youtube.com; base-uri 'self'; form-action 'self'
 /assets/h/*
   Cache-Control: public, max-age=31536000, immutable
+/assets/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+  Access-Control-Allow-Origin: *
 /assets/gen/*
-  Cache-Control: public, max-age=604800
+  Cache-Control: public, max-age=2592000
+/assets/brand/*
+  Cache-Control: public, max-age=2592000
+/assets/intro/*
+  Cache-Control: public, max-age=2592000
+/llms.txt
+  Content-Type: text/plain; charset=utf-8
+/llms-full.txt
+  Content-Type: text/plain; charset=utf-8
 `);
 console.log('built', urls.length, 'pages →', path.relative(ROOT, DIST));

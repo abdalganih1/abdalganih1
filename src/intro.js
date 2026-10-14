@@ -10,6 +10,7 @@
 
   w.AGIntro = function (root, opts) {
     var gsap = w.gsap;
+    Array.prototype.forEach.call(root.querySelectorAll('img[data-src]'), function (im) { im.src = im.getAttribute('data-src'); });
     var $ = function (s) { return root.querySelector(s); };
     var $$ = function (s) { return Array.prototype.slice.call(root.querySelectorAll(s)); };
     var cam = $('.in-cam'), stage = $('.in-stage'), rocket = $('.in-rocket'), disc = $('.in-disc');
