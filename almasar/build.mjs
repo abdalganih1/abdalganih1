@@ -96,14 +96,16 @@ const NAV = [
   ['/summaries', 'الملخصات'],
   ['/about', 'من نحن'],
 ];
-const LOGO = `<svg class="logo-mark" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#2fd3d9"/><stop offset="1" stop-color="#f7b955"/></linearGradient></defs><rect x=".75" y=".75" width="46.5" height="46.5" rx="13.5" fill="#0d1630" stroke="#2fd3d9" stroke-opacity=".35" stroke-width="1.5"/><path d="M12 38c0-9 8-9 12-14s1-12 12-12" fill="none" stroke="url(#lg)" stroke-width="4.2" stroke-linecap="round"/><circle cx="12" cy="38" r="3.2" fill="#2fd3d9"/><circle cx="36" cy="12" r="4.2" fill="#f7b955"/></svg>`;
+const LOGO = `<svg class="logo-mark" viewBox="0 0 256 256" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#19e0c8"/><stop offset=".55" stop-color="#35b6ff"/><stop offset="1" stop-color="#3d6bff"/></linearGradient></defs><rect x="0" y="0" width="256" height="256" rx="61.4" fill="url(#lg)"/><path d="M56.3 215.0 C56.3 148.5 179.2 169.0 179.2 112.6 S97.3 71.7 122.9 46.1" fill="none" stroke="#ffffff" stroke-width="28.2" stroke-linecap="round"/><path d="M56.3 215.0 C56.3 148.5 179.2 169.0 179.2 112.6 S97.3 71.7 122.9 46.1" fill="none" stroke="#0b3550" stroke-opacity="0.55" stroke-width="5.6" stroke-dasharray="12.8 15.4" stroke-linecap="round"/><circle cx="128.0" cy="43.5" r="23.0" fill="#ffb547"/><circle cx="56.3" cy="215.0" r="14.1" fill="#ffffff"/></svg>
+`;
+const WORDMARK = `<img class="logo-img logo-l" src="/assets/brand/logo-light.svg" alt="منصة مسار" width="129" height="44"><img class="logo-img logo-d" src="/assets/brand/logo-dark.svg" alt="" width="129" height="44" aria-hidden="true">`;
 const icon = (n) => `<svg class="i" aria-hidden="true"><use href="/assets/brand/icons.svg#${n}"/></svg>`;
 
 function header(active) {
   return `<a class="skip" href="#main">تخطَّ إلى المحتوى</a>
 <header class="mh" id="mh">
   <div class="wrap mh-in">
-    <a href="/" class="logo" aria-label="منصة مسار، الصفحة الرئيسية">${LOGO}<span class="logo-t">مسار<small>منصة تعليمية</small></span></a>
+    <a href="/" class="logo" aria-label="منصة مسار، الصفحة الرئيسية">${WORDMARK}</a>
     <nav class="mh-nav" id="mhNav" aria-label="القائمة الرئيسية">
       <ul>${NAV.map(([h, t]) => `<li><a href="${h}"${h === active ? ' aria-current="page"' : ''}>${t}</a></li>`).join('')}</ul>
       <div class="mh-auth" data-auth>
@@ -123,7 +125,7 @@ function footer() {
   <div class="wrap">
     <div class="mf-top">
       <div class="mf-brand">
-        <a href="/" class="logo">${LOGO}<span class="logo-t">مسار<small>منصة تعليمية</small></span></a>
+        <a href="/" class="logo" aria-label="منصة مسار">${WORDMARK}</a>
         <p>منصة تعليمية عربية لإعداد جيل ريادي للمستقبل، واعٍ وقادر ومؤثر.</p>
         <a class="mf-app" href="/download">${icon('phone')}<span><b>تطبيق مسار لأندرويد</b><small>تعلّم بدون إنترنت</small></span></a>
       </div>
@@ -237,7 +239,7 @@ function introMarkup() {
     <circle id="introHead" r="9" fill="#fff" filter="url(#glow)"/>
   </svg>
   <div class="intro-words"><span>اكتشف ذاتك</span><span>حدّد مسارك</span><span>أبدع في حياتك</span></div>
-  <div class="intro-brand"><div class="intro-logo">${LOGO.replace('id="lg"', 'id="lgi"').replace('url(#lg)', 'url(#lgi)')}</div><div class="intro-name">مسار</div><div class="intro-sub">ريادة المستقبل تبدأ بخطوة</div></div>
+  <div class="intro-brand"><div class="intro-logo">${LOGO.replace('id="lg"', 'id="lgi"').replace('url(#lg)', 'url(#lgi)')}</div><div class="intro-name">المسار</div><div class="intro-sub">ريادة المستقبل تبدأ بخطوة</div></div>
   <button class="intro-skip" id="introSkip" type="button">تخطَّ الانترو</button>
 </div>`;
 }

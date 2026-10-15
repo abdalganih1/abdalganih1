@@ -126,7 +126,10 @@ ul, ol { margin: 0; padding: 0; }
 .mh.is-hidden { transform: translateY(-100%); }
 .mh-in { display: flex; align-items: center; gap: 24px; height: 76px; }
 .logo { display: inline-flex; align-items: center; gap: 12px; flex: none; }
-.logo-mark { width: 42px; height: 42px; filter: drop-shadow(0 6px 18px rgba(47, 211, 217, .35)); }
+.logo-mark { width: 42px; height: 42px; }
+.logo-img { height: 44px; width: auto; }
+.logo-d, .dk .logo-l, html.theme-dark .logo-l, .top-dark .mh:not(.is-solid) .logo-l { display: none; }
+.dk .logo-d, html.theme-dark .logo-d, .top-dark .mh:not(.is-solid) .logo-d { display: block; }
 .logo-t { font-family: var(--fd); font-weight: 800; font-size: 22px; line-height: 1; display: grid; gap: 4px; }
 .logo-t small { font-family: var(--ff); font-weight: 500; font-size: 11.5px; color: var(--tx-3); }
 .mh-nav { display: flex; align-items: center; gap: 22px; margin-inline-start: auto; }
