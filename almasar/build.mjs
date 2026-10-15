@@ -136,12 +136,10 @@ function footer() {
         ${courses.slice(0, 5).map((c) => `<li><a href="${c.url}">${esc(c.title)}</a></li>`).join('')}</ul></div>
       <div class="mf-col"><h2>تواصل</h2><ul>
         <li><a href="mailto:${SITE.email}">${SITE.email}</a></li>
-        <li><a href="tel:${SITE.phone}" dir="ltr">${SITE.phoneDisplay}</a></li>
         <li><a href="/about">من نحن</a></li><li><a href="/privacy">سياسة الخصوصية</a></li><li><a href="/terms">الشروط والأحكام</a></li></ul></div>
     </div>
     <div class="mf-bottom">
       <p>© ${new Date().getFullYear()} منصة مسار. جميع الحقوق محفوظة.</p>
-      <p class="mf-lic">${icon('shield')} مرخّصة ومسجّلة في دولة الإمارات العربية المتحدة</p>
       <p><a href="/?intro" class="mf-intro">شاهد الانترو من جديد ✦</a></p>
     </div>
   </div>
@@ -156,10 +154,8 @@ const ORG = {
   url: URL_,
   logo: `${URL_}/assets/brand/logo-512.png`,
   email: SITE.email,
-  telephone: SITE.phone,
   foundingDate: SITE.founded,
   founder: { '@type': 'Person', name: 'عبد الغني الحمدي', alternateName: 'Abdalgani Alhamdi', url: 'https://abdalgani.com' },
-  address: { '@type': 'PostalAddress', addressCountry: 'AE' },
   areaServed: 'Arab world',
   knowsLanguage: ['ar', 'en'],
   description: SITE.description,
@@ -453,8 +449,8 @@ ${faqBlock(FAQ.slice(0, 6))}
 
 <section class="sec en" lang="en" dir="ltr"><div class="wrap narrow reveal">
   <h2>About Masar</h2>
-  <p><strong>Masar</strong> (almasar.org) is an Arabic-first, AI-native learning platform founded in 2026 by engineer Abdalgani Alhamdi and registered in the United Arab Emirates. It helps Arab learners discover and pursue their ideal path: ${courses.length} free structured courses with ${totalLessons}+ video and text lessons (≈${totalHours} hours) that start in one click without an account, completion certificates with QR verification, an offline-capable Android app, and interactive AI learning experiences such as a 3D Arduino circuit simulator and an AI personality assessment.</p>
-  <p class="en-meta">Founded 2026 · UAE-registered · <a href="mailto:${SITE.email}">${SITE.email}</a> · <a href="tel:${SITE.phone}">${SITE.phoneDisplay}</a></p>
+  <p><strong>Masar</strong> (almasar.org) is an Arabic-first, AI-native learning platform founded in 2026 by engineer Abdalgani Alhamdi It helps Arab learners discover and pursue their ideal path: ${courses.length} free structured courses with ${totalLessons}+ video and text lessons (≈${totalHours} hours) that start in one click without an account, completion certificates with QR verification, an offline-capable Android app, and interactive AI learning experiences such as a 3D Arduino circuit simulator and an AI personality assessment.</p>
+  <p class="en-meta">Founded 2026 · <a href="mailto:${SITE.email}">${SITE.email}</a></p>
 </div></section>
 
 ${ctaBand()}`;
@@ -629,12 +625,12 @@ out('post.html', `<!doctype html><html lang="ar" dir="rtl"><head><meta charset="
   <article class="vm-c reveal" style="--d:.2s"><span class="vm-i">${icon('user')}</span><h3>المؤسس</h3><p>المهندس عبد الغني الحمدي، مطوّر ويب ومدرّب تقني، صاحب قناة Abdalgani Alhamdi التعليمية، ومؤسس منصة مسار ومساراتها التعليمية. <a class="lnk" href="https://abdalgani.com" rel="noopener">abdalgani.com</a></p></article>
 </div></div></section>
 <section class="sec"><div class="wrap narrow"><div class="legal-card reveal"><h2>${icon('shield')} الكيان القانوني</h2>
-  <p>تُدار منصة مسار بكيان مؤسسي خاص مرخّص من دولة الإمارات العربية المتحدة، وتمارس نشاطها التعليمي والتدريبي الإلكتروني عبر الموقع الرسمي almasar.org وتطبيقها الرسمي.</p>
-  <dl class="kv"><div><dt>سنة التأسيس</dt><dd>2026</dd></div><div><dt>المؤسس والمدير</dt><dd>م. عبد الغني الحمدي</dd></div><div><dt>النشاط</dt><dd>تعليم إلكتروني وتدريب تقني</dd></div><div><dt>الترخيص</dt><dd>مرخّصة من دولة الإمارات العربية المتحدة</dd></div><div><dt>الخدمة</dt><dd>عن بُعد لكل الدول العربية</dd></div><div><dt>التواصل</dt><dd><a href="mailto:${SITE.email}">${SITE.email}</a> · <a href="tel:${SITE.phone}" dir="ltr">${SITE.phoneDisplay}</a></dd></div></dl>
+  <p>تمارس منصة مسار نشاطها التعليمي والتدريبي الإلكتروني عبر الموقع الرسمي almasar.org وتطبيقها الرسمي.</p>
+  <dl class="kv"><div><dt>سنة التأسيس</dt><dd>2026</dd></div><div><dt>المؤسس والمدير</dt><dd>م. عبد الغني الحمدي</dd></div><div><dt>النشاط</dt><dd>تعليم إلكتروني وتدريب تقني</dd></div><div><dt>الخدمة</dt><dd>عن بُعد لكل الدول العربية</dd></div><div><dt>التواصل</dt><dd><a href="mailto:${SITE.email}">${SITE.email}</a></dd></div></dl>
 </div></div></section>
-<section class="sec en" lang="en" dir="ltr"><div class="wrap narrow reveal"><h2>About Masar</h2><p><strong>Masar</strong> (almasar.org) is an Arabic, AI-native learning platform founded in 2026 by engineer Abdalgani Alhamdi and registered in the UAE. We help Arab learners discover their ideal path through structured learning tracks, completion certificates, an offline-capable Android app and interactive AI learning experiences, including a 3D Arduino circuit simulator and an AI-powered personality assessment.</p></div></section>
+<section class="sec en" lang="en" dir="ltr"><div class="wrap narrow reveal"><h2>About Masar</h2><p><strong>Masar</strong> (almasar.org) is an Arabic, AI-native learning platform founded in 2026 by engineer Abdalgani Alhamdi. We help Arab learners discover their ideal path through structured learning tracks, completion certificates, an offline-capable Android app and interactive AI learning experiences, including a 3D Arduino circuit simulator and an AI-powered personality assessment.</p></div></section>
 ${ctaBand('جاهز تبدأ مسارك؟', `انضم للمتعلمين على منصة مسار، وابدأ من أي كورس من ${courses.length} كورسات مجانية.`)}`;
-  page({ file: 'about.html', path: '/about', title: 'من نحن: قصة منصة مسار ورسالتها | منصة مسار', desc: 'تعرّف على منصة مسار: منصة تعليمية عربية أسسها المهندس عبد الغني الحمدي عام 2026، مرخّصة في الإمارات، لإعداد جيل ريادي واعٍ وقادر ومؤثر.', body, active: '/about', crumbs: [['من نحن', '/about']],
+  page({ file: 'about.html', path: '/about', title: 'من نحن: قصة منصة مسار ورسالتها | منصة مسار', desc: 'تعرّف على منصة مسار: منصة تعليمية عربية أسسها المهندس عبد الغني الحمدي عام 2026، لإعداد جيل ريادي واعٍ وقادر ومؤثر.', body, active: '/about', crumbs: [['من نحن', '/about']],
     ld: [{ '@type': 'AboutPage', url: `${URL_}/about`, name: 'من نحن', about: { '@id': `${URL_}/#org` } }] });
 }
 
@@ -672,7 +668,7 @@ for (const [file, t, d] of [['privacy', 'سياسة الخصوصية', 'كيف �
   const src = read(`original/${file}.html`);
   const inner = src.slice(src.indexOf('<div class="legal-box">') + '<div class="legal-box">'.length, src.lastIndexOf('</div>', src.indexOf('</section>', src.indexOf('legal-section')) - 1));
   const upd = (src.match(/آخر تحديث:[^<]+/) || [''])[0];
-  const content = inner.replace(/<\/div>\s*<\/div>\s*$/, '').replace(/<a href="\/cdn-cgi\/l\/email-protection[^"]*"[^>]*>[\s\S]*?<\/a>/g, `<a href="mailto:${SITE.email}">${SITE.email}</a>`).replace(/<span class="__cf_email__"[^>]*>[^<]*<\/span>/g, SITE.email);
+  const content = inner.replace(/<\/div>\s*<\/div>\s*$/, '').replace('تخضع هذه الشروط للقوانين واللوائح النافذة في دولة الإمارات العربية المتحدة، وأي نزاع يُحل ودياً', 'أي نزاع يتعلق بهذه الشروط يُحل ودياً').replace(/<a href="\/cdn-cgi\/l\/email-protection[^"]*"[^>]*>[\s\S]*?<\/a>/g, `<a href="mailto:${SITE.email}">${SITE.email}</a>`).replace(/<span class="__cf_email__"[^>]*>[^<]*<\/span>/g, SITE.email);
   page({ file: `${file}.html`, path: `/${file}`, title: `${t} | منصة مسار`, desc: d, active: '', crumbs: [[t, `/${file}`]], pri: '0.3',
     body: `${pageHero('قانوني', t, upd, '')}<section class="sec"><div class="wrap narrow"><div class="prose legal reveal">${content}</div></div></section>` });
 }
@@ -756,11 +752,11 @@ const llms = `# منصة مسار (Masar)
 
 > ${SITE.description}
 
-منصة مسار (almasar.org) منصة تعليمية عربية تأسست عام 2026 على يد المهندس عبد الغني الحمدي، ومرخّصة ومسجلة في دولة الإمارات العربية المتحدة. شعارها: «${SITE.tagline}». تضم ${courses.length} كورسات مجانية و${totalLessons}+ درساً (قرابة ${totalHours} ساعة)، مع شهادات إتمام قابلة للتحقق، وتطبيق أندرويد يعمل بدون إنترنت، وتجارب تعلّم بالذكاء الاصطناعي.
+منصة مسار (almasar.org) منصة تعليمية عربية تأسست عام 2026 على يد المهندس عبد الغني الحمدي. شعارها: «${SITE.tagline}». تضم ${courses.length} كورسات مجانية و${totalLessons}+ درساً (قرابة ${totalHours} ساعة)، مع شهادات إتمام قابلة للتحقق، وتطبيق أندرويد يعمل بدون إنترنت، وتجارب تعلّم بالذكاء الاصطناعي.
 
-Masar is an Arabic-first, AI-native learning platform founded in 2026 by engineer Abdalgani Alhamdi and registered in the UAE. All ${courses.length} published courses are free; learners get verifiable completion certificates, an offline-capable Android app and AI learning experiences.
+Masar is an Arabic-first, AI-native learning platform founded in 2026 by engineer Abdalgani Alhamdi. All ${courses.length} published courses are free; learners get verifiable completion certificates, an offline-capable Android app and AI learning experiences.
 
-- التواصل: ${SITE.email} · ${SITE.phoneDisplay}
+- التواصل: ${SITE.email}
 - الرؤية: إعداد جيل ريادي للمستقبل واعٍ وقادر ومؤثر، منطلقاً من فهم ذاته والتفوق في موهبته، ومن خلال اكتشاف دوره المناسب في الحياة.
 - المنهجية: اكتشف ذاتك ← حدّد مسارك ← أبدع فيه.
 
@@ -840,5 +836,16 @@ out('_redirects', `/index /  301
 
 // Pages Function: 301 for the old dynamic article URLs (only /post routes invoke it)
 out('_routes.json', JSON.stringify({ version: 1, include: ['/post', '/post.html'], exclude: [] }));
+
+// the UAE licence line and the old phone number are retired: strip them from pages kept from the original platform
+for (const f of fs.readdirSync(DIST, { recursive: true })) {
+  if (!String(f).endsWith('.html') || String(f).startsWith('admin')) continue;
+  const fp = path.join(DIST, String(f));
+  const h = fs.readFileSync(fp, 'utf8');
+  const h2 = h.replace(/<p class="footer-license"[^>]*>[\s\S]*?<\/p>\s*/g, '')
+    .replace(/<li><a href="tel:\+971525202899">[^<]*<\/a><\/li>\s*/g, '')
+    .replace(/<p[^>]*><a href="tel:\+971525202899"[^>]*>[^<]*<\/a><\/p>\s*/g, '');
+  if (h2 !== h) fs.writeFileSync(fp, h2);
+}
 
 console.log(`built ${sitemap.length} indexable pages → ${path.relative(process.cwd(), DIST) || DIST}`);
